@@ -1,0 +1,124 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.0-RC.1' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/02/2010
+Autor: Almir
+Descrição: Renomeação de algumas tabelas
+------------------------------------------------------------------------*/
+
+create table TBLVPDESCQUANTIDADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTITEM               DECIMAL(9)                     not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDDESCONTO           VARCHAR(47),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCQUANTIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, QTITEM, CDUSUARIO)
+);
+
+insert into TBLVPDESCQUANTIDADE select * from TBLVPDESCONTOQUANTIDADE;
+
+drop table TBLVPDESCONTOQUANTIDADE;
+
+
+create table TBLVPMETASPORFORN (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+DSPERIODO            VARCHAR(30)                    not null,
+cdFornecedor         DECIMAL(9,0)                   not null,
+nuSequencia          varchar(20),
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixClienteMeta     DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORFORN primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, cdFornecedor, cdUsuario)
+);
+
+
+insert into TBLVPMETASPORFORN select * from TBLVPMETASPORFORNECEDOR;
+
+drop table TBLVPMETASPORFORNECEDOR;
+
+
+create table TBLVPRELNOVIDADEPROD (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDTIPONOVIDADEPRODUTO DECIMAL(9,0)                   not null,
+DSPRODUTO            VARCHAR(100),
+DSNOVIDADEPRODUTO    VARCHAR(100),
+DTEMISSAORELATORIO   DATETIME,
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPRELNOVIDADEPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+insert into TBLVPRELNOVIDADEPROD select * from TBLVPRELNOVIDADEPRODUTO;
+
+drop table TBLVPRELNOVIDADEPRODUTO;
+
+
+create table TBLVPTABELAPRECOCLI (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTABELAPRECOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDTABELAPRECO, CDUSUARIO)
+);
+
+insert into TBLVPTABELAPRECOCLI select * from TBLVPTABELAPRECOCLIENTE;
+
+drop table TBLVPTABELAPRECOCLIENTE;
+
+
+create table TBLVPVERBACONTACOR (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+DSCONTACORRENTE      VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBACONTACOR primary key (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, CDUSUARIO)
+);
+
+insert into TBLVPVERBACONTACOR select * from TBLVPVERBACONTACORRENTE;
+
+drop table TBLVPVERBACONTACORRENTE;
+
+
+create table TBLVPCONFIGPARAMGER (
+CDPARAMETRO          VARCHAR(20)                    not null,
+VLPARAMETROPDA       VARCHAR(50),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGPARAMGER primary key (CDPARAMETRO, CDUSUARIO)
+);
+
+insert into TBLVPCONFIGPARAMGER select * from TBLVPCONFIGPARAMETROGER;
+
+drop table TBLVPCONFIGPARAMETROGER;
+
+
+create table TBLVPCONFIGPARAMEMP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDPARAMETRO          VARCHAR(20)                    not null,
+VLPARAMETROPDA       VARCHAR(50),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGPARAMEMP primary key (CDEMPRESA, CDPARAMETRO, CDUSUARIO)
+);
+
+insert into TBLVPCONFIGPARAMEMP select * from TBLVPCONFIGPARAMETROEMP;
+
+drop table TBLVPCONFIGPARAMETROEMP;

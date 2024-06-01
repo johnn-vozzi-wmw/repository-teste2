@@ -1,0 +1,132 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.14' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 29/03/2011
+Autor: Dirceu
+Descrição: Novas colunas qtMinItensKit, dtVigenciaInicial e dtVigenciaFinal na tabela Kit
+------------------------------------------------------------------------*/
+alter table TBLVPKIT
+add qtMinItensKit        decimal(9,0);
+
+alter table TBLVPKIT
+add dtVigenciaInicial    DATETIME;
+
+alter table TBLVPKIT
+add dtVigenciaFinal    DATETIME;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 29/03/2011
+Autor: Dirceu
+Descrição: Novas colunas qtMinItem e qtMaxItem na tabela ItemKit
+		Removida a coluna qtItemFisico (qtMinItem)
+------------------------------------------------------------------------*/
+alter table TBLVPITEMKIT
+add qtMinItem		DECIMAL(16,7);
+
+alter table TBLVPITEMKIT
+add qtMaxItem		DECIMAL(16,7);
+
+go
+
+update TBLVPITEMKIT
+set qtMinItem = qtItemFisico;
+
+go
+
+alter table TBLVPITEMKIT
+drop column qtItemFisico;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 29/03/2011
+Autor: Dirceu
+Descrição: Nova coluna vlUnitarioEspecial na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO
+add vlUnitarioEspecial   DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 01/04/2011
+Autor: Dirceu
+Descrição: Excluída coluna cdKit da tabela ItemPedido
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+drop column cdKit;
+
+alter table TBLVPITEMPEDIDOERP
+drop column cdKit;
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2011
+Autor: Dirceu
+Descrição: Nova coluna vlReducaoOptanteSimples na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO
+add vlReducaoOptanteSimples DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2011
+Autor: Dirceu
+Descrição: Nova coluna flOptanteSimples na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add flOptanteSimples     CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2011
+Autor: Dirceu
+Descrição: Nova coluna vlReducaoOptanteSimples na tabela ItemPedido
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+add vlReducaoOptanteSimples DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP
+add vlReducaoOptanteSimples DECIMAL(16,7);
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2011
+Autor: Dirceu
+Descrição: Nova coluna vlBaseEspecial na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO
+add vlBaseEspecial       DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 06/04/2011
+Autor: Pedro
+Descrição: Nova coluna nuDiasPrevisaoEntrega na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add nuDiasPrevisaoEntrega       DECIMAL(9,0);
+
+
+/*-------------------------------------------------------------------------
+Data: 07/04/2011
+Autor: Pedro
+Descrição: Nova coluna flFiltro na tabela CONFIGPERSONCAD
+------------------------------------------------------------------------*/
+
+alter table TBLVPCONFIGPERSONCAD
+add flFiltro       CHAR(1);
+
+

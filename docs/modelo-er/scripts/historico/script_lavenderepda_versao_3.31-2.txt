@@ -1,0 +1,43 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.31-2' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 30/01/2014
+Autor: Guilherme Ribeiro
+Descrição: Atualização tabela TBLVPTIPOPEDIDO
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPTIPOPEDIDO;
+
+GO
+
+CREATE TABLE TBLVPTIPOPEDIDO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDTIPOPEDIDO         VARCHAR(20)          NOT NULL,
+   DSTIPOPEDIDO         VARCHAR(100)         NULL,
+   FLDEFAULT            CHAR(1)              NULL,
+   FLEXIGESENHA         CHAR(1)              NULL,
+   FLIGNORARINDICEFINANCLI CHAR(1)              NULL,
+   FLBONIFICACAO        CHAR(1)              NULL,
+   FLEXCECAOGRUPOPRODUTO CHAR(1)              NULL,
+   FLEXCECAOCONDPAGTO   CHAR(1)              NULL,
+   FLEXCECAOPRODUTO     CHAR(1)              NULL,
+   QTMINVALORPARCELA    DECIMAL(16,7)        NULL,
+   FLVISITAPOSITIVADA   CHAR(1)              NULL,
+   FLOBRIGAQTDPRODUTOS  CHAR(1)              NULL,
+   FLCONSISTECONVERSAOUNIDADE CHAR(1)              NULL,
+   FLIGNORACONTROLEVERBA CHAR(1)              NULL,
+   FLIGNORACONTROLEESTOQUE CHAR(1)              NULL,
+   FLIGNORALIMITECREDITOCLIENTE CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPTIPOPEDIDO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 11/02/2014
+Autor: Guilherme Nunes
+Descrição: Novo campo na tabela TBLVPNOVOCLIENTE
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPNOVOCLIENTE ADD dtBase DATETIME;

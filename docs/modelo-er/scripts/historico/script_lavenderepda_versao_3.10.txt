@@ -1,0 +1,34 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.10' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/04/2012
+Autor: Wellington
+Descrição: Adicionada nova coluna na tabela de cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE add flAlertaClienteNaoAtendido char(1) null;
+
+/*-------------------------------------------------------------------------
+Data: 25/04/2012
+Autor: Wellington
+Descrição: Adicionada coluna na tabela de produtos.
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add cdUnidade varchar(20) null;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/05/2012
+Autor: Dirceu
+Descrição: Ajuste migração de versão sync antigo para sync novo
+------------------------------------------------------------------------*/
+update TBLVPTITULOFINANCEIRO set NUSERIE = ' ' where NUSERIE = '';
+
+alter table TBLVPPEDIDOERP
+drop column nuPedidoRelacionado;
+
+alter table TBLVPPEDIDOERP
+add nuPedidoRelacionado varchar(30);
+
+

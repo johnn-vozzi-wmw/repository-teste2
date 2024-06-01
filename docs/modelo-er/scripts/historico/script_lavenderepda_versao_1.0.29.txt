@@ -1,0 +1,42 @@
+
+/*-------------------------------------------------------------------------
+Data: 16/02/2009
+Autor: Dirceu
+Descrição: Alterada coluna cdLog da tabela LogPda para varchar(20)
+------------------------------------------------------------------------*/
+
+create table tmp_TBLVPLOGPDA (
+cdLog                decimal(12,0)                   not null,
+cdNivel              varchar(5)                     not null,
+cdCategoria          decimal(9,0),
+dsLog                varchar(200),
+dtLog                DATETIME,
+hrLog                varchar(5),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null
+);
+
+insert into tmp_TBLVPLOGPDA (cdLog, cdNivel, cdCategoria, dsLog, dtLog, hrLog, flTipoAlteracao, cdUsuario)
+select cdLog, cdNivel, cdCategoria, dsLog, dtLog, hrLog, flTipoAlteracao, cdUsuario
+from TBLVPLOGPDA;
+
+drop table TBLVPLOGPDA;
+
+create table TBLVPLOGPDA (
+cdLog                varchar(20)                  not null,
+cdNivel              varchar(5)                     not null,
+cdCategoria          decimal(9,0),
+dsLog                varchar(200),
+dtLog                DATETIME,
+hrLog                varchar(5),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPLOGPDA primary key (cdUsuario, cdLog)
+);
+
+insert into TBLVPLOGPDA (cdLog, cdNivel, cdCategoria, dsLog, dtLog, hrLog, flTipoAlteracao, cdUsuario)
+select cdLog, cdNivel, cdCategoria, dsLog, dtLog, hrLog, flTipoAlteracao, cdUsuario
+from tmp_TBLVPLOGPDA;
+
+drop table tmp_TBLVPLOGPDA;
+

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="lavenderepda" default="all">
+
+	<!-- ======================== properties ======================================= -->
+
+
+	<property name="build.root.totalcross.dir" value="${basedir}/tempTotalCross/"/>
+	
+	<property name="build.root.totalcross.target.dist" value="${basedir}/release/resources/totalcross/dist/"/>
+	<property name="build.root.totalcross.target.etc" value="${basedir}/release/resources/totalcross/etc/"/>
+
+	<property name="build.root.vendasapp-resources.dir" value="${basedir}/vendasapp-resources/"/>
+
+	<property name="certificado.ios.distribution" value="${basedir}/release/resources/certificados/ios/enterprise" />
+
+	<property name="deploy.dir" value="./install" />
+	<property name="app.main.class" value="./temp/br/com/wmw/lavenderepda/presentation/ui/MainLavenderePda.class" />
+	<property name="extra.args" value="/p /v /n MainLavenderePda /o ${deploy.dir} /m ${certificado.ios.distribution} /android_request_install_packages /android_manage_external_storage"/>
+	<property name="platforms" value="-win32 -android -ios"/>
+	<property name="activation.key" value="/r 5443444B5141A1D3BF21F715"/>
+	<property name="wmwvendasdeploy" value="%6 -classpath %1/totalcross/dist/totalcross-sdk.jar tc.Deploy %5 %2 %3 /v /n %4 ${activation.key} /m %1/ios/enterprise"/>
+	<property name="wmwvendasshdeploy" value="$6 -classpath $1/totalcross/dist/totalcross-sdk.jar tc.Deploy $5 $2 $3 /v /n $4 ${activation.key} /m $1/ios/enterprise"/>
+
+	<property name="framework-tc.location" value="${basedir}/tempFramework/FrameworkLib.jar" />
+	<property name="totalcross.location" value="${basedir}/tempFramework/totalcross.jar" />
+
+	<property name="resources.dir" value="${basedir}/release/resources/" />
+	<property name="resources.tczs.dir" value="${resources.dir}/tczs" />
+	<property name="resources.app.dir" value="${resources.dir}/app" />
+	<property name="resources.android.dir" value="${resources.app.dir}/android"/>
+	<property name="resources.iphone.dir" value="${resources.app.dir}/ios"/>
+	<property name="resources.pocket.dir" value="${resources.app.dir}/pocket"/>
+	<property name="resources.simulador.dir" value="${resources.app.dir}/simulador"/>
+
+	<path id="classpathApp">
+		<pathelement location="${totalcross.location}"/>
+		<pathelement location="${framework-tc.location}"/>
+	</path>
+	
+	<target name="delete-dirs">
+		
+		<echo>[WMW] Realizando limpeza das pastas...</echo>
+		<delete dir="temp" />
+		<delete dir="tempFramework" />
+		<delete dir="${deploy.dir}"/>
+		<delete dir="${build.root.totalcross.dir}" />
+		<delete dir="${build.root.vendasapp-resources.dir}" />
+
+		<delete>
+			<fileset dir="." includes="/*.pkg"/>
+		</delete>
+		<delete>
+			<fileset dir="." includes="MainLavenderePda.jar"/>
+		</delete>
+		
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- Prepare														 			 -->
+	<!-- =========================================================================== -->
+
+	<target name="prepare">
+		
+		<antcall target="delete-dirs" />
+		
+		<echo>[WMW] Criando estrutura das pastas que serão utilizadas no build...</echo>
+		<mkdir dir="temp"/>
+		<mkdir dir="tempFramework"/>
+		<mkdir dir="install"/>
+		<mkdir dir="${resources.dir}" />
+		
+		<unjar dest="${build.root.totalcross.dir}" src="${br.com.wmw.totalcross-sdk.location}"/>
+		<unjar dest="${build.root.vendasapp-resources.dir}" src="${vendasapp-resources_location}"/>
+
+		<copy todir="${build.root.totalcross.target.dist}/vm/" >
+			<fileset dir="${build.root.totalcross.dir}/totalcross-sdk/TotalCross/dist/vm" excludes="**/*.deb" casesensitive="false"/>
+		</copy>
+		
+		<move file="${build.root.totalcross.target.dist}/vm/win32/tcvm.dll" tofile="${build.root.totalcross.target.dist}/vm/win32/tcvm.dll.tmp"/>
+		<move file="${build.root.totalcross.target.dist}/vm/win32/tcvm.dll.tmp" tofile="${build.root.totalcross.target.dist}/vm/win32/TCVM.dll"/>
+		<!--
+		<move file="${build.root.totalcross.target.dist}/vm/iOS" tofile="${build.root.totalcross.target.dist}/vm/iostmp"/>
+		<move file="${build.root.totalcross.target.dist}/vm/iostmp" tofile="${build.root.totalcross.target.dist}/vm/ios"/>
+		-->
+		<copy todir="${basedir}/release/resources" >
+			<fileset dir="${build.root.vendasapp-resources.dir}/vendasapp" excludes="**/wince/**" casesensitive="false"/>
+		</copy>
+
+		<copy todir="${build.root.totalcross.target.dist}" >
+			<fileset dir="${build.root.totalcross.dir}/totalcross-sdk/TotalCross/dist/" includes="totalcross-sdk.jar" excludes="*tcweb.jar" casesensitive="false"/>
+		</copy>
+
+		<copy todir="${build.root.totalcross.target.etc}" >
+			<fileset dir="${build.root.totalcross.dir}/totalcross-sdk/TotalCross/etc" excludes="**/*sqlite-jdbc*.jar*" casesensitive="false"/>
+		</copy>
+		
+		<chmod file="${build.root.totalcross.target.etc}/tools/android/protoc/protoc-3.20.1-linux-x86_64/bin/protoc" perm="+x"/>
+
+		<copy todir="${basedir}/release/resources" >
+			<fileset dir="${basedir}/src/main/resources" casesensitive="false"/>
+		</copy>
+
+		<echo>[WMW] Gerando LavenderePdaDeploy...</echo>
+		<echo file="install/wmwvendasdeploy.bat" append="false" level="debug">@set "JAVA_HOME=%6"
+@set "PATH=%JAVA_HOME%/bin;%PATH%"
+@set "TOTALCROSS_HOME=%7"
+@echo "JAVA_HOME=%JAVA_HOME%"
+@echo "PATH=%PATH%"
+@echo "TOTALCROSS_HOME=%TOTALCROSS_HOME%"
+java -version
+java -classpath %TOTALCROSS_HOME%;%1;%TOTALCROSS_HOME%/dist/totalcross-sdk.jar tc.Deploy %5 %2 %3 /v /android_request_install_packages /android_manage_external_storage /n %4 /r 5443444B5141A1D3BF21F715 /m %8/ios/enterprise
+</echo>
+		<echo file="install/wmwvendasdeploy.sh" append="false" level="debug">JAVA_HOME="${6%/}"
+PATH="${JAVA_HOME%/}/bin:${PATH}"
+TOTALCROSS_HOME="${7%/}"
+echo "JAVA_HOME=${JAVA_HOME}"
+echo "PATH=${PATH}"
+echo "TOTALCROSS_HOME=${TOTALCROSS_HOME}"
+java -version
+java -classpath ${TOTALCROSS_HOME}:${1}:${TOTALCROSS_HOME}/dist/totalcross-sdk.jar tc.Deploy ${5} ${2} ${3} /v /android_request_install_packages /android_manage_external_storage /n ${4} /r 5443444B5141A1D3BF21F715 /m ${8}/ios/enterprise
+</echo>
+		<!--
+		<echo file="install/wmwvendasdeploy.bat">${wmwvendasdeploy}</echo>
+		<echo file="install/wmwvendasdeploy.sh">${wmwvendasshdeploy}</echo>
+		-->
+
+	</target>
+
+
+	<!-- =========================================================================== -->
+	<!-- Copy															 			 -->
+	<!-- =========================================================================== -->
+
+	<target name="copy" depends="prepare">
+
+		<echo>[WMW] Copiando o jar do totalcross do projeto (dependecy) para o destino: ${totalcross.location}...</echo>
+		<copy tofile="${totalcross.location}">
+			<fileset file="${totalcross.path}" />
+		</copy>
+
+		<echo>[WMW] Copiando o jar do framework-tc do projeto (dependecy) para o destino: ${framework-tc.location}...</echo>
+		<copy tofile="${framework-tc.location}">
+			<fileset file="${framework-tc.path}">
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- BUILD 															 			 -->
+	<!-- =========================================================================== -->
+
+	<target name="build" depends="copy">
+		
+
+		<copy tofile="./MainLavenderePda.jar">
+			<fileset file="./target/${project.name}-${project.version}.jar" />
+		</copy>
+
+		<jar destfile="./MainLavenderePda.jar" update="true">
+			<fileset dir="./release/resources/" includes="version.conf build.info"/>
+		</jar>
+		
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- DEPLOY                   													 -->
+	<!-- =========================================================================== -->
+
+	<target name="deploy" depends="build" if="app.main.class">
+		
+		<property environment="env" />
+
+		<echo>[WMW] Gerando o .tcz do framework-tc...</echo>
+		<java jvm="${env.JAVA8_HOME}/bin/java" classname="tc.Deploy" fork="yes" dir="." failonerror="true">
+			<env key="TOTALCROSS_HOME" value="${basedir}/release/resources/totalcross/"/>
+			<classpath refid="classpathApp"/>
+			<arg line="tempFramework/FrameworkLib.jar"/>
+			<arg line="${activation.key}"/>
+		</java>
+
+<!--		<echo>[WMW] Gerando o .tcz do MainLavenderePda...</echo>-->
+<!--		<java jvm="${env.JAVA8_HOME}/bin/java" classname="tc.Deploy" fork="yes" dir="." failonerror="true">-->
+<!--			<env key="TOTALCROSS_HOME" value="${basedir}/release/resources/totalcross/"/>-->
+<!--			<classpath refid="classpathApp"/>-->
+<!--			<arg line="MainLavenderePda.jar"/>-->
+<!--			<arg line="/v"/>-->
+<!--			<arg line="-win32"/>-->
+<!--			<arg line="${activation.key}"/>-->
+<!--		</java>-->
+
+		<copy todir="install" failonerror="true">
+			<fileset dir="tempFramework" includes="FrameworkLib*.tcz" casesensitive="false"/>
+		</copy>
+
+
+		<echo>[WMW] Copiando os arquivos .pkg para a raiz do projeto...</echo>
+		<copy todir="." failonerror="true">
+			<fileset dir="pkgs" includes="*.pkg" casesensitive="false"/>
+		</copy>
+
+
+		<echo>[WMW] Gerando aplicação ...</echo>
+		<java jvm="${env.JAVA8_HOME}/bin/java" classname="tc.Deploy" fork="yes" dir="." failonerror="true">
+			<env key="TOTALCROSS_HOME" value="${basedir}/release/resources/totalcross/"/>
+			<classpath refid="classpathApp"/>
+			<arg line="MainLavenderePda.jar"/>
+			<arg line="${extra.args}"/>
+			<arg line="${platforms}"/>
+			<arg line="${activation.key}"/>
+		</java>
+
+		<echo>[WMW] Copiando os arquivos MainLavenderePda.jar, LavenderePdaDeploy.bat e appcon.gif para a pasta ./install...</echo>
+		<copy todir="install" failonerror="true">
+			<fileset dir="." includes="MainLavenderePda.jar" casesensitive="false"/>
+<!--			<fileset dir="." includes="appicon.gif" casesensitive="false"/>-->
+			<fileset dir="." includes="appicon.png" casesensitive="false"/>
+		</copy>
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- DIST                   													 -->
+	<!-- =========================================================================== -->
+
+	<target name="dist" depends="deploy">
+
+		<echo>[WMW] Copiando os arquivos *.jar, *.bat e *.png para a pasta src/main/resources/app...</echo>
+		<copy todir="${resources.app.dir}" failonerror="true">
+			<fileset dir="${deploy.dir}" includes="*.jar" casesensitive="false"/>
+			<fileset dir="${deploy.dir}" includes="*.bat" casesensitive="false"/>
+			<fileset dir="${deploy.dir}" includes="*.sh" casesensitive="false"/>
+			<fileset dir="${deploy.dir}" includes="*.gif" casesensitive="false"/>
+			<fileset dir="${deploy.dir}" includes="*.png" casesensitive="false"/>
+			<fileset file="${framework-tc.location}" />
+		</copy>
+
+		<echo>[WMW] Copiando os arquivos tczs para a pasta src/main/resources/tczs...</echo>
+		<copy todir="${resources.tczs.dir}" failonerror="true">
+			<fileset dir="${deploy.dir}" includes="FrameworkLib*.tcz" casesensitive="false"/>
+			<fileset dir="${deploy.dir}/install/win32" includes="*.tcz" casesensitive="false"/>
+		</copy>
+
+		<echo>[WMW] Renomeando o arquivo MainLavenderePda.tcz para MainLavenderePdaLib.tcz...</echo>
+		<move file="${resources.tczs.dir}/MainLavenderePda.tcz" toFile="${resources.tczs.dir}/MainLavenderePdalib.tcz"/>
+
+		<echo>[WMW] Copiando os arquivos do android gerado para a pasta src/main/resources/app/android...</echo>
+		<copy todir="${resources.android.dir}" failonerror="true">
+			<fileset dir="${deploy.dir}/install/android" casesensitive="false">
+			</fileset>
+		</copy>
+
+		<echo>[WMW] Copiando os arquivos do Simulador gerado para a pasta src/main/resources/app/simulador</echo>
+		<copy todir="${resources.simulador.dir}" failonerror="true">
+			<fileset dir="${deploy.dir}/install/win32" casesensitive="false"/>
+		</copy>
+		
+		<echo file="${resources.simulador.dir}/_startSimulador.bat" append="false" level="debug">@ECHO OFF
+pushd %~dp0
+SET nmArquivo=n
+SET __COMPAT_LAYER=WIN7RTM
+for %%a in (*.exe) DO SET nmArquivo=%%a
+for %%b in (*.lnk) DO SET nmArquivo=%%b
+start %nmArquivo% /admin /scr -2, -2, 480, 720
+</echo>
+		
+		<echo file="${resources.simulador.dir}/updateApp.bat" append="false" level="debug">@ECHO OFF
+xcopy /e /y novo\*.* .
+del /q /s novo
+del /q atualizaApp.bat
+call _startSimulador.bat
+</echo>
+
+		<echo>[WMW] Copiando arquivo release-notes.txt para a pasta src/main/resources</echo>
+		<copy todir="${resources.dir}" failonerror="no">
+			<fileset dir="." includes="release-notes.txt" casesensitive="false">
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- cleanFinish              													 -->
+	<!-- =========================================================================== -->
+
+	<target name="cleanFinish">
+		
+		<antcall target="delete-dirs" />
+
+		<jar destfile="${basedir}/target/${project.name}-${project.version}.jar" >
+			<fileset dir="./release/resources">
+				<exclude name="app/simulador/"/>
+				<exclude name="app/android/"/>
+				<exclude name="images/"/>
+			    <exclude name="*.gitignore"/>
+			</fileset>
+		</jar>
+		
+		<jar destfile="${basedir}/target/${project.name}-${project.version}.jar" update="true" >
+			<fileset dir="./release/resources">
+				<include name="app/simulador/TCWMW*"/>
+				<include name="app/simulador/*.bat"/>
+			</fileset>
+		</jar>
+
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- all              															 -->
+	<!-- =========================================================================== -->
+
+	<target name="all" depends="dist,cleanFinish" />
+
+</project>

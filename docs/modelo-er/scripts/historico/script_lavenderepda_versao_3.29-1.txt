@@ -1,0 +1,57 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.29-1' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 20/11/2013
+Autor: Guilherme(Digi)
+Descrição: Adicionado campo na tabela TBLVPPEDIDOERP
+------------------------------------------------------------------------*/
+--SQLSERVER
+
+-- TBLVPPEDIDOERP
+if not exists(select 1 from syscolumns where id = object_id('TBLVPPEDIDOERP') and name = 'CDTRANSPORTADORA')
+begin
+   alter table TBLVPPEDIDOERP add CDTRANSPORTADORA varchar(20);   
+end
+
+--/SQLSERVER
+
+--ORACLE
+
+DECLARE
+  FLEXISTE INT;
+BEGIN
+  SELECT COUNT(1) INTO FLEXISTE
+  FROM USER_TAB_COLUMNS
+  WHERE TABLE_NAME = upper('TBLVPPEDIDOERP') and COLUMN_NAME = upper('CDTRANSPORTADORA');
+  
+  IF FLEXISTE = 0 THEN
+   EXECUTE immediate 'alter table TBLVPPEDIDOERP add CDTRANSPORTADORA varchar(20)';
+  END IF;
+END;
+
+--/ORACLE
+
+--POSTGRES
+
+Create or replace function executaScripts() returns integer as $$Declare
+    result integer := 0;
+Begin
+	-- TBLVPPEDIDOERP
+	BEGIN
+	  IF (SELECT COUNT(1)
+	  FROM information_schema.columns 
+	  WHERE upper(table_name)='TBLVPPEDIDOERP' and upper(column_name)='CDTRANSPORTADORA') = 0 THEN
+	   EXECUTE 'alter table TBLVPPEDIDOERP add CDTRANSPORTADORA VARCHAR(20)';
+	  END IF;
+	END;
+	return result;
+end;
+
+$$ language 'plpgsql';
+
+select executaScripts();
+
+drop function executaScripts();
+
+--/POSTGRES

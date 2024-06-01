@@ -1,0 +1,838 @@
+/*
+Data: 	09/01/2008
+Descrição: nova tabela de TipoPedido e novo campo cdTipoPedido na tabela de Pedido e Cliente
+*/
+create table TBLVPTIPOPEDIDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+DSTIPOPEDIDO         VARCHAR(100),
+FLFATURAR            CHAR(1),
+FLDEFAULT            CHAR(1),
+FLEXIGISENHA         CHAR(1),
+flIgnorarIndiceFinanCli char(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPTIPOPEDIDO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO)
+);
+
+alter table TBLVPPEDIDO
+add CDTIPOPEDIDO VARCHAR(20);
+
+alter table TBLVPCLIENTE
+add CDTIPOPEDIDO VARCHAR(20);
+
+/*
+Data: 	10/01/2008
+Descrição: novo campo cdCondicaoPagamento na tabela de Cliente
+*/
+
+alter table TBLVPCLIENTE
+add CDCONDICAOPAGAMENTO VARCHAR(20);
+
+/*
+Data: 	11/01/2008
+Descrição: Nova tabela de CondPagtoCli 
+*/
+create table TBLVPCONDPAGTOCLI (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(20) 		    not null,
+FLATIVO              CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO	     VARCHAR(8)
+constraint PK_TBLVPCONDPAGTOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+/*
+Data: 	14/01/2008
+Descrição: Nova tabela de CondPagtoTabPreco
+*/
+create table TBLVPCONDPAGTOTABPRECO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(20) 		    not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO	     VARCHAR(8)
+constraint PK_TBLVPCONDPAGTOTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+/*
+Data: 	14/01/2008
+Descrição: Novo campo cdTipoCondPagto na tabela CondicaoPagamento
+*/
+alter table TBLVPCONDICAOPAGAMENTO
+add CDTIPOCONDPAGTO VARCHAR(20);
+
+
+/*
+Data: 	14/01/2008
+Descrição: Nova tabela de ParcelaPedido
+*/
+create table TBLVPPARCELAPEDIDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30) 		    not null,
+CDPARCELA	     VARCHAR(20) 		    not null,
+VLPARCELA	     DECIMAL(12,3),                  
+DTVENCIMENTO         DATETIME,                           
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO	     VARCHAR(8)                     
+constraint PK_TBLVPPARCELAPEDIDO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPARCELA));
+
+
+/*
+Data: 	14/01/2008
+Descrição: adicionar período como chave na produtividade
+*/
+
+/*==============================================================*/
+/* Table: tmp_TBLVPPRODUTIVIDADE                                */
+/*==============================================================*/
+create table tmp_TBLVPPRODUTIVIDADE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+qtPedidos            Decimal(9),
+vlRealizadoVendas    Decimal(12,3),
+vlMetaVendas         Decimal(12,3),
+dsPeriodo            Varchar(30),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null
+);
+
+insert into tmp_TBLVPPRODUTIVIDADE (cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario
+from TBLVPPRODUTIVIDADE;
+
+drop table TBLVPPRODUTIVIDADE;
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTIVIDADE                                    */
+/*==============================================================*/
+create table TBLVPPRODUTIVIDADE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+qtPedidos            Decimal(9),
+vlRealizadoVendas    Decimal(12,3),
+vlMetaVendas         Decimal(12,3),
+dsPeriodo            Varchar(30)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTIVIDADE primary key (cdEmpresa, cdRepresentante, dsPeriodo, cdUsuario)
+);
+
+insert into TBLVPPRODUTIVIDADE (cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario
+from tmp_TBLVPPRODUTIVIDADE;
+
+drop table tmp_TBLVPPRODUTIVIDADE;
+
+
+/*
+Data: 	14/01/2008
+Descrição: adicionar período na tabela valor indicador
+*/
+
+/*==============================================================*/
+/* Table: tmp_TBLVPVALORINDICADOR                               */
+/*==============================================================*/
+create table tmp_TBLVPVALORINDICADOR (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdIndicador          varchar(20)                    not null,
+dsVlIndicador        varchar(20),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null
+);
+
+insert into tmp_TBLVPVALORINDICADOR (cdEmpresa, cdRepresentante, cdIndicador, dsVlIndicador, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, cdIndicador, dsVlIndicador, flTipoAlteracao, cdUsuario
+from TBLVPVALORINDICADOR;
+
+drop table TBLVPVALORINDICADOR;
+
+/*==============================================================*/
+/* Table: TBLVPVALORINDICADOR                                   */
+/*==============================================================*/
+create table TBLVPVALORINDICADOR (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdIndicador          varchar(20)                    not null,
+dsVlIndicador        varchar(20),
+DSPERIODO            VARCHAR(30)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPVALORINDICADOR primary key (cdEmpresa, cdRepresentante, cdIndicador, DSPERIODO, cdUsuario)
+);
+
+insert into TBLVPVALORINDICADOR (cdEmpresa, cdRepresentante, cdIndicador, dsVlIndicador, DSPERIODO, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, cdIndicador, dsVlIndicador, '', flTipoAlteracao, cdUsuario
+from tmp_TBLVPVALORINDICADOR;
+
+drop table tmp_TBLVPVALORINDICADOR;
+
+
+/* 
+Data: 14/01/2008
+Descrição: novos campos para a tabela de condição de pagamento
+*/
+
+alter table TBLVPCONDICAOPAGAMENTO
+add NUPARCELAS DECIMAL(4);
+
+alter table TBLVPCONDICAOPAGAMENTO
+add NUINTERVALOENTRADA DECIMAL(4);
+
+alter table TBLVPCONDICAOPAGAMENTO
+add NUINTERVALOPARCELAS DECIMAL(4);
+
+alter table TBLVPCONDICAOPAGAMENTO
+add DTPAGAMENTO DATETIME;
+
+alter table TBLVPCONDICAOPAGAMENTO
+add NUPRAZOBASE DECIMAL(4);
+
+alter table TBLVPCONDICAOPAGAMENTO
+add FLPERIODICIDADEPRAZOBASE CHAR(1);
+
+
+/* 
+Data: 15/01/2008
+Descrição: novo campo CDlINHA para a tabela ItemTabelaPreco
+*/
+
+alter table TBLVPITEMTABELAPRECO
+add CDLINHA VARCHAR(20);
+
+/* 
+Data: 15/01/2008
+Descrição: nova Tabela Linha
+*/
+
+create table TBLVPLINHA (
+cdEmpresa            varchar(20)                    not null,
+cdLinha	             varchar(20) 		    not null,
+dsLinha              varchar(50),
+flAtivo              char(1),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8),
+constraint PK_TBLVPLINHA primary key (cdEmpresa, cdLinha, cdusuario)
+);
+
+/* 
+Data: 15/01/2008
+Descrição: nova Tabela CondPagtoLinha
+*/
+
+create table TBLVPCONDPAGTOLINHA (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCondicaoPagamento  varchar(40)                    not null,
+cdLinha	             varchar(20) 		    not null,
+nuDiasPrazo          DECIMAL(9),
+cdUsuario            varchar(8),
+constraint PK_TBLVPCONDPAGTOLINHA primary key (cdEmpresa, cdRepresentante, cdCondicaoPagamento, cdLinha, cdusuario)
+);
+
+/* 
+Data: 15/01/2008
+Descrição: novo campo cdLinha na Tabela ItemPedido
+*/
+alter table TBLVPITEMPEDIDO
+add CDLINHA VARCHAR(20);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdCondicaoPagamento para varchar(40)
+		cdTabelaPreco para varchar(30)
+		na tabela Cliente
+================================================================================================*/
+
+alter table TBLVPCLIENTE
+alter column CDCONDICAOPAGAMENTO VARCHAR(40);
+alter table TBLVPCLIENTE
+alter column CDTABELAPRECO VARCHAR(30);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdCondicaoPagamento para varchar(40)
+		cdTabelaPreco para varchar(30)
+		na tabela Pedido e PedidoErp
+================================================================================================*/
+
+alter table TBLVPPEDIDO
+alter column CDCONDICAOPAGAMENTO VARCHAR(40);
+alter table TBLVPPEDIDO
+alter column CDTABELAPRECO VARCHAR(30);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdCondicaoPagamento para varchar(40)
+		cdTabelaPreco para varchar(30)
+		na tabela CondPagtoTabPreco
+================================================================================================*/
+
+alter table TBLVPCONDPAGTOTABPRECO
+drop constraint PK_TBLVPCONDPAGTOTABPRECO;
+alter table TBLVPCONDPAGTOTABPRECO
+alter column CDCONDICAOPAGAMENTO VARCHAR(40) not null;
+alter table TBLVPCONDPAGTOTABPRECO
+alter column CDTABELAPRECO VARCHAR(30) not null;
+alter table TBLVPCONDPAGTOTABPRECO
+add constraint PK_TBLVPCONDPAGTOTABPRECO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTABELAPRECO);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: sai o campo CDUF
+		cdTabelaPreco para varchar(30)
+		na tabela DescontoQuantidade
+================================================================================================*/
+
+alter table TBLVPDESCONTOQUANTIDADE
+drop constraint PK_TBLVPDESCONTOQUANTIDADE;
+alter table TBLVPDESCONTOQUANTIDADE
+alter column CDTABELAPRECO VARCHAR(30) not null;
+alter table TBLVPDESCONTOQUANTIDADE
+add constraint PK_TBLVPDESCONTOQUANTIDADE primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, QTITEM);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdTabelaPreco para varchar(30)
+		na tabela ItemPedido e ItemPedidoErp
+================================================================================================*/
+
+alter table TBLVPITEMPEDIDO
+alter column CDTABELAPRECO VARCHAR(30);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: dTabelaPreco para varchar(30)
+		na tabela ItemTabelaPreco
+================================================================================================*/
+
+alter table TBLVPITEMTABELAPRECO
+drop constraint PK_TBLVPITEMTABELAPRECO;
+alter table TBLVPITEMTABELAPRECO
+alter column CDTABELAPRECO VARCHAR(30) not null;
+alter table TBLVPITEMTABELAPRECO
+add constraint PK_TBLVPITEMTABELAPRECO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: dTabelaPreco para varchar(30)
+		na tabela TabelaPreco
+================================================================================================*/
+
+alter table TBLVPTABELAPRECO
+drop constraint PK_TBLVPTABELAPRECO;
+alter table TBLVPTABELAPRECO
+alter column CDTABELAPRECO VARCHAR(30) not null;
+alter table TBLVPTABELAPRECO
+add constraint PK_TBLVPTABELAPRECO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO);
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: dTabelaPreco para varchar(30)
+		na tabela TabelaPrecoCliente
+================================================================================================*/
+
+alter table TBLVPTABELAPRECOCLIENTE
+drop constraint PK_TBLVPTABELAPRECOCLIENTE;
+alter table TBLVPTABELAPRECOCLIENTE
+alter column CDTABELAPRECO VARCHAR(30) not null;
+alter table TBLVPTABELAPRECOCLIENTE
+add constraint PK_TBLVPTABELAPRECOCLIENTE primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDTABELAPRECO);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdCondicaoPagamento para varchar(40)
+		na tabela CondicaoPagamento
+================================================================================================*/
+
+alter table TBLVPCONDICAOPAGAMENTO
+drop constraint PK_TBLVPCONDICAOPAGAMENTO;
+alter table TBLVPCONDICAOPAGAMENTO
+alter column CDCONDICAOPAGAMENTO VARCHAR(40) not null;
+alter table TBLVPCONDICAOPAGAMENTO
+add constraint PK_TBLVPCONDICAOPAGAMENTO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO);
+
+
+
+/*================================================================================================
+Data: 16/01/2008
+Descrição: cdCondicaoPagamento para varchar(40)
+		na tabela CondPagtoCli
+================================================================================================*/
+
+alter table TBLVPCONDPAGTOCLI
+drop constraint PK_TBLVPCONDPAGTOCLI;
+alter table TBLVPCONDPAGTOCLI
+alter column CDCONDICAOPAGAMENTO VARCHAR(40) not null;
+alter table TBLVPCONDPAGTOCLI
+add constraint PK_TBLVPCONDPAGTOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONDICAOPAGAMENTO, CDUSUARIO);
+
+
+
+
+/*================================================================================================
+Data: 22/01/2008
+Descrição: adicionado campo DSUFPRECO à tabela de cliente
+================================================================================================*/
+alter table TBLVPCLIENTE
+	add DSUFPRECO varchar(20);
+	
+	
+	
+/*================================================================================================
+Data: 22/01/2008
+Descrição: nova tabela de FornecedorRep
+================================================================================================*/
+create table TBLVPFORNECEDORREP (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDFORNECEDOR         VARCHAR(20)                    not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)			    not null,
+constraint PK_TBLVPFORNECEDORREP primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDFORNECEDOR)
+);
+
+
+/*================================================================================================
+Data: 23/01/2008
+Descrição: novo campo CDFORNECEDOR na tabela do Produto
+================================================================================================*/
+alter table TBLVPPRODUTO
+	add CDFORNECEDOR varchar(20);
+
+
+/*================================================================================================
+Data: 24/01/2008
+Descrição: Campo flBloqueiaAlterarPreco alterado para flDescontoQtdAuto na tabela TabelaPreco
+================================================================================================*/
+drop table TBLVPTABELAPRECO;
+
+create table TBLVPTABELAPRECO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(30)                    not null,
+DSTABELAPRECO        VARCHAR(100),
+FLTIPOTABELA         DECIMAL(4,0),
+VLPCTCOMISSAO        DECIMAL(12,3),
+DTVALIDADE           DATETIME,
+FLACESSAOUTRASTAB    CHAR(1),
+FLACESSIVELOUTRASTAB CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+FLDESCONTOQTDAUTO    CHAR(1),
+VLPCTMAXDESCADICIONALITEM DECIMAL(12,3),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPTABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDUSUARIO)
+);
+
+
+/*================================================================================================
+Data: 24/01/2008
+Descrição: novo campo FLTIPOALTERACAO na tabela do CONDPAGTOLINHA
+================================================================================================*/
+alter table TBLVPCONDPAGTOLINHA
+	add FLTIPOALTERACAO varchar(1);
+
+
+/*================================================================================================
+Data: 31/01/2008
+Descrição: Nova tabela TBLVPTABELAPRECOREP
+================================================================================================*/
+create table TBLVPTABELAPRECOREP (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(30)                    not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPTABELAPRECOREP primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Tabela: TBLVPVERBACONTACORRENTE                               */
+/*==============================================================*/
+create table TBLVPVERBACONTACORRENTE (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+DSCONTACORRENTE      VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPVERBACONTACORRENTE primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE)
+);
+
+/*==============================================================*/
+/* Tabela: TBLVPVERBA                                            */
+/*==============================================================*/
+create table TBLVPVERBA (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDTIPOGERACAO        VARCHAR(20),
+CDCONTACORRENTE      VARCHAR(20),
+CDTIPOMULTIPLO       VARCHAR(20),
+DSVERBA              VARCHAR(100),
+FLMIXOBRIGATORIO     CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPVERBA primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDVERBA)
+);
+
+/*==============================================================*/
+/* Tabela: TBLVPVERBASALDO                                       */
+/*==============================================================*/
+create table TBLVPVERBASALDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+VLSALDO              DECIMAL(12,3),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPVERBASALDO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE)
+);
+
+/*==============================================================*/
+/* Tabela: TBLVPVERBATABELAPRECO                                 */
+/*==============================================================*/
+create table TBLVPVERBATABELAPRECO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(20)                    not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPVERBATABELAPRECO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDTABELAPRECO)
+);
+
+/*==============================================================*/
+/* Tabela: TBLVPVERBAPRODUTO                                     */
+/*==============================================================*/
+create table TBLVPVERBAPRODUTO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+VLMULTIPLO           DECIMAL(12,3),
+VLVERBA              DECIMAL(12,3),
+FLGERAVERBA          CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8),
+constraint PK_TBLVPVERBAPRODUTO primary key (CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDPRODUTO)
+);
+
+  /*============================================================*/
+ /* Novo campo flStatusCliente na tabela TBLVPFICHAFINANCEIRA  */
+/*============================================================*/
+alter table TBLVPFICHAFINANCEIRA
+add FLSTATUSCLIENTE CHAR(1);
+
+
+  /*====================================================*/
+ /* Novo campo flStatusCliente na tabela TBLVPCLIENTE  */
+/*====================================================*/
+alter table TBLVPCLIENTE
+add FLSTATUSCLIENTE CHAR(1);
+
+
+/*-------------------------------------------------------------------------
+Data: 18/02/2008
+Descrição: 
+	- alterado o campo dsUfPreco da tabela Cliente de varchar(20) para varchar(2)
+-------------------------------------------------------------------------*/
+create table tmp_TBLVPCLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nmRazaoSocial        varchar(50),
+nuFone               varchar(20),
+NUFONEFAX            VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+dsEmail              varchar(50),
+dsObservacao         varchar(50),
+nmFantasia           varchar(50),
+nmContatoPrincipal   varchar(50),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+CDTABELAPRECO        VARCHAR(30),
+VLLIMITECREDITO      DECIMAL(12,3),
+dsLogradouroComercial varchar(50),
+dsComplementoComercial varchar(30),
+dsBairroComercial    varchar(30),
+dsCepComercial       varchar(20),
+dsCidadeComercial    varchar(30),
+dsEstadoComercial    varchar(20),
+dsPaisComercial      varchar(20),
+dsUfPreco            varchar(20),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+flStatusCliente      VARCHAR(1)
+);
+
+insert into tmp_TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente
+from TBLVPCLIENTE;
+
+drop table TBLVPCLIENTE;
+
+create table TBLVPCLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nmRazaoSocial        varchar(50),
+nuFone               varchar(20),
+NUFONEFAX            VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+dsEmail              varchar(50),
+dsObservacao         varchar(50),
+nmFantasia           varchar(50),
+nmContatoPrincipal   varchar(50),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+CDTABELAPRECO        VARCHAR(30),
+VLLIMITECREDITO      DECIMAL(12,3),
+dsLogradouroComercial varchar(50),
+dsComplementoComercial varchar(30),
+dsBairroComercial    varchar(30),
+dsCepComercial       varchar(20),
+dsCidadeComercial    varchar(30),
+dsEstadoComercial    varchar(20),
+dsPaisComercial      varchar(20),
+dsUfPreco            varchar(2),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+flStatusCliente      VARCHAR(1),
+constraint PK_TBLVPCLIENTE primary key (cdEmpresa, cdRepresentante, cdCliente, cdUsuario)
+);
+
+insert into TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, flTipoAlteracao, cdUsuario, flStatusCliente, dsUfPreco)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, flTipoAlteracao, cdUsuario, flStatusCliente, dsUfPreco
+from tmp_TBLVPCLIENTE;
+
+drop table tmp_TBLVPCLIENTE;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/02/2008
+Descrição: 
+	- alterado o campo cdUf da tabela ItemTabelaPreco de varchar(20) para varchar(2)
+	- alterado o campo cdLinha da tabela ItemTabelaPreco de varchar(20) para decimal(9)
+-------------------------------------------------------------------------*/
+create table tmp_TBLVPITEMTABELAPRECO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDUF                 VARCHAR(20)                    not null,
+CDLINHA              VARCHAR(20),
+VLUNITARIO           DECIMAL(12,3),
+VLPCTMAXDESCONTO     DECIMAL(12,3),
+VLPCTMAXACRESCIMO    DECIMAL(12,3),
+VLPRECOEMBALAGEMPRIMARIA DECIMAL(12,3),
+FLPROMOCAO           CHAR(1),
+VLPCTSUBSTTRIBUTARIAINFO DECIMAL(12,3),
+VLGNREINFO           DECIMAL(12,3),
+VLBASE               DECIMAL(12,3),
+VLPCTDESCONTOINFO    DECIMAL(12,3),
+VLPRECOLISTAINFO     DECIMAL(12,3),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null
+);
+
+insert into tmp_TBLVPITEMTABELAPRECO (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDLINHA, VLUNITARIO, VLPCTMAXDESCONTO, VLPCTMAXACRESCIMO, VLPRECOEMBALAGEMPRIMARIA, FLPROMOCAO, VLPCTSUBSTTRIBUTARIAINFO, VLGNREINFO, VLBASE, VLPCTDESCONTOINFO, VLPRECOLISTAINFO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDLINHA, VLUNITARIO, VLPCTMAXDESCONTO, VLPCTMAXACRESCIMO, VLPRECOEMBALAGEMPRIMARIA, FLPROMOCAO, VLPCTSUBSTTRIBUTARIAINFO, VLGNREINFO, VLBASE, VLPCTDESCONTOINFO, VLPRECOLISTAINFO, FLTIPOALTERACAO, CDUSUARIO
+from TBLVPITEMTABELAPRECO;
+
+drop table TBLVPITEMTABELAPRECO;
+
+create table TBLVPITEMTABELAPRECO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDTABELAPRECO        VARCHAR(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDUF                 VARCHAR(2)                     not null,
+CDLINHA              DECIMAL(9),
+VLUNITARIO           DECIMAL(12,3),
+VLPCTMAXDESCONTO     DECIMAL(12,3),
+VLPCTMAXACRESCIMO    DECIMAL(12,3),
+VLPRECOEMBALAGEMPRIMARIA DECIMAL(12,3),
+FLPROMOCAO           CHAR(1),
+VLPCTSUBSTTRIBUTARIAINFO DECIMAL(12,3),
+VLGNREINFO           DECIMAL(12,3),
+VLBASE               DECIMAL(12,3),
+VLPCTDESCONTOINFO    DECIMAL(12,3),
+VLPRECOLISTAINFO     DECIMAL(12,3),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMTABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDUSUARIO)
+);
+
+insert into TBLVPITEMTABELAPRECO (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDLINHA, VLUNITARIO, VLPCTMAXDESCONTO, VLPCTMAXACRESCIMO, VLPRECOEMBALAGEMPRIMARIA, FLPROMOCAO, VLPCTSUBSTTRIBUTARIAINFO, VLGNREINFO, VLBASE, VLPCTDESCONTOINFO, VLPRECOLISTAINFO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDLINHA, VLUNITARIO, VLPCTMAXDESCONTO, VLPCTMAXACRESCIMO, VLPRECOEMBALAGEMPRIMARIA, FLPROMOCAO, VLPCTSUBSTTRIBUTARIAINFO, VLGNREINFO, VLBASE, VLPCTDESCONTOINFO, VLPRECOLISTAINFO, FLTIPOALTERACAO, CDUSUARIO
+from tmp_TBLVPITEMTABELAPRECO;
+
+drop table tmp_TBLVPITEMTABELAPRECO;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/02/2008
+Descrição: 
+	- alterado o campo cdLinha da tabela CondPagtoLinha de varchar(20) para decimal(9)
+-------------------------------------------------------------------------*/
+create table tmp_TBLVPCONDPAGTOLINHA (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDLINHA              VARCHAR(20)                    not null,
+NUDIASPRAZO          DECIMAL(9),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null
+);
+
+insert into tmp_TBLVPCONDPAGTOLINHA (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, FLTIPOALTERACAO, CDUSUARIO
+from TBLVPCONDPAGTOLINHA;
+
+drop table TBLVPCONDPAGTOLINHA;
+
+create table TBLVPCONDPAGTOLINHA (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDLINHA              DECIMAL(9)                     not null,
+NUDIASPRAZO          DECIMAL(9),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDPAGTOLINHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, CDUSUARIO)
+);
+
+insert into TBLVPCONDPAGTOLINHA (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, FLTIPOALTERACAO, CDUSUARIO
+from tmp_TBLVPCONDPAGTOLINHA;
+
+drop table tmp_TBLVPCONDPAGTOLINHA;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/02/2008
+Descrição: 
+	- alterado o campo cdLinha da tabela ItemPedido de varchar(20) para decimal(9)
+-------------------------------------------------------------------------*/
+create table tmp_TBLVPITEMPEDIDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDLINHA              VARCHAR(20),
+CDTABELAPRECO        VARCHAR(30)                    not null,
+QTITEMFISICO         DECIMAL(12,3),
+QTITEMFATURAMENTO    DECIMAL(12,3),
+VLITEMPEDIDO         DECIMAL(12,3),
+VLBASEITEMTABELAPRECO DECIMAL(12,3),
+VLBASEITEMPEDIDO     DECIMAL(12,3),
+VLTOTALITEMPEDIDO    DECIMAL(12,3),
+VLPCTDESCONTO        DECIMAL(12,3),
+VLPCTDESCONTOFOB     DECIMAL(12,3),
+VLPCTACRESCIMO       DECIMAL(12,3),
+VLPCTIPIITEM         DECIMAL(12,3),
+VLIPIITEM            DECIMAL(12,3),
+VLPCTRENTABILIDADE   DECIMAL(12,3),
+NULISTATABELAPRECO   DECIMAL(4),
+QTTROCAESPECIAL      DECIMAL(4),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null
+);
+
+insert into tmp_TBLVPITEMPEDIDO (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDLINHA, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, VLBASEITEMTABELAPRECO, VLBASEITEMPEDIDO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDLINHA, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, VLBASEITEMTABELAPRECO, VLBASEITEMPEDIDO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario
+from TBLVPITEMPEDIDO;
+
+drop table TBLVPITEMPEDIDO;
+
+create table TBLVPITEMPEDIDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        VARCHAR(30)                    not null,
+QTITEMFISICO         DECIMAL(12,3),
+QTITEMFATURAMENTO    DECIMAL(12,3),
+VLITEMPEDIDO         DECIMAL(12,3),
+VLBASEITEMTABELAPRECO DECIMAL(12,3),
+VLBASEITEMPEDIDO     DECIMAL(12,3),
+VLTOTALITEMPEDIDO    DECIMAL(12,3),
+VLPCTDESCONTO        DECIMAL(12,3),
+VLPCTDESCONTOFOB     DECIMAL(12,3),
+VLPCTACRESCIMO       DECIMAL(12,3),
+VLPCTIPIITEM         DECIMAL(12,3),
+VLIPIITEM            DECIMAL(12,3),
+VLPCTRENTABILIDADE   DECIMAL(12,3),
+NULISTATABELAPRECO   DECIMAL(4),
+QTTROCAESPECIAL      DECIMAL(4),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, cdUsuario)
+);
+
+insert into TBLVPITEMPEDIDO (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, CDLINHA, FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, VLBASEITEMTABELAPRECO, VLBASEITEMPEDIDO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, CDLINHA, FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, VLBASEITEMTABELAPRECO, VLBASEITEMPEDIDO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario
+from tmp_TBLVPITEMPEDIDO;
+
+drop table tmp_TBLVPITEMPEDIDO;
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2008
+Descrição: 
+	- Novo campo flProdutoControlado na Tabela TBLVPPRODUTO
+-------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add flProdutoControlado CHAR(1);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2008
+Descrição: 
+	- Novo campo dtVencimentoAlvara na Tabela TBLVPCLIENTE
+-------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add dtVencimentoAlvara DATETIME;
+
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2008
+Descrição: 
+	- Novo campo flAlvaraVencido na Tabela TBLVPCLIENTE
+-------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add flAlvaraVencido CHAR(1);

@@ -1,0 +1,113 @@
+/*-------------------------------------------------------------------------
+Data: 20/03/2008
+Descrição: novo campo cdContaCorrente na tabela ItemPedido ------------------------------------------------------------------------*/
+
+alter table TBLVPITEMPEDIDO add cdContaCorrente VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 09/04/25008
+Descrição: novos campos de endereço de entrega e cobranca na tabeal cliente
+-------------------------------------------------------------------------*/
+create table tmp_TBLVPCLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nmRazaoSocial        varchar(50),
+nuFone               varchar(20),
+NUFONEFAX            VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+dsEmail              varchar(50),
+dsObservacao         varchar(50),
+nmFantasia           varchar(50),
+nmContatoPrincipal   varchar(50),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+CDTABELAPRECO        VARCHAR(30),
+VLLIMITECREDITO      DECIMAL(12,3),
+dsLogradouroComercial varchar(50),
+dsComplementoComercial varchar(30),
+dsBairroComercial    varchar(30),
+dsCepComercial       varchar(20),
+dsCidadeComercial    varchar(30),
+dsEstadoComercial    varchar(20),
+dsPaisComercial      varchar(20),
+dsUfPreco            varchar(2),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+flStatusCliente      VARCHAR(1),
+dtVencimentoAlvara   DATETIME,
+flAlvaraVencido      CHAR(1)
+);
+
+insert into tmp_TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente, dtVencimentoAlvara, flAlvaraVencido)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente, dtVencimentoAlvara, flAlvaraVencido
+from TBLVPCLIENTE;
+
+drop table TBLVPCLIENTE;
+
+create table TBLVPCLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nmRazaoSocial        varchar(50),
+nuFone               varchar(20),
+NUFONEFAX            VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+dsEmail              varchar(50),
+dsObservacao         varchar(50),
+nmFantasia           varchar(50),
+nmContatoPrincipal   varchar(50),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+CDTABELAPRECO        VARCHAR(30),
+VLLIMITECREDITO      DECIMAL(12,3),
+dsLogradouroComercial varchar(50),
+dsComplementoComercial varchar(30),
+dsBairroComercial    varchar(30),
+dsCepComercial       varchar(20),
+dsCidadeComercial    varchar(30),
+dsEstadoComercial    varchar(20),
+dsPaisComercial      varchar(20),
+dsLogradouroEntrega  varchar(50),
+dsComplementoEntrega varchar(30),
+dsBairroEntrega      varchar(30),
+dsCepEntrega         varchar(20),
+dsCidadeEntrega      varchar(30),
+dsEstadoEntrega      varchar(20),
+dsPaisEntrega        varchar(20),
+dsLogradouroCobranca varchar(50),
+dsComplementoCobranca varchar(30),
+dsBairroCobranca     varchar(30),
+dsCepCobranca        varchar(20),
+dsCidadeCobranca     varchar(30),
+dsEstadoCobranca     varchar(20),
+dsPaisCobranca       varchar(20),
+dsUfPreco            varchar(2),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+flStatusCliente      VARCHAR(1),
+dtVencimentoAlvara   DATETIME,
+flAlvaraVencido      CHAR(1),
+constraint PK_TBLVPCLIENTE primary key (cdEmpresa, cdRepresentante, cdCliente, cdUsuario)
+);
+
+insert into TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente, dtVencimentoAlvara, flAlvaraVencido)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, NUFONEFAX, NUCELULAR, dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDTIPOPEDIDO, CDTABELAPRECO, VLLIMITECREDITO, dsLogradouroComercial, dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, dsUfPreco, flTipoAlteracao, cdUsuario, flStatusCliente, dtVencimentoAlvara, flAlvaraVencido
+from tmp_TBLVPCLIENTE;
+
+drop table tmp_TBLVPCLIENTE;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 09/04/25008
+Descrição: excluído campo flAlvaraVencido
+-------------------------------------------------------------------------*/
+
+alter table TBLVPCLIENTE
+   drop column flAlvaraVencido;
+

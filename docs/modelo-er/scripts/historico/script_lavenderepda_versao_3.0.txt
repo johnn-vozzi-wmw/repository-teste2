@@ -1,0 +1,50 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.0' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 26/09/2011
+Autor: Wellington
+Descrição: Nova coluna flPreAltaCusto nas Tabelas TBLVPPRODUTOTABPRECO e TBLVPPRODUTO
+------------------------------------------------------------------------*/
+
+alter table TBLVPPRODUTOTABPRECO add flPreAltaCusto	CHAR(1);
+alter table TBLVPPRODUTO add flPreAltaCusto	CHAR(1);
+
+/*-------------------------------------------------------------------------
+Data: 27/09/2011
+Autor: Wellington
+Descrição: Criado nova Tabela TBLVPPONTUACAO
+------------------------------------------------------------------------*/
+
+create table TBLVPPONTUACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+VLPCTLUCRO           DECIMAL(16,7)                  not null,
+QTPONTOS             DECIMAL(9,0),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPONTUACAO primary key (CDEMPRESA, CDREPRESENTANTE, VLPCTLUCRO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 29/09/2011
+Autor: Pedro
+Descrição: Nova Tabela TBLVPCARGAPROGRAMADA
+------------------------------------------------------------------------*/
+create table TBLVPCARGAPROGRAMADA (
+NMTABELA             VARCHAR(30)                    not null,
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCARGAPROGRAMADA primary key (NMTABELA, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 07/10/2011
+Autor: Wellington
+Descrição: Novo campo nas tabelas TBLVPPEDIDO,TBLVPPEDIDOERP , TBLVPITEMPEDIDO e TBLVPITEMPEDIDOERP
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add qtPontosPedido decimal(9,0);
+alter table TBLVPPEDIDOERP add qtPontosPedido decimal(9,0);
+alter table TBLVPITEMPEDIDO add qtPontosItem decimal(9,0);
+alter table TBLVPITEMPEDIDOERP add qtPontosItem decimal(9,0);

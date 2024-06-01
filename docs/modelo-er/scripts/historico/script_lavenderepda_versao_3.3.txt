@@ -1,0 +1,84 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.3' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 19/10/2011
+Autor: Wellington
+Descrição: Nova coluna vlPrecoCusto na Tabela TBLVPPRODUTO
+------------------------------------------------------------------------*/
+
+alter table TBLVPPRODUTO add vlPrecoCusto	decimal(16,7);
+
+/*-------------------------------------------------------------------------
+Data: 24/10/2011
+Autor: Wellington
+Descrição: Novas colunas na Tabela TBLVPUSUARIOPDA
+------------------------------------------------------------------------*/
+
+alter table TBLVPUSUARIOPDA add nuHoraDiferencaServidor	decimal(9,0);
+alter table TBLVPUSUARIOPDA add nuHoraDiferencaHrVerao	decimal(9,0);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/11/2011
+Autor: Dirceu
+Descrição: Tabelas ConfigParamEmp e ConfigParamGer excluídas
+------------------------------------------------------------------------*/
+drop table TBLVPCONFIGPARAMEMP;
+drop table TBLVPCONFIGPARAMGER;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/11/2011
+Autor: Dirceu
+Descrição: Tabela ConfigWeb2Sync renomeada para ConfigIntegWebTc
+------------------------------------------------------------------------*/
+create table TBLVPCONFIGINTEGWEBTC (
+dsTabela             varchar(20)                    not null,
+flRemessa            char(1),
+flRetorno            char(1),
+flAtivo              char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONFIGINTEGWEBTC primary key (dsTabela, cdUsuario)
+);
+
+drop table TBLVPCONFIGWEB2SYNC;
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/11/2011
+Autor: Dirceu
+Descrição: Alterada estrutura da tabela ValorParametro
+------------------------------------------------------------------------*/
+
+drop table TBLVPVALORPARAMETRO;
+
+go
+
+create table TBLVPVALORPARAMETRO (
+CDSISTEMA            decimal(9)                     not null,
+CDPARAMETRO          DECIMAL(9)                     not null,
+NMENTIDADE           VARCHAR(30)                    not null,
+VLCHAVE              VARCHAR(150)                   not null,
+VLPARAMETRO          VARCHAR(1000),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVALORPARAMETRO primary key (CDSISTEMA, CDPARAMETRO, VLCHAVE, NMENTIDADE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/11/2011
+Autor: Pedro
+Descrição: Nova coluna na Tabela TBLVPCONFIGINTEGWEBTC
+------------------------------------------------------------------------*/
+
+alter table TBLVPCONFIGINTEGWEBTC add dsChave	VARCHAR(100);
+

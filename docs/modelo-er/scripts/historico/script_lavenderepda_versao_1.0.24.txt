@@ -1,0 +1,117 @@
+
+/*-------------------------------------------------------------------------
+Data: 29/09/2008
+Autor: Dirceu
+Descrição: Novas tabelas MotivoRegistroVisita e Visita
+------------------------------------------------------------------------*/
+create table TBLVPMOTREGISTROVISITA (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDMOTIVOREGISTROVISITA VARCHAR(20)                    not null,
+DSMOTIVOREGISTROVISITA VARCHAR(20),
+FLVISITAPOSITIVADA   CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMOTREGISTROVISITA primary key (CDEMPRESA, CDMOTIVOREGISTROVISITA, CDUSUARIO)
+);
+
+create table TBLVPVISITA (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+FLORIGEMVISITA       CHAR(1)                        not null,
+CDVISITA             VARCHAR(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+FLVISITAPOSITIVADA   CHAR(1),
+CDMOTIVOREGISTROVISITA VARCHAR(20),
+DTVISITA             DATETIME,
+HRVISITA             CHAR(5),
+DSOBSERVACAO         VARCHAR(255),
+NUPEDIDO             VARCHAR(30),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVISITA primary key (CDEMPRESA, CDREPRESENTANTE, CDVISITA, FLORIGEMVISITA, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 29/09/08
+Autor: Dirceu
+Descrição: Novo campo hrFimEmissao para a tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add HRFIMEMISSAO VARCHAR(5);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 30/09/08
+Autor: Dirceu
+Descrição: Novo campo nmEmpresaCurto para a tabela Empresa
+------------------------------------------------------------------------*/
+alter table TBLVPEMPRESA
+add NMEMPRESACURTO VARCHAR(100);
+
+
+/*-------------------------------------------------------------------------
+Data: 08/10/08
+Autor: Thiago
+Descrição: Nova Tabela verbaItemPedido
+------------------------------------------------------------------------*/
+create table TBLVPVERBAITEMPEDIDO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDUSUARIO            VARCHAR(8)                     not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+VLCONSUMIDO          DECIMAL(12,3),
+VLGERADO             DECIMAL(12,3),
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPVERBAITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 15/10/08
+Autor: Dirceu
+Descrição: Campos cdEmpresa e cdRepresentante da Visita e MotRegistroVisita
+		alterados de varchar para decimal.
+------------------------------------------------------------------------*/
+alter table TBLVPVISITA
+drop constraint PK_TBLVPVISITA;
+
+alter table TBLVPVISITA
+alter column CDEMPRESA DECIMAL(9,0) not null;
+
+alter table TBLVPVISITA
+alter column CDREPRESENTANTE DECIMAL(9,0) not null;
+
+alter table TBLVPVISITA
+add constraint PK_TBLVPVISITA primary key (CDEMPRESA, CDREPRESENTANTE, CDVISITA, FLORIGEMVISITA, CDUSUARIO);
+
+alter table TBLVPMOTREGISTROVISITA
+drop constraint PK_TBLVPMOTREGISTROVISITA;
+
+alter table TBLVPMOTREGISTROVISITA
+alter column CDEMPRESA DECIMAL(9,0) not null;
+
+alter table TBLVPMOTREGISTROVISITA
+add constraint PK_TBLVPMOTREGISTROVISITA primary key (CDEMPRESA, CDMOTIVOREGISTROVISITA, CDUSUARIO);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 21/10/08
+Autor: Dirceu
+Descrição: Nova tabela ConfigInterno
+------------------------------------------------------------------------*/
+create table TBLVPCONFIGINTERNO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDCONFIGINTERNO      DECIMAL(9,0)                   not null,
+VLCONFIGINTERNO      VARCHAR(500),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGINTERNO primary key (CDEMPRESA, CDCONFIGINTERNO, CDUSUARIO)
+);

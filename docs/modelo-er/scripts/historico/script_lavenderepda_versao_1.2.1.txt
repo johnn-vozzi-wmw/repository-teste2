@@ -1,0 +1,113 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.1' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 15/07/2009
+Autor: Pedro
+Descrição: Novas colunas nas Tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add cdAreaVenda	VARCHAR(20);
+
+alter table TBLVPPEDIDOERP
+add cdAreaVenda	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 16/07/2009
+Autor: Pedro
+Descrição: Alteração na tabela AreaVendaCliente e AreaVendaProduto
+------------------------------------------------------------------------*/
+drop table tblvpareavendacliente;
+
+create table TBLVPAREAVENDACLIENTE (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+cdAreaVenda          varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDACLIENTE primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdCliente, cdUsuario)
+);
+
+drop table tblvpareavendaproduto;
+
+create table TBLVPAREAVENDAPRODUTO (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+cdProduto            varchar(20)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDAPRODUTO primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdProduto, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/07/2009
+Autor: Pedro
+Descrição: Novas coluna nas Tabela ProdutoTabPreco
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTOTABPRECO
+add dsPrincipioAtivo	VARCHAR(100);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 28/07/2009
+Autor: Dirceu
+Descrição: Alterado o tipo do campo nuConversaoUnidadesMedida 
+		de Decimal(9,0) para Decimal(16,7)
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+alter column nuConversaoUnidadesMedida	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 28/07/2009
+Autor: Dirceu
+Descrição: Nova tabela Tributacao
+------------------------------------------------------------------------*/
+create table TBLVPTRIBUTACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTributacaoCliente  DECIMAL(9,0)                   not null,
+cdTributacaoProduto  DECIMAL(9,0)                   not null,
+cdTipoPrecoBaseTributacao DECIMAL(9,0),
+vlPctRepasseIcms     DECIMAL(16,7),
+vlPctReducaoBaseIcms DECIMAL(16,7),
+vlReducaoIcms        DECIMAL(16,7),
+vlPctIcms            DECIMAL(16,7),
+cdTipoRecolhimento   DECIMAL(9,0),
+flBaseIcmsRetidoComDesconto char(1),
+flBaseIcmsRetidoComRepasse CHAR(1),
+vlPctMargemAgregada  DECIMAL(16,7),
+vlPctIcmsRetido      DECIMAL(16,7),
+vlPctReducaoBaseIcmsRetido DECIMAL(16,7),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTRIBUTACAO primary key (CDEMPRESA, CDREPRESENTANTE, cdTributacaoCliente, cdTributacaoProduto, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 28/07/2009
+Autor: Dirceu
+Descrição: Nova coluna cdTributacaoCliente na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add CDTRIBUTACAOCLIENTE		DECIMAL(9,0);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 28/07/2009
+Autor: Dirceu
+Descrição: Nova coluna cdTributacaoProduto na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add CDTRIBUTACAOPRODUTO		DECIMAL(9,0);
+

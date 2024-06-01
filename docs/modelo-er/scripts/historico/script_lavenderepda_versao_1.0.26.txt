@@ -1,0 +1,20 @@
+/*-------------------------------------------------------------------------
+Data: 23/10/08
+Autor: Thiago
+Descrição: Novos campos vlPrecoFabrica, vlPrecoMaximoConsumidor
+	na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add vlPrecoFabrica DECIMAL(12,3);
+
+alter table TBLVPPRODUTO
+add vlPrecoMaximoConsumidor DECIMAL(12,3);
+
+
+/*-------------------------------------------------------------------------
+Data: 03/11/2008
+Autor: Dirceu
+Descrição: alterado tamanho do campo dsMotRegistroVisita de 20 para 100
+------------------------------------------------------------------------*/
+alter table TBLVPMOTREGISTROVISITA
+alter column DSMOTIVOREGISTROVISITA VARCHAR(100);

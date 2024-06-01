@@ -1,0 +1,61 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.8' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 29/09/2009
+Autor: Dirceu
+Descrição: nova coluna nuCodigoBarras na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add nuCodigoBarras	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 30/09/2009
+Autor: Dirceu
+Descrição: nova coluna qtPeso nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add qtPeso	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add qtPeso	DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 30/09/2009
+Autor: Dirceu
+Descrição: nova coluna qtPeso nas tabelas ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add qtPeso	DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP 
+add qtPeso	DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 20/10/2009
+Autor: Pedro
+Descrição: Novo campo no item do pedido
+------------------------------------------------------------------------*/
+
+alter table TBLVPITEMPEDIDO 
+add VLBASEFLEX DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP 
+add VLBASEFLEX DECIMAL(16,7);
+
+/*-------------------------------------------------------------------------
+Data: 20/10/2009
+Autor: Pedro
+Descrição: Novo campo no pedido
+------------------------------------------------------------------------*/
+
+alter table TBLVPPEDIDO 
+add FLORIGEMPEDIDORELACIONADO CHAR(1);
+
+alter table TBLVPPEDIDOERP 
+add FLORIGEMPEDIDORELACIONADO CHAR(1);
+

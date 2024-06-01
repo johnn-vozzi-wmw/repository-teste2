@@ -1,0 +1,52 @@
+/*-------------------------------------------------------------------------
+Data: 13/03/25008
+Descrição: novos campos flOrigemSaldo e DTSALDO na tabela VerbaSaldo
+-------------------------------------------------------------------------*/
+
+create table tmp_TBLVPVERBASALDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+VLSALDO              DECIMAL(12,3),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null
+);
+
+insert into tmp_TBLVPVERBASALDO (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, VLSALDO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, VLSALDO, FLTIPOALTERACAO, CDUSUARIO
+from TBLVPVERBASALDO;
+
+drop table TBLVPVERBASALDO;
+
+create table TBLVPVERBASALDO (
+CDEMPRESA            VARCHAR(20)                    not null,
+CDREPRESENTANTE      VARCHAR(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+FLORIGEMSALDO        CHAR(1)                        not null,
+VLSALDO              DECIMAL(12,3),
+DTSALDO          DATETIME,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBASALDO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, FLORIGEMSALDO, CDUSUARIO)
+);
+
+insert into TBLVPVERBASALDO (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, FLORIGEMSALDO, VLSALDO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, 'E', VLSALDO, FLTIPOALTERACAO, CDUSUARIO
+from tmp_TBLVPVERBASALDO;
+
+drop table tmp_TBLVPVERBASALDO;
+
+/*-------------------------------------------------------------------------
+Data: 14/03/25008
+Descrição: novo campo vlVerbaPedido na tabela Pedido
+-------------------------------------------------------------------------*/
+
+alter table TBLVPPEDIDO add VLVERBAPEDIDO DECIMAL(12,3);
+
+/*-------------------------------------------------------------------------
+Data: 17/03/25008
+Descrição: novo campo qtMinValor na tabela TabelaPreco
+-------------------------------------------------------------------------*/
+
+alter table TBLVPTABELAPRECO add QTMINVALOR DECIMAL(12,3);
+

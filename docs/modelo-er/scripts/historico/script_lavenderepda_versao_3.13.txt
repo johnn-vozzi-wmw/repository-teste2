@@ -1,0 +1,59 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.13' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 19/06/2012
+Autor: Pedro
+Descrição: Adicionado novas tabelas e colunas referente a kit
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add FLKIT char(1) null;
+alter table TBLVPPRODUTOTABPRECO add FLKIT char(1) null;
+
+create table TBLVPITEMKITPEDIDO (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, cdUsuario)
+);
+
+create table TBLVPITEMKITPEDIDOERP (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, cdUsuario)
+);
+
+create table TBLVPPRODUTOKIT (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOKIT primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDPRODUTO, cdUsuario)
+);
+
+/*-------------------------------------------------------------------------
+Data: 28/06/2012
+Autor: Guilherme
+Descrição: Novos campos nas tabelas itemPedido, itemPedidoERP e produto
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO add CDGRUPOBONIFICACAO varchar(20) null;
+alter table TBLVPITEMPEDIDOERP add CDGRUPOBONIFICACAO varchar(20) null;
+alter table TBLVPPRODUTO add CDGRUPOBONIFICACAO varchar(20) null;

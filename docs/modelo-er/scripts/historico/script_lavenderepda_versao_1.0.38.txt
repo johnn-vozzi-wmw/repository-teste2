@@ -1,0 +1,141 @@
+/*-------------------------------------------------------------------------
+Data: 18/03/2009
+Autor: Dirceu
+Descrição: Novas colunas qtEstoquePrevisto e dtEstoquePrevisto na tabela Estoque
+------------------------------------------------------------------------*/
+alter table TBLVPESTOQUE 
+add qtEstoquePrevisto	DECIMAL(16,7);
+
+alter table TBLVPESTOQUE 
+add dtEstoquePrevisto	DATETIME;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/03/2009
+Autor: Dirceu
+Descrição: Novas tabelas Sistema e SistemaPda
+------------------------------------------------------------------------*/
+
+create table TBLVPSISTEMA (
+CDSISTEMA            DECIMAL(9)                     not null,
+SGSISTEMA            CHAR(3)                        not null,
+NMSISTEMA            VARCHAR(100)                   not null,
+DSVERSAOSISTEMA      VARCHAR(200),
+constraint PK_TBLVPSISTEMA primary key (CDSISTEMA)
+);
+
+
+create table TBLVPSISTEMAPDA (
+CDSISTEMA            DECIMAL(9)                     not null,
+SGSISTEMA            CHAR(3)                        not null,
+NMSISTEMA            VARCHAR(100)                   not null,
+DSVERSAOSISTEMA      VARCHAR(200),
+flTipoAlteracao      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPSISTEMAPDA primary key (CDSISTEMA, cdUsuario)
+);
+
+go
+
+insert into TBLVPSISTEMA (CDSISTEMA, SGSISTEMA, NMSISTEMA, DSVERSAOSISTEMA) 
+values (20, 'LVP', 'LavenderePda', '1.0.38');
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2009
+Autor: Dirceu
+Descrição: Novo campo cdLoteProduto nas tabela ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDOERP 
+add cdLoteProduto	VARCHAR(8);
+
+alter table TBLVPITEMPEDIDO 
+add cdLoteProduto	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/04/2009
+Autor: Dirceu
+Descrição: Novas tabelas LoteProduto e DescVidaUtilGrupo
+------------------------------------------------------------------------*/
+
+create table TBLVPDESCVIDAUTILGRUPO (
+cdGrupoProduto1      VARCHAR(20)                    not null,
+vlPctVidaUtilMinimo  DECIMAL(16,7)                  not null,
+vlPctVidaUtilMaximo  DECIMAL(16,7),
+vlPctDesconto        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCVIDAUTILGRUPO primary key (cdGrupoProduto1, vlPctVidaUtilMinimo, cdUsuario)
+);
+
+
+create table TBLVPLOTEPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                    not null,
+CDREPRESENTANTE      DECIMAL(9,0)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+cdLoteProduto        VARCHAR(20)                    not null,
+qtEstoqueDisponivel  DECIMAL(16,7),
+qtEstoqueReservado   DECIMAL(16,7),
+dtValidade           DATETIME,
+vlPctVidaUtilProduto DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPLOTEPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdLoteProduto, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 06/04/2009
+Autor: Dirceu
+Descrição: Nova coluna cdSetor nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add cdSetor	VARCHAR(20);
+
+alter table TBLVPPEDIDOERP 
+add cdSetor	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 06/04/2009
+Autor: Dirceu
+Descrição: Nova tabela ClienteSetor
+------------------------------------------------------------------------*/
+
+create table TBLVPCLIENTESETOR (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTipoCliRede        VARCHAR(5)                     not null,
+cdCliRede            VARCHAR(20)                    not null,
+cdSetor              VARCHAR(20)                    not null,
+dsSetor              VARCHAR(60),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCLIENTESETOR primary key (CDEMPRESA, CDREPRESENTANTE, cdCliRede, cdSetor, cdTipoCliRede, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 06/04/2009
+Autor: Dirceu
+Descrição: Nova coluna cdContratoEspecial na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add cdContratoEspecial	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 06/04/2009
+Autor: Dirceu
+Descrição: Nova coluna cdGrupoProduto1 na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add cdGrupoProduto1	VARCHAR(20);
+
+

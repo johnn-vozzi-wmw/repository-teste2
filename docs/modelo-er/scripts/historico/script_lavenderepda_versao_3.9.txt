@@ -1,0 +1,29 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.9' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 04/04/2012
+Autor: Dirceu
+Descrição: Nova tabela DescProgQtd
+------------------------------------------------------------------------*/
+create table TBLVPDESCPROGQTD (
+CDEMPRESA            decimal(9)                     not null,
+CDREPRESENTANTE      decimal(9)                     not null,
+CDUNIDADE            varchar(20)                    not null,
+QTUNIDADE            decimal(9)                     not null,
+VLPCTDESCONTO        decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCPROGQTD primary key (CDEMPRESA, CDREPRESENTANTE, CDUNIDADE, QTUNIDADE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 11/04/2012
+Autor: Pedro
+Descrição: Coluna FLPAGAMENTOEFETUADO na tabela de Consignacao
+------------------------------------------------------------------------*/
+alter table TBLVPCONSIGNACAO
+add FLPAGAMENTOEFETUADO char(1) null;

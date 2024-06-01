@@ -1,0 +1,59 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.11' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/01/2011
+Autor: Dirceu 
+Descrição: Nova tabela TabelaPrecoReg
+------------------------------------------------------------------------*/
+
+create table TBLVPTABELAPRECOREG (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+cdTabelaPreco        DECIMAL(9)                     not null,
+cdRegiao             varchar(20)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTABELAPRECOREG primary key (CDEMPRESA, CDREPRESENTANTE, cdTabelaPreco, cdRegiao, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/01/2011
+Autor: Dirceu 
+Descrição: Alterado o tamanho da coluna dsTabPrecoList de 100 para 4.000
+		da tabela ProdutoTabPreco
+------------------------------------------------------------------------*/
+drop table TBLVPPRODUTOTABPRECO;
+
+go
+
+create table TBLVPPRODUTOTABPRECO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+DSPRINCIPIOATIVO     VARCHAR(100),
+CDFORNECEDOR         DECIMAL(9,0),
+DSTABPRECOLIST       VARCHAR(4000),
+DSTABPRECOPROMOLIST  VARCHAR(15),
+flBonificacao        CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 02/02/2011
+Autor: Dirceu 
+Descrição: Nova coluna flTipoPessoa na tabela NovoCliente
+------------------------------------------------------------------------*/
+alter table TBLVPNOVOCLIENTE
+add flTipoPessoa	CHAR(1);
+
+

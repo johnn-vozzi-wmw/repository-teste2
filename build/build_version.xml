@@ -1,0 +1,48 @@
+<project name="lavenderepda_version" default="default">
+
+	<target name="default" depends="prepare, condition, removeSnapshot" />
+
+	<target name="prepare">
+		<delete dir="${basedir}/release/resources"/>
+		<mkdir dir="${basedir}/release/resources"/>
+		<echo>[WMW] Gravando a versão do wmwvendasapp no arquivo version.conf da pasta resources...</echo>
+		<delete file="${basedir}/release/resources/version.conf" />
+		<echo file="${basedir}/release/resources/version.conf">${project.version}</echo>
+		
+		<echo>[WMW] Criando arquivo build.info...</echo>
+		<delete file="${basedir}/release/resources/build.info" />
+		<tstamp>
+		    <format property="current.time" pattern="dd-MM-yyyy HH:mm:ss Z" timezone="GMT-3"/>
+		 </tstamp>
+		<echo file="${basedir}/release/resources/build.info">{
+	"build_date": "${current.time}",
+	"version": "${project.version}",
+	"framework_tc_version": "${framework.version}",
+	"totalcross_version": "${totalcross.version}",
+	"user": "${user.name}",
+	"os_name": "${os.name}",
+	"os_version": "${os.version}",
+	"java_version": "${java.version}",
+	"java_vendor": "${java.vendor}",
+	"compiler_version": "${compiler.version}",
+	"wtools_version":"${wtools.version}"
+}</echo>
+		<replaceregexp match="\\" replace="/" flags="g i">
+			<fileset dir="${basedir}/release/resources" includes="build.info"/>
+		</replaceregexp>
+	</target>
+
+	<target name="condition">
+		<condition property="wmw.release">
+			<equals arg1="${wmwRelease}" arg2="true"/>
+		</condition>
+	</target>
+
+	<target name="removeSnapshot" if="wmw.release">
+		<echo>[WMW] Gerando versão OFICIAL do Sistema</echo>
+		<replaceregexp match="-SNAPSHOT" replace="" flags="g i" >
+			<fileset dir="./release/resources" includes="version.conf" casesensitive="false"/>
+		</replaceregexp>
+	</target>
+
+</project>

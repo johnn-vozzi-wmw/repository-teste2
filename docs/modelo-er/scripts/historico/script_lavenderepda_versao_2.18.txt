@@ -1,0 +1,227 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.18' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 05/07/2011
+Autor: Wellington
+Descrição: Nova tabela de parametro
+------------------------------------------------------------------------*/
+
+create table TBLVPVALORPARAMETRO (
+CDSISTEMA            decimal(9)                     not null,
+CDPARAMETRO          DECIMAL(9)                     not null,
+CDENTIDADE           DECIMAL(9)                     not null,
+VLCHAVE              VARCHAR(150)                   not null,
+VLPARAMETRO          VARCHAR(1000),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVALORPARAMETRO primary key (CDSISTEMA, CDPARAMETRO, VLCHAVE, CDENTIDADE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/07/2011
+Autor: Pedro
+Descrição: Nova coluna nuCarimbo em todas as tabelas do PDA
+------------------------------------------------------------------------*/
+
+alter table TBLVPAGENDAVISITA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPAREAVENDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPAREAVENDACLIENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPAREAVENDAPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPATRIBUTOOPCAOPROD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPATRIBUTOPROD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCAMPANHA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCATEGORIA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCCCLIPORTIPO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCESTA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCESTAPOSITCLIENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCESTAPOSITPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCESTAPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCESTAPROMOCIONAL add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCLIENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCLIENTESETOR add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONCORRENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONDICAOPAGAMENTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONDPAGTOCLI add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONDPAGTOLINHA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONDPAGTOTABPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONDTIPOPAGTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONEXAOPDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGDYNENTITY add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGINTERNO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGPARAMEMP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGPARAMGER add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGPERSONCAD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONFIGWEB2SYNC add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONTACORRENTECLI add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONTATO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCONTATOERP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCCOMIGRUPO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCCOMIPROD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCONTOCCP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCPROGRESSIVO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCQUANTIDADE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPDESCVIDAUTILGRUPO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPEMPRESA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPESTOQUE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPFICHAFINANCEIRA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPFORNECEDOR add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPGIROPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPGRUPOPRODUTO1 add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPGRUPOPRODUTO2 add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPGRUPOPRODUTO3 add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPINDICADOR add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPITEMKIT add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPITEMPEDIDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPITEMPEDIDOERP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPITEMPEDIDOERPDIF add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPITEMTABELAPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPKIT add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPKITTABPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPLOGPDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPLOTEPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMENSAGEM add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMETA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMETASPORCLIENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMETASPORFORN add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMETASPORPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMOTIVOTROCA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPMOTREGISTROVISITA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPNOVOCLIENTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPARCELAPEDIDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPEDIDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPEDIDOERP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPEDIDOERPDIF add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPESQUISAMERCADO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPRODUTOATRIBUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPPRODUTOTABPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPRECADO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPRELINADIMPCLI add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPRELINADIMPREP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPRELNOVIDADEPROD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPREPRESENTANTE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPREPRESENTANTEEMP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPROTAENTREGA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPSISTEMAPDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPSTATUSPEDIDOPDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPSUPERVISORREP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTABELAPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTABELAPRECOCLI add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTABELAPRECOREG add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTABELAPRECOREP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTCACTIVATION add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTIPOENTREGA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTIPOFRETE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTIPONOVIDADEPROD add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTIPOPAGAMENTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTIPOPEDIDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTITULOFINANCEIRO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTRANSPORTADORA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTRIBUTACAO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTRIBUTACAOVLBASE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPUSUARIOPDA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPUSUARIOPDAREP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPUSUARIOREP add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPUSUARIOWEB add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVALORINDICADOR add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVALORPARAMETRO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBACONTACOR add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBAITEMPEDIDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBAPRODUTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBASALDO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVERBATABELAPRECO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVISITA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPVISITASUPERVISOR add NUCARIMBO	DECIMAL(9,0);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/07/2011
+Autor: Dirceu
+Descrição: Novas tabelas EsquemaCorSistema, CorSistema e Tema Sistema
+------------------------------------------------------------------------*/
+
+create table TBLVPESQUEMACORSISTEMA (
+cdEsquemaCor         decimal(9)                     not null,
+dsEsquemaCor         varchar(100),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPESQUEMACORSISTEMA primary key (cdEsquemaCor, cdUsuario)
+);
+
+create table TBLVPCORSISTEMA (
+cdEsquemaCor         decimal(9)                     not null,
+cdCor                decimal(9)                     not null,
+dsUtilizacao         varchar(100),
+vlR                  decimal(9),
+vlG                  decimal(9),
+vlB                  decimal(9),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCORSISTEMA primary key (cdEsquemaCor, cdCor, CDUSUARIO)
+);
+
+create table TBLVPTEMASISTEMA (
+cdTema               decimal(9)                     not null,
+cdEsquemaCor         decimal(9),
+dsTema               varchar(100),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTEMASISTEMA primary key (cdTema, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/07/2011
+Autor: Wellington
+Descrição: Novas tabelas TBLVWFACEAMENTO, TBLVWFACEAMENTOESTOQUE
+------------------------------------------------------------------------*/
+
+create table TBLVPFACEAMENTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTPONTOEQUILIBRIO    decimal(16,7),
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      char(1),
+constraint PK_TBLVPFACEAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDUSUARIO)
+)
+
+go
+
+
+create table TBLVPFACEAMENTOESTOQUE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+DTCADASTRO           datetime                       not null,
+FLULTILIZADOPEDIDODTATUAL CHAR(1),
+QTESTOQUEATUAL       decimal(16,7),
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      char(1),
+constraint PK_TBLVPFACEAMENTOESTOQUE primary key (CDEMPRESA, CDREPRESENTANTE, DTCADASTRO, CDCLIENTE, CDPRODUTO, CDUSUARIO)
+)
+
+go
+
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 15/07/2011
+Autor: Pedro
+Descrição: Nova coluna nuCarimbo para novas tabelas do PDA
+------------------------------------------------------------------------*/
+
+alter table TBLVPFACEAMENTO add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPFACEAMENTOESTOQUE add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPTEMASISTEMA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPCORSISTEMA add NUCARIMBO	DECIMAL(9,0);
+alter table TBLVPESQUEMACORSISTEMA add NUCARIMBO	DECIMAL(9,0);

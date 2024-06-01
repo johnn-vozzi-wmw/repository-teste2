@@ -1,0 +1,45 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.4' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/09/2009
+Autor: Dirceu
+Descrição: Nova coluna vlVerbaItemPositivo nas tabelas ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add vlVerbaItemPositivo		DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP 
+add vlVerbaItemPositivo		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/09/2009
+Autor: Dirceu
+Descrição: Nova coluna vlPctDescPromocional na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO 
+add vlPctDescPromocional	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 04/09/2009
+Autor: Dirceu
+Descrição: Nova coluna flEspecial na tabela TabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+add flEspecial		CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 04/09/2009
+Autor: Dirceu
+Descrição: Coluna flTipoTabela na tabela TabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+drop column FLTIPOTABELA;
+

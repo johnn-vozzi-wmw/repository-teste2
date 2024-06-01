@@ -1,0 +1,74 @@
+/*** versÃ£o do sistema para qual o banco Ã© compatÃ­vel ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.25' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 07/06/2013
+Autor: Pedro
+Descrição: Novas tabelas de Sugestao de Venda
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPSUGESTAOVENDA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDSUGESTAOVENDA      VARCHAR(20)          NOT NULL,
+   DSSUGESTAOVENDA      VARCHAR(20)          NULL,
+   DTFINAL              DATETIME             NULL,
+   DTINICIAL            DATETIME             NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPSUGESTAOVENDA PRIMARY KEY (CDEMPRESA, CDSUGESTAOVENDA, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPSUGESTAOVENDAPROD (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDSUGESTAOVENDA      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPSUGESTAOVENDAPROD PRIMARY KEY (CDEMPRESA, CDSUGESTAOVENDA, CDPRODUTO, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPSUGESTAOVENDAREP (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDSUGESTAOVENDA      VARCHAR(20)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPSUGESTAOVENDAREP PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDSUGESTAOVENDA, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/06/2013
+Autor: Fernando
+Descrição: Nova coluna na tabela de pedido e pedidoerp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add dsMotivoDesconto varchar(4000);
+alter table TBLVPPEDIDOERP add dsMotivoDesconto varchar(4000);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/06/2013
+Autor: Fernando
+Descrição: Novas colunas na tabela de itempedido e itempedidoerp e tabela
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPITEMPEDIDO ADD vlItemPedidoUnElementar decimal(16,7) null;
+ALTER TABLE TBLVPITEMPEDIDO ADD qtItemPedidoUnElementar decimal(16,7) null;
+
+ALTER TABLE TBLVPITEMPEDIDOERP ADD vlItemPedidoUnElementar decimal(16,7) null;
+ALTER TABLE TBLVPITEMPEDIDOERP ADD qtItemPedidoUnElementar decimal(16,7) null;
+
+CREATE TABLE TBLVPFERIADO (
+   NUDIA                DECIMAL(2,0)         NOT NULL,
+   NUMES                DECIMAL(2,0)         NOT NULL,
+   NUANO                DECIMAL(4,0)         NOT NULL,
+   DSFERIADO            VARCHAR(100)         NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPFERIADO PRIMARY KEY (NUDIA, NUMES, NUANO, CDUSUARIO)
+)
+;
+

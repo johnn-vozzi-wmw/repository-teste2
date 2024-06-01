@@ -1,0 +1,100 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.16' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/08/2012
+Autor: Pedro
+Descrição: Novos campos na tabela PRODUTO
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add FLAUTOBONIFICA char(1) null;
+alter table TBLVPPRODUTO add VLPCTMAXBONIFICACAO decimal(16,7) null;
+alter table TBLVPPRODUTO add CDPRODUTOBONIFICACAO varchar(20) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/08/2012
+Autor: Guilherme
+Descrição: Nova tabela METAPORGRUPOPROD1
+------------------------------------------------------------------------*/
+create table TBLVPMETAPORGRUPOPROD1 (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+DSPERIODO            varchar(30)                    not null,
+CDGRUPOPRODUTO1      decimal(9,0)                   not null,
+nuSequencia          varchar(20),
+VlMeta               decimal(16,7),
+VlRealizado          decimal(16,7),
+qtUnidadeMeta        decimal(16,7),
+qtCaixaMeta          decimal(16,7),
+qtMixClienteMeta     decimal(16,7),
+qtUnidadeRealizado   decimal(16,7),
+qtCaixaRealizado     decimal(16,7),
+qtMixClienteRealizado decimal(16,7),
+dsGrupoProduto1      varchar(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETAPORGRUPOPROD1 primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, CDGRUPOPRODUTO1)
+);
+
+/*-------------------------------------------------------------------------
+Data: 07/08/2012
+Autor: Guilherme
+Descrição: Retirado campo e adicionado novo campo na tabela TBLVPCLIENTE
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE drop column flAlertaClienteNaoAtendido;
+alter table TBLVPCLIENTE add nuDiasSemPedido decimal(9,0);
+
+/*-------------------------------------------------------------------------
+Data: 22/08/2012
+Autor: Guilherme
+Descrição: Novo campo na tabela DESCQUANTIDADE
+------------------------------------------------------------------------*/
+alter table TBLVPDESCQUANTIDADE add VLDESCONTO decimal(16,7) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 31/08/2012
+Autor: Guilherme
+Descrição: Adicionada coluna cdUsuario na chave da tabela MetaPorGrupoProd1
+------------------------------------------------------------------------*/
+drop table TBLVPMETAPORGRUPOPROD1;
+
+create table TBLVPMETAPORGRUPOPROD1 (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+DSPERIODO            varchar(30)                    not null,
+CDGRUPOPRODUTO1      decimal(9,0)                   not null,
+nuSequencia          varchar(20),
+VlMeta               decimal(16,7),
+VlRealizado          decimal(16,7),
+qtUnidadeMeta        decimal(16,7),
+qtCaixaMeta          decimal(16,7),
+qtMixClienteMeta     decimal(16,7),
+qtUnidadeRealizado   decimal(16,7),
+qtCaixaRealizado     decimal(16,7),
+qtMixClienteRealizado decimal(16,7),
+dsGrupoProduto1      varchar(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETAPORGRUPOPROD1 primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, CDGRUPOPRODUTO1, cdUsuario)
+);
+
+/*-------------------------------------------------------------------------
+Data: 03/09/2012
+Autor: Guilherme
+Descrição: Novo campo na tabela ITEMPEDIDO
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO add vlTotalBrutoItemPedido decimal(16,7) null;
+alter table TBLVPITEMPEDIDOERP add vlTotalBrutoItemPedido decimal(16,7) null;
+
+/*-------------------------------------------------------------------------
+Data: 03/09/2012
+Autor: Guilherme
+Descrição: Novo campo na tabela PEDIDO
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add vlTotalBrutoItens decimal(16,7) null;
+alter table TBLVPPEDIDOERP add vlTotalBrutoItens decimal(16,7) null;
+

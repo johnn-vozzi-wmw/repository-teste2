@@ -1,0 +1,415 @@
+
+/*-------------------------------------------------------------------------
+Data: 19/02/2009
+Autor: Dirceu
+Descrição: Nova tabela DescontoCCP
+------------------------------------------------------------------------*/
+create table TBLVPDESCONTOCCP (
+CDEMPRESA            DECIMAL(9,0)                    not null,
+CDREPRESENTANTE      DECIMAL(9,0)                    not null,
+CDCLASSECLIENTE      VARCHAR(20)                    not null,
+CDCLASSEPRODUTO      VARCHAR(20)                    not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCONTOCCP primary key (CDEMPRESA, CDREPRESENTANTE, CDCLASSECLIENTE, CDCLASSEPRODUTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 19/02/2009
+Autor: Dirceu
+Descrição: Nova tabela DescontoProgressivo
+------------------------------------------------------------------------*/
+create table TBLVPDESCONTOPROGRESSIVO (
+CDEMPRESA            DECIMAL(9,0)                    not null,
+CDREPRESENTANTE      DECIMAL(9,0)                    not null,
+VLINICIOFAIXA        DECIMAL(16,7)                  not null,
+VLFINALFAIXA         DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCONTOPROGRESSIVO primary key (CDEMPRESA, CDREPRESENTANTE, VLINICIOFAIXA, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/02/2009
+Autor: Dirceu
+Descrição: Nova coluna vlIndiceFinanceiro na tabela CondPagtoLinha
+------------------------------------------------------------------------*/
+alter table TBLVPCONDPAGTOLINHA 
+add VLINDICEFINANCEIRO   DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/02/2009
+Autor: Dirceu
+Descrição: Nova coluna cdLinha na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add CDLINHA              VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/02/2009
+Autor: Dirceu
+Descrição: Nova coluna cdCategoria na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add CDCATEGORIA          VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/02/2009
+Autor: Dirceu
+Descrição: Coluna cdLinha alterada de Decimal para Varchar na tabela CondPagtoLinha
+------------------------------------------------------------------------*/
+create table tmp_TBLVPCONDPAGTOLINHA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDLINHA              DECIMAL(9)                     not null,
+NUDIASPRAZO          DECIMAL(9),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null
+);
+
+insert into tmp_TBLVPCONDPAGTOLINHA (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, VLINDICEFINANCEIRO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, VLINDICEFINANCEIRO, FLTIPOALTERACAO, CDUSUARIO
+from TBLVPCONDPAGTOLINHA;
+
+drop table TBLVPCONDPAGTOLINHA;
+
+create table TBLVPCONDPAGTOLINHA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDLINHA              VARCHAR(20)                    not null,
+NUDIASPRAZO          DECIMAL(9),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDPAGTOLINHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, CDUSUARIO)
+);
+
+insert into TBLVPCONDPAGTOLINHA (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, VLINDICEFINANCEIRO, FLTIPOALTERACAO, CDUSUARIO)
+select CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, NUDIASPRAZO, VLINDICEFINANCEIRO, FLTIPOALTERACAO, CDUSUARIO
+from tmp_TBLVPCONDPAGTOLINHA;
+
+drop table tmp_TBLVPCONDPAGTOLINHA;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/02/2009
+Autor: Dirceu
+Descrição: Colunas do tipo DECIMAL(12,3) alteradas para DECIMAL(16,7)
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+alter column VLLIMITECREDITO DECIMAL(16,7);
+
+alter table TBLVPCONDICAOPAGAMENTO
+alter column VLINDICEFINANCEIRO DECIMAL(16,7);
+
+alter table TBLVPCONDICAOPAGAMENTO
+alter column VLPCTDESCONTOTOTALPEDIDO DECIMAL(16,7);
+
+alter table TBLVPCONDPAGTOLINHA
+alter column VLINDICEFINANCEIRO DECIMAL(16,7);
+
+alter table TBLVPDESCONTOCCP
+alter column VLPCTDESCONTO DECIMAL(16,7);
+
+alter table TBLVPDESCONTOPROGRESSIVO
+alter column VLFINALFAIXA DECIMAL(16,7);
+
+alter table TBLVPDESCONTOPROGRESSIVO
+alter column VLPCTDESCONTO DECIMAL(16,7);
+
+alter table TBLVPDESCONTOQUANTIDADE
+alter column VLPCTDESCONTO DECIMAL(16,7);
+
+alter table TBLVPESTOQUE
+alter column qtEstoque DECIMAL(16,7);
+
+alter table TBLVPFICHAFINANCEIRA
+alter column VLMAIORFATURA DECIMAL(16,7);
+
+alter table TBLVPFICHAFINANCEIRA
+alter column VLMEDIOCOMPRA DECIMAL(16,7);
+
+alter table TBLVPFICHAFINANCEIRA
+alter column VLSALDOCLIENTE DECIMAL(16,7);
+
+alter table TBLVPITEMKIT
+alter column QTITEMFISICO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column QTITEMFISICO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column QTITEMFATURAMENTO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLITEMPEDIDO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLBASEITEMTABELAPRECO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLBASEITEMPEDIDO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLTOTALITEMPEDIDO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLPCTDESCONTO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLPCTDESCONTOFOB DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLPCTACRESCIMO DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLPCTIPIITEM DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLIPIITEM DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLPCTRENTABILIDADE DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDO
+alter column VLVERBAITEM DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLUNITARIO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPCTMAXDESCONTO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPCTMAXACRESCIMO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPRECOEMBALAGEMPRIMARIA DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPCTSUBSTTRIBUTARIAINFO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLGNREINFO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLBASE DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPCTDESCONTOINFO DECIMAL(16,7);
+
+alter table TBLVPITEMTABELAPRECO
+alter column VLPRECOLISTAINFO DECIMAL(16,7);
+
+alter table TBLVPPARCELAPEDIDO
+alter column VLPARCELA DECIMAL(16,7);
+
+alter table TBLVPPEDIDO
+alter column VLTOTALITENS DECIMAL(16,7);
+
+alter table TBLVPPEDIDO
+alter column vlTotalPedido DECIMAL(16,7);
+
+alter table TBLVPPEDIDO
+alter column vlVerbaPedido DECIMAL(16,7);
+
+alter table TBLVPPRODUTIVIDADE
+alter column vlRealizadoVendas DECIMAL(16,7);
+
+alter table TBLVPPRODUTIVIDADE
+alter column vlMetaVendas DECIMAL(16,7);
+
+alter table TBLVPPRODUTO
+alter column VLPCTIPI DECIMAL(16,7);
+
+alter table TBLVPPRODUTO
+alter column QTPESO DECIMAL(16,7);
+
+alter table TBLVPPRODUTO
+alter column vlPrecoFabrica DECIMAL(16,7);
+
+alter table TBLVPPRODUTO
+alter column vlPrecoMaximoConsumidor DECIMAL(16,7);
+
+alter table TBLVPRELINADIMPCLI
+alter column vlTitulos DECIMAL(16,7);
+
+alter table TBLVPRELINADIMPREP
+alter column vlTitulos DECIMAL(16,7);
+
+alter table TBLVPTABELAPRECO
+alter column VLPCTCOMISSAO DECIMAL(16,7);
+
+alter table TBLVPTABELAPRECO
+alter column VLPCTMAXDESCADICIONALITEM DECIMAL(16,7);
+
+alter table TBLVPTABELAPRECO
+alter column QTMINVALOR DECIMAL(16,7);
+
+alter table TBLVPTITULOFINANCEIRO
+alter column VLNF DECIMAL(16,7);
+
+alter table TBLVPTITULOFINANCEIRO
+alter column VLTITULO DECIMAL(16,7);
+
+alter table TBLVPTITULOFINANCEIRO
+alter column VLPAGO DECIMAL(16,7);
+
+alter table TBLVPVERBAITEMPEDIDO
+alter column VLCONSUMIDO DECIMAL(16,7);
+
+alter table TBLVPVERBAITEMPEDIDO
+alter column VLGERADO DECIMAL(16,7);
+
+alter table TBLVPVERBAPRODUTO
+alter column VLMULTIPLO DECIMAL(16,7);
+
+alter table TBLVPVERBAPRODUTO
+alter column VLVERBA DECIMAL(16,7);
+
+alter table TBLVPVERBASALDO
+alter column VLSALDO DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/02/2009
+Autor: Dirceu
+Descrição: Novas tabelas PedidoErp e ItemPedidoErp
+------------------------------------------------------------------------*/
+create table TBLVPITEMPEDIDOERP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+QTITEMFISICO         DECIMAL(16,7),
+QTITEMFATURAMENTO    DECIMAL(16,7),
+VLITEMPEDIDO         DECIMAL(16,7),
+VLBASEITEMTABELAPRECO DECIMAL(16,7),
+VLBASEITEMPEDIDO     DECIMAL(16,7),
+VLTOTALITEMPEDIDO    DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+VLPCTDESCONTOFOB     DECIMAL(16,7),
+VLPCTACRESCIMO       DECIMAL(16,7),
+VLPCTIPIITEM         DECIMAL(16,7),
+VLIPIITEM            DECIMAL(16,7),
+VLPCTRENTABILIDADE   DECIMAL(16,7),
+NULISTATABELAPRECO   DECIMAL(4),
+QTTROCAESPECIAL      DECIMAL(4),
+VLVERBAITEM          DECIMAL(16,7),
+CDCONTACORRENTE      VARCHAR(20),
+CDKIT                VARCHAR(20),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, cdUsuario)
+);
+
+create table TBLVPPEDIDOERP (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+nuPedido             varchar(30)                    not null,
+flOrigemPedido       char(1)                        not null,
+cdCliente            varchar(20)                    not null,
+nuPedidoRelacionado  varchar(30)                    not null,
+CDSTATUSPEDIDO       VARCHAR(20),
+dtEmissao            datetime,
+hrEmissao            VARCHAR(5),
+hrFimEmissao         VARCHAR(5),
+dtEntrega            datetime,
+VLTOTALITENS         DECIMAL(16,7),
+vlTotalPedido        DECIMAL(16,7),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTABELAPRECO        DECIMAL(9,0),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+dsMensagemEntrega    varchar(100),
+dsObservacao         varchar(100),
+CDSUPERVISOR         DECIMAL(9,0),
+vlVerbaPedido        DECIMAL(16,7),
+FLPRECOLIBERADOSENHA char(1),
+FLCREDITOCLIENTELIBERADOSENHA char(1),
+nuOrdemCompraCliente varchar(20),
+CDROTAENTREGA        varchar(20),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPEDIDOERP primary key (cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2009
+Autor: Dirceu
+Descrição: Nova coluna flPossuiDiferenca para as tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+
+alter table TBLVPPEDIDO 
+add FLPOSSUIDIFERENCA	CHAR(1);
+
+alter table TBLVPPEDIDOERP 
+add FLPOSSUIDIFERENCA	CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2009
+Autor: Dirceu
+Descrição: Nova tabela ItemPedidoErpDif
+------------------------------------------------------------------------*/
+
+create table TBLVPITEMPEDIDOERPDIF (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+NUPEDIDOERP          VARCHAR(30)                    not null,
+NUPEDIDOORIGINAL     VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+QTITEMFISICOORIGINAL DECIMAL(16,7),
+QTITEMFISICOERP      DECIMAL(16,7),
+FLTIPODIFERENCA      CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, NUPEDIDOERP, cdProduto, FLTIPOITEMPEDIDO, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/02/2009
+Autor: Pedro
+Descrição: Nova coluna vlIndiceFinanceiro na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add VLINDICEFINANCEIRO          DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 26/02/2009
+Autor: Dirceu
+Descrição: Nova coluna CdClasse na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add CDCLASSE	VARCHAR(20);
+
+

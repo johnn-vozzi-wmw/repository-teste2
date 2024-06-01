@@ -1,0 +1,70 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.8' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 22/09/2010
+Autor: Dirceu
+Descrição: Nova tabela RotaEntrega
+------------------------------------------------------------------------*/
+create table TBLVPROTAENTREGA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdRotaEntrega        VARCHAR(20)                    not null,
+dsRotaEntrega        VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPROTAENTREGA primary key (CDEMPRESA, CDREPRESENTANTE, cdRotaEntrega, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 01/10/2010
+Autor: Dirceu
+Descrição: Nova coluna dsCondicaoPagamentoSemCadastro nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add DSCONDICAOPAGAMENTOSEMCADASTRO	VARCHAR(100);
+
+alter table TBLVPPEDIDOERP 
+add DSCONDICAOPAGAMENTOSEMCADASTRO	VARCHAR(100);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 19/10/2010
+Autor: Dirceu
+Descrição: Novas colunas na tabela MetasPorProduto
+------------------------------------------------------------------------*/
+alter table TBLVPMETASPORPRODUTO 
+add qtUnidadeRealizado		DECIMAL(16,7);
+
+alter table TBLVPMETASPORPRODUTO 
+add qtCaixaRealizado		DECIMAL(16,7);
+
+alter table TBLVPMETASPORPRODUTO 
+add qtMixClienteRealizado		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/10/2010
+Autor: Dirceu
+Descrição: Nova coluna flBloqueado na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO 
+add flBloqueado		char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 11/11/2010
+Autor: Dirceu
+Descrição: Nova coluna vlIndiceFinanceiroCondPagto na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add vlIndiceFinanceiroCondPagto		DECIMAL(16,7);
+
+

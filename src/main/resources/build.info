@@ -1,0 +1,13 @@
+{
+"build_date": "${timestamp}",
+"version": "${project.version}",
+"framework_tc_version": "${framework.version}",
+"totalcross_version": "${totalcross.version}",
+"user": "${user.name}",
+"os_name": "${os.name}",
+"os_version": "${os.version}",
+"java_version": "${java.version}",
+"java_vendor": "${java.vendor}",
+"compiler_version": "${compiler.version}",
+"wtools_version":"${wtools.version}"
+}

@@ -1,0 +1,113 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.18' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 05/10/2012
+Autor: Wellington
+Descrição: Alterado tabela de titulo financeiro
+------------------------------------------------------------------------*/
+alter table TBLVPTITULOFINANCEIRO add CDREPRESENTANTETITULO decimal(9,0) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 10/10/2012
+Autor: Fernando
+Descrição: Novas colunas na tabela GiroProduto
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPGIROPRODUTO ADD qtCompra decimal(16,7);
+ALTER TABLE TBLVPGIROPRODUTO ADD vlUnitario decimal(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/10/2012
+Autor: Fernando
+Descrição: Novos campos nas tabelas de Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add flMaxVendaLiberadoSenha char(1);
+alter table TBLVPPEDIDOERP add flMaxVendaLiberadoSenha char(1);
+
+/*-------------------------------------------------------------------------
+Data: 23/10/2012
+Autor: Wellington
+Descrição: Nova coluna nas tabelas
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add CDORIGEMSETOR varchar(20) null;
+alter table TBLVPPEDIDOERP add CDORIGEMSETOR varchar(20) null;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/10/2012
+Autor: Pedro
+Descrição: Alterada coluna DSTABPRECOPROMOLIST da tabela PRODUTOTABPRECO
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDOERP drop column DSTABPRECOPROMOLIST;
+alter table TBLVPITEMPEDIDOERP add DSTABPRECOPROMOLIST VARCHAR(4000);
+
+
+/*-------------------------------------------------------------------------
+Data: 26/10/2012
+Autor: Wellington
+Descrição: Mudança na tabela de ClienteSetorOrigem e retirada a tabela de ClienteSetor
+------------------------------------------------------------------------*/
+drop TABLE TBLVPCLIENTESETOR;
+
+create table TBLVPCLIENTESETORORIGEM (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTipoCliRede        VARCHAR(5)                     not null,
+cdCliRede            VARCHAR(20)                    not null,
+cdSetor              VARCHAR(20)                    not null,
+cdOrigemSetor        VARCHAR(20)                    not null,
+dsSetor              VARCHAR(100),
+dsOrigemSetor        VARCHAR(100),
+cdCondicaoPagamento  VARCHAR(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCLIENTESETORORIGEM primary key (CDEMPRESA, CDREPRESENTANTE, cdCliRede, cdSetor, cdTipoCliRede, cdOrigemSetor, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 30/10/2012
+Autor: Pedro
+Descrição: Nova tabela BANDEIRA e coluna na tablea CLIENTE
+------------------------------------------------------------------------*/
+create table TBLVPBANDEIRA (
+CDEMPRESA            decimal(9,0)                   not null,
+cdBandeira           varchar(20)                    not null,
+dsBandeira           varchar(100),
+nuCarimbo            Decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPBANDEIRA primary key (CDEMPRESA, cdBandeira, cdUsuario)
+);
+
+alter table TBLVPCLIENTE add cdBandeira varchar(20) null;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 01/11/2012
+Autor: Fernando
+Descrição: Nova Tabela TBLVPPRODUTOTIPOPED 
+------------------------------------------------------------------------*/
+create table TBLVPPRODUTOTIPOPED (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+CDPRODUTO            DECIMAL(9,0)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPRODUTOTIPOPED primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDPRODUTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 01/11/2012
+Autor: Fernando
+Descrição: Novo campo na tabela TipoPedido
+------------------------------------------------------------------------*/
+alter table tblvptipopedido add FLEXCECAOPRODUTO char(1);

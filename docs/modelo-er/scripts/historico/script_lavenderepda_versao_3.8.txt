@@ -1,0 +1,201 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.8' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 16/03/2012
+Autor: Pedro
+Descrição: Novas tabelas e campos
+------------------------------------------------------------------------*/
+alter table TBLVPTIPOPEDIDO add FLEXCECAOGRUPOPRODUTO char(1) null;
+alter table TBLVPTIPOPEDIDO add FLEXCECAOCONDPAGTO char(1) null;
+
+create table TBLVPCONDTIPOPEDIDO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDTIPOPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTIPOPEDIDO, CDUSUARIO)
+);
+
+create table TBLVPGRUPOPRODTIPOPED (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+CDGRUPOPRODUTO1      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO2      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO3      DECIMAL(9,0)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODTIPOPED primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 16/03/2012
+Autor: Dirceu
+Descrição: Coluna dsSenha movido da UsuarioPdaRep para UsuarioPda
+------------------------------------------------------------------------*/
+alter table TBLVPUSUARIOPDA
+add dsSenha varchar(40);
+
+alter table TBLVPUSUARIOPDAREP
+drop column dsSenha;
+
+/*-------------------------------------------------------------------------
+Data: 20/03/2012
+Autor: Wellington
+Descrição: Adicionadas novas colunas na tabela de produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add nuMultiploIdeal decimal(16,7) null;
+alter table TBLVPPRODUTO add qtMinimaVenda decimal(16,7) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 21/03/2012
+Autor: Pedro
+Descrição: Adicionadas novas colunas na tabela de produtotabpreco
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTOTABPRECO add CDGRUPOPRODUTO1 decimal(9,0) null;
+alter table TBLVPPRODUTOTABPRECO add CDGRUPOPRODUTO2 decimal(9,0) null;
+alter table TBLVPPRODUTOTABPRECO add CDGRUPOPRODUTO3 decimal(9,0) null;
+
+/*-------------------------------------------------------------------------
+Data: 21/03/2012
+Autor: Wellington
+Descrição: Alterada tamanho do nuCodigoBarras da tabela produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO drop column NUCODIGOBARRAS;
+alter table TBLVPPRODUTO add NUCODIGOBARRAS varchar(200) null;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 22/03/2012
+Autor: Dirceu
+Descrição: Nova tabela de FotoProduto
+------------------------------------------------------------------------*/
+create table TBLVPFOTOPRODUTO (
+CDPRODUTO            varchar(20)                    not null,
+NMFOTO               varchar(100)                   not null,
+NUTAMANHO            decimal(9),
+DTMODIFICACAO        datetime,
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFOTOPRODUTO primary key (CDPRODUTO, NMFOTO, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/03/2012
+Autor: Dirceu
+Descrição: Novas tabelas de Forecast e Grade (contrato com o cliente)
+------------------------------------------------------------------------*/
+create table TBLVPCONTRATOCLIENTE (
+CDEMPRESA            decimal(9)                     not null,
+CDREPRESENTANTE      decimal(9)                     not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+DTVIGENCIAFINAL      datetime,
+NUDIASPERIODICIDADE  decimal(9),
+CDTABELAPRECO        varchar(30),
+CDCONDICAOPAGAMENTO  varchar(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDUSUARIO)
+);
+
+create table TBLVPCONTRATOPRODUTO (
+CDEMPRESA            decimal(9)                     not null,
+CDREPRESENTANTE      decimal(9)                     not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+CDPRODUTO            varchar(20)                    not null,
+QTPRODUTOCONTRATO    decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDPRODUTO, CDUSUARIO)
+);
+
+create table TBLVPCONTRATOPRODEST (
+CDEMPRESA            decimal(9)                     not null,
+CDREPRESENTANTE      decimal(9)                     not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+CDPRODUTO            varchar(20)                    not null,
+DTCADASTRO           datetime                       not null,
+QTESTOQUEATUAL       decimal(16,7),
+FLULTILIZADOPEDIDODTATUAL char(1),
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOPRODEST primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDPRODUTO, DTCADASTRO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/03/2012
+Autor: Pedro
+Descrição: Alterada tabela CONSIGNACAO
+------------------------------------------------------------------------*/
+alter table TBLVPCONSIGNACAO add DTPROXIMAVISITA datetime null;
+
+
+/*-------------------------------------------------------------------------
+Data: 27/03/2012
+Autor: Wellington
+Descrição: Alterada tabela ProdutoTabPreco
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTOTABPRECO add NUCODIGOBARRAS varchar(200) null;
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 29/03/2012
+Autor: Dirceu
+Descrição: Tipo da coluna cdTabelaPreco da tabela ContratoCliente alterado para decimal
+------------------------------------------------------------------------*/
+alter table TBLVPCONTRATOCLIENTE 
+drop column CDTABELAPRECO;
+
+alter table TBLVPCONTRATOCLIENTE
+add CDTABELAPRECO        decimal(9);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 29/03/2012
+Autor: Dirceu
+Descrição: Nova coluna flBloqueadoEdicao na tabela pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add flBloqueadoEdicao	char(1);
+
+alter table TBLVPPEDIDOERP
+add flBloqueadoEdicao	char(1);
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 30/03/2012
+Autor: Dirceu
+Descrição: Coluna flUtilizadoPedidoDtAtual excluído da tabela ContratoProdEst
+------------------------------------------------------------------------*/
+alter table TBLVPCONTRATOPRODEST
+drop column FLULTILIZADOPEDIDODTATUAL;
+
+

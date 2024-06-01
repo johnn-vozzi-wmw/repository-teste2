@@ -1,0 +1,212 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.27' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 07/08/2013
+Autor: Pedro
+Descrição: Novas tabelas
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPDESCCOMIPROD;
+DROP TABLE TBLVPDESCCOMIGRUPO;
+CREATE TABLE TBLVPDESCCOMIFAIXA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDDESCCOMI           VARCHAR(20)          NOT NULL,
+   QTITEM               DECIMAL(16,7)        NOT NULL,
+   VLPCTDESCONTO        DECIMAL(16,7)        NOT NULL,
+   VLPCTCOMISSAO        DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPDESCCOMIFAIXA PRIMARY KEY (CDEMPRESA, CDDESCCOMI, QTITEM, VLPCTDESCONTO, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPDESCCOMI (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDDESCCOMI           VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NULL,
+   CDGRUPOPRODUTO1      VARCHAR(20)          NULL,
+   CDGRUPOPRODUTO2      VARCHAR(20)          NULL,
+   CDGRUPOPRODUTO3      VARCHAR(20)          NULL,
+   CDCLIENTE            VARCHAR(20)          NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NULL,
+   CDCONDICAOPAGAMENTO  VARCHAR(40)          NULL,
+   CDRAMOATIVIDADE      VARCHAR(20)          NULL,
+   CDCIDADE             VARCHAR(20)          NULL,
+   DTVIGENCIAINICIAL    DATETIME             NOT NULL,
+   DTVIGENCIAFINAL      DATETIME             NOT NULL,
+   CDTIPODESCCOMI       VARCHAR(20)          NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPDESCCOMI PRIMARY KEY (CDEMPRESA, CDDESCCOMI, CDUSUARIO)
+)
+go
+
+/*-------------------------------------------------------------------------
+Data: 07/08/2013
+Autor: Pedro
+Descrição: Novo campo na tabela CLIENTE
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD CDCIDADECOMERCIAL VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/08/2013
+Autor: Pedro
+Descrição: Novas tabelas
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPMETAVENDA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDMETAVENDA          VARCHAR(20)          NOT NULL,
+   DSMETAVENDA          VARCHAR(100)         NULL,
+   CDTIPOMETAVENDA      VARCHAR(20)          NULL,
+   CDVARIAVELMETAVENDA  VARCHAR(20)          NULL,
+   DTINICIALVIGENCIA    DATETIME             NULL,
+   DTFINALVIGENCIA      DATETIME             NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPMETAVENDA PRIMARY KEY (CDEMPRESA, CDMETAVENDA, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPFAMILIA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDFAMILIA            VARCHAR(20)          NOT NULL,
+   DSFAMILIA            VARCHAR(100)         NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPFAMILIA PRIMARY KEY (CDEMPRESA, CDFAMILIA, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPMETAVENDAFAMILIA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDMETAVENDA          VARCHAR(20)          NOT NULL,
+   CDFAMILIA            VARCHAR(20)          NOT NULL,
+   VLMETAVENDA          DECIMAL(16,7)        NULL,
+   VLREALIZADOVENDA     DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPMETAVENDAFAMILIA PRIMARY KEY (CDEMPRESA, CDMETAVENDA, CDFAMILIA, CDUSUARIO)
+)
+go
+
+
+CREATE TABLE TBLVPMETAVENDAREP (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDMETAVENDA          VARCHAR(20)          NOT NULL,
+   CDGERENTE            VARCHAR(20)          NOT NULL,
+   VLCHAVETIPO      	VARCHAR(20)          NOT NULL,
+   CDSUPERVISOR         VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   VLMETAVENDA          DECIMAL(16,7)        NULL,
+   VLREALIZADOVENDA     DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPMETAVENDAREP PRIMARY KEY (CDEMPRESA, CDMETAVENDA, CDGERENTE, VLCHAVETIPO, CDSUPERVISOR, CDREPRESENTANTE, CDUSUARIO)
+)
+go
+
+
+
+/*---------------------------------------------------------------------------------------------------
+Data: 30/08/2013
+Autor: Guilherme Ribeiro
+Descrição: Inserção da coluna cdTransportadora caso não tenha nas tabelas Pedido e PedidoErp
+----------------------------------------------------------------------------------------------------*/
+
+--SQLSERVER
+
+-- TBLVPPEDIDO
+if not exists(select 1 from syscolumns where id = object_id('TBLVPPEDIDO') and name = 'CDTRANSPORTADORA')
+begin
+   alter table TBLVPPEDIDO add CDTRANSPORTADORA varchar(20);   
+end
+
+-- TBLVPPEDIDOERP
+if not exists(select 1 from syscolumns where id = object_id('TBLVPPEDIDOERP') and name = 'CDTRANSPORTADORA')
+begin
+   alter table TBLVPPEDIDOERP add CDTRANSPORTADORA varchar(20);   
+end
+
+--/SQLSERVER
+
+--ORACLE
+
+DECLARE
+  FLEXISTE INT;
+BEGIN
+  SELECT COUNT(1) INTO FLEXISTE
+  FROM USER_TAB_COLUMNS
+  WHERE TABLE_NAME = upper('TBLVPPEDIDO') and COLUMN_NAME = upper('CDTRANSPORTADORA');
+  
+  IF FLEXISTE = 0 THEN
+   EXECUTE immediate 'alter table TBLVPPEDIDO add CDTRANSPORTADORA varchar(20)';
+  END IF;
+END;
+
+/
+
+DECLARE
+  FLEXISTE INT;
+BEGIN
+  SELECT COUNT(1) INTO FLEXISTE
+  FROM USER_TAB_COLUMNS
+  WHERE TABLE_NAME = upper('TBLVPPEDIDOERP') and COLUMN_NAME = upper('CDTRANSPORTADORA');
+  
+  IF FLEXISTE = 0 THEN
+   EXECUTE immediate 'alter table TBLVPPEDIDOERP add CDTRANSPORTADORA varchar(20)';
+  END IF;
+END;
+
+--/ORACLE
+
+--POSTGRES
+
+Create or replace function executaScripts() returns integer as $$Declare
+    result integer := 0;
+Begin
+	-- TBLVPPEDIDO 
+	BEGIN
+	  IF (SELECT COUNT(1)
+	  FROM information_schema.columns 
+	  WHERE upper(table_name)='TBLVPPEDIDO' and upper(column_name)='CDTRANSPORTADORA') = 0 THEN
+	   EXECUTE 'alter table TBLVPPEDIDO add CDTRANSPORTADORA VARCHAR(20)';
+	  END IF;
+	END;
+	return result;
+end;
+
+$$ language 'plpgsql';
+
+select executaScripts();
+
+drop function executaScripts();
+
+Create or replace function executaScripts() returns integer as $$Declare
+    result integer := 0;
+Begin
+	-- TBLVPPEDIDOERP
+	BEGIN
+	  IF (SELECT COUNT(1)
+	  FROM information_schema.columns 
+	  WHERE upper(table_name)='TBLVPPEDIDOERP' and upper(column_name)='CDTRANSPORTADORA') = 0 THEN
+	   EXECUTE 'alter table TBLVPPEDIDOERP add CDTRANSPORTADORA VARCHAR(20)';
+	  END IF;
+	END;
+	return result;
+end;
+
+$$ language 'plpgsql';
+
+select executaScripts();
+
+drop function executaScripts();
+
+--/POSTGRES

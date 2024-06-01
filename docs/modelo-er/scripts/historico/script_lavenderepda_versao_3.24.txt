@@ -1,0 +1,200 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.24' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 06/05/13
+Autor: Pedro
+Descrição: Novas tabelas de Segmento
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPSEGMENTO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDSEGMENTO           VARCHAR(20)          NOT NULL,
+   DSSEGMENTO           VARCHAR(50)          NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPSEGMENTO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDSEGMENTO, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPCLIENTESEG (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDSEGMENTO           VARCHAR(20)          NOT NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   FLDEFAULT            CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCLIENTESEG PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDSEGMENTO, CDCLIENTE, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPTABELAPRECOSEG (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDSEGMENTO           VARCHAR(20)          NOT NULL,
+   CDTABELAPRECO        VARCHAR(30)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPTABELAPRECOSEG PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDSEGMENTO, CDTABELAPRECO, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPCONDPAGTOSEG (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDSEGMENTO           VARCHAR(20)          NOT NULL,
+   CDCONDICAOPAGAMENTO  VARCHAR(40)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCONDPAGTOSEG PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDSEGMENTO, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 06/05/13
+Autor: Pedro
+Descrição: Novo campo cdSegmento na tabela PEDIDO e PEDIDOERP
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPEDIDO ADD CDSEGMENTO VARCHAR(20) NULL;
+ALTER TABLE TBLVPPEDIDOERP ADD CDSEGMENTO VARCHAR(20) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 07/05/13
+Autor: Pedro
+Descrição: Novo campo na tabela PRODUTOTABPRECO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTOTABPRECO ADD qtVendasPeriodo decimal(9,0) NULL;
+
+/*-------------------------------------------------------------------------
+Data: 07/05/2013
+Autor: Richard
+Descrição: Adicionado CDGRUPOPRODUTO2 e CDGRUPOPRODUTO3 a tabela TBLVPDESCCOMIGRUPO
+------------------------------------------------------------------------*/
+
+
+-- Cria uma tabela temporaria para manipulação de dados
+create table TBLVPDESCCOMIGRUPO_TEMP (
+   CDEMPRESA            varchar(20)          null,
+   CDREPRESENTANTE      varchar(20)          null,
+   CDGRUPOPRODUTO1      varchar(20)          null,
+   CDGRUPOPRODUTO2      varchar(20)          null,
+   CDGRUPOPRODUTO3      varchar(20)          null,      
+   QTITEM               decimal(16,7)        null,
+   VLPCTDESCONTO        decimal(16,7)        null,
+   VLPCTCOMISSAO        decimal(16,7)        null,
+   CDUSUARIO		    varchar(20)			 null,
+   FLTIPOALTERACAO      char(1)              null
+);
+-- Insere os registros na tabela temporaria
+insert into TBLVPDESCCOMIGRUPO_TEMP(CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, VLPCTDESCONTO, VLPCTCOMISSAO, CDUSUARIO, FLTIPOALTERACAO)
+select CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, VLPCTDESCONTO, VLPCTCOMISSAO, CDUSUARIO, FLTIPOALTERACAO from TBLVPDESCCOMIGRUPO;
+
+-- Atualiza os campos cdGrupoProduto2 e cdGrupoProduto3
+update TBLVPDESCCOMIGRUPO_TEMP set CDGRUPOPRODUTO2 = '0' where CDGRUPOPRODUTO2 is null;
+update TBLVPDESCCOMIGRUPO_TEMP set CDGRUPOPRODUTO3 = '0' where CDGRUPOPRODUTO3 is null;
+
+-- Exclui todos os registros da tabela oficial
+delete from TBLVPDESCCOMIGRUPO;
+
+-- Remove a chave primaria da tabela oficial
+alter table TBLVPDESCCOMIGRUPO drop constraint PK_TBLVPDESCCOMIGRUPO;
+
+-- Adiciona as colunas a tabela
+alter table TBLVPDESCCOMIGRUPO add CDGRUPOPRODUTO2 varchar(20) not null;
+alter table TBLVPDESCCOMIGRUPO add CDGRUPOPRODUTO3 varchar(20) not null;
+
+-- Define novamente a nova chave primaria										 
+alter table TBLVPDESCCOMIGRUPO add constraint PK_TBLVPDESCCOMIGRUPO primary key (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, VLPCTDESCONTO, CDUSUARIO, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3);
+
+-- Devolve os registros para a tabela oficial
+insert into TBLVPDESCCOMIGRUPO(CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, QTITEM, VLPCTDESCONTO, VLPCTCOMISSAO, CDUSUARIO, FLTIPOALTERACAO)
+select CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, QTITEM, VLPCTDESCONTO, VLPCTCOMISSAO, CDUSUARIO, FLTIPOALTERACAO from TBLVPDESCCOMIGRUPO_TEMP;
+
+-- exclui a tabela temporaria
+drop table TBLVPDESCCOMIGRUPO_TEMP;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 08/05/13
+Autor: Fernando
+Descrição: Novas tabelas
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPCONDICAOCOMERCIAL (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDCONDICAOCOMERCIAL  VARCHAR(20)          NOT NULL,
+   DSCONDICAOCOMERCIAL  VARCHAR(30)          NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)              NOT NULL,
+   CONSTRAINT PK_TBLVPCONDICAOCOMERCIAL PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOCOMERCIAL, CDUSUARIO)
+);
+
+CREATE TABLE TBLVPCONDCOMCONDPAGTO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDCONDICAOCOMERCIAL  VARCHAR(20)          NOT NULL,
+   CDCONDICAOPAGAMENTO  VARCHAR(40)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)              NOT NULL,
+   CONSTRAINT PK_TBLVPCONDCOMCONDPAGTO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOCOMERCIAL, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+
+CREATE TABLE TBLVPCONDCOMSEGCLI (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDCONDICAOCOMERCIAL  VARCHAR(20)          NOT NULL,
+   CDSEGMENTO           VARCHAR(20)          NOT NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   FLDEFAULT            CHAR(1)              NULL,   
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)              NOT NULL,
+   CONSTRAINT PK_TBLVPCONDCOMSEGCLI PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOCOMERCIAL, CDSEGMENTO, CDCLIENTE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 08/05/13
+Autor: Fernando
+Descrição: Novo campo na tabela de Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add CDCONDICAOCOMERCIAL varchar(20);
+alter table TBLVPPEDIDOERP add CDCONDICAOCOMERCIAL varchar(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/05/2013
+Autor: Pedro
+Descrição: Nova coluna na tabela de CONDICAOCOMERCIAL e CONDCOMCONDPAGTO
+------------------------------------------------------------------------*/
+alter table TBLVPCONDICAOCOMERCIAL add VLINDICEFINANCEIRO decimal(16,7);
+alter table TBLVPCONDCOMCONDPAGTO add VLINDICEFINANCEIRO decimal(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 08/05/13
+Autor: Fernando
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPINFOENTREGAPED (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   FLORIGEMPEDIDO       CHAR(1)              NOT NULL,
+   NUPEDIDO             VARCHAR(30)          NOT NULL,
+   DTEMISSAO            DATETIME             NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   DSINFOENTREGA        VARCHAR(4000)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPINFOENTREGAPED PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDUSUARIO)
+);
+

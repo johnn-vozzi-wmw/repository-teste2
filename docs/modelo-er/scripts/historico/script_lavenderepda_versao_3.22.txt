@@ -1,0 +1,170 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.22' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 05/03/13
+Autor: Guilherme
+Descrição: Alterados campos de tabelas do pda
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPATRIBUTOOPCAOPROD
+   DROP COLUMN FLATIVO
+go
+
+ALTER TABLE TBLVPATRIBUTOPROD
+   DROP COLUMN FLATIVO
+go
+
+ALTER TABLE TBLVPCONDPAGTOCLI
+   DROP COLUMN FLATIVO
+go
+
+ALTER TABLE TBLVPCONDTIPOPAGTO
+   DROP COLUMN FLATIVO
+go
+
+ALTER TABLE TBLVPTIPOCONDPAGTOCLI
+   DROP COLUMN FLATIVO
+go
+
+/*-------------------------------------------------------------------------
+Data: 12/03/13
+Autor: Guilherme
+Descrição: Adicionado campo na tabela Estoque
+------------------------------------------------------------------------*/
+--SQLSERVER
+
+-- DTESTOQUEPREVISTO   
+if not exists(select 1 from syscolumns where id = object_id('TBLVPESTOQUE') and name = 'DTESTOQUEPREVISTO')
+begin
+   alter table TBLVPESTOQUE add DTESTOQUEPREVISTO datetime;
+end
+
+--/SQLSERVER
+
+--ORACLE
+
+-- DTESTOQUEPREVISTO   
+DECLARE
+  FLEXISTE INT;
+BEGIN
+  SELECT COUNT(1) INTO FLEXISTE
+  FROM USER_TAB_COLUMNS
+  WHERE TABLE_NAME = upper('TBLVPESTOQUE') and COLUMN_NAME = upper('DTESTOQUEPREVISTO');
+  
+  IF FLEXISTE = 0 THEN
+   EXECUTE immediate 'alter table TBLVPESTOQUE add DTESTOQUEPREVISTO varchar(20)';
+  END IF;
+END;
+
+--/ORACLE
+
+--POSTGRES
+Create or replace function executaScripts() returns integer as $$Declare
+    result integer := 0;
+Begin
+	-- DTESTOQUEPREVISTO 
+	BEGIN
+	  IF (SELECT COUNT(1)
+	  FROM information_schema.columns 
+	  WHERE upper(table_name)='TBLVPESTOQUE' and upper(column_name)='DTESTOQUEPREVISTO') = 0 THEN
+	   EXECUTE 'alter table TBLVPESTOQUE add DTESTOQUEPREVISTO DATE';
+	  END IF;
+	END;
+	return result;
+end;
+
+$$ language 'plpgsql';
+
+select executaScripts();
+
+drop function executaScripts();
+
+--/POSTGRES
+
+
+/*-------------------------------------------------------------------------
+Data: 12/03/2013
+Autor: Pedro
+Descrição: Adicionado coluna dsMsgAlerta na tabela de TabelaPreco
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTABELAPRECO ADD DSMSGALERTA VARCHAR(4000) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 13/03/2013
+Autor: Pedro
+Descrição: Adicionado coluna qtDiasPrazoPagtoEstendido na tabela de Cliente
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD qtDiasPrazoPagtoEstendido DECIMAL(9,0) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 13/03/2013
+Autor: Pedro
+Descrição: Nova tabela de TIPOPAGTOCLI
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPTIPOPAGTOCLI (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDTIPOPAGAMENTO      VARCHAR(20)          NOT NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPTIPOPAGTOCLI PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDTIPOPAGAMENTO, CDCLIENTE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 14/03/2013
+Autor: Pedro
+Descrição: Adicionado coluna dsTabPrecoDescPromocionalList na tabela de PRODUTOTABPRECO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTOTABPRECO ADD dsTabPrecoDescPromocionalList VARCHAR(4000) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 12/03/2013
+Autor: Pedro
+Descrição: Novas colunas na tabela Pedido e PedidoErp
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPEDIDO ADD VLVERBAPEDIDOPOSITIVO DECIMAL(16,7) NULL;
+ALTER TABLE TBLVPPEDIDOERP ADD VLVERBAPEDIDOPOSITIVO DECIMAL(16,7) NULL;
+
+/*-------------------------------------------------------------------------
+Data: 19/03/2013
+Autor: Pedro
+Descrição: Nova coluna na tabela TipoPedido
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD QTMINVALORPARCELA DECIMAL(16,7) NULL;
+
+/*-------------------------------------------------------------------------
+Data: 22/03/2013
+Autor: Wellington
+Descrição: Nova Tabela
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPPONTOGPS (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   DTCOLETA             DATETIME             NOT NULL,
+   HRCOLETA             CHAR(5)              NOT NULL,
+   VLLATITUDE           DECIMAL(16,7)        NULL,
+   VLLONGITUDE          DECIMAL(16,7)        NULL,
+   VLVELOCIDADE         DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPONTOGPS PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, CDUSUARIO)
+);
+go
+
+/*-------------------------------------------------------------------------
+Data: 28/03/2013
+Autor: Wellington
+Descrição: Novas colunas na tabela ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPITEMPEDIDO ADD VLUNIDADEPADRAO DECIMAL(16,7) NULL;
+ALTER TABLE TBLVPITEMPEDIDOERP ADD VLUNIDADEPADRAO DECIMAL(16,7) NULL;
+
+ALTER TABLE TBLVPITEMPEDIDO ADD VLBASEEMBALAGEMELEMENTAR DECIMAL(16,7) NULL;
+ALTER TABLE TBLVPITEMPEDIDOERP ADD VLBASEEMBALAGEMELEMENTAR DECIMAL(16,7) NULL;

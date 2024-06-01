@@ -1,0 +1,159 @@
+
+/*-------------------------------------------------------------------------
+Data: 05/09/2008
+Autor: Dirceu
+Descrição: Excluído campo CdEmpresa da tabela UsuarioPda
+------------------------------------------------------------------------*/
+
+alter table TBLVPUSUARIOPDA
+drop column CDEMPRESA;
+
+alter table ERPLVPUSUARIOPDA
+drop column CDEMPRESA;
+
+alter table PDALVPUSUARIOPDA
+drop column CDEMPRESA;
+
+
+/*-------------------------------------------------------------------------
+Data: 05/09/2008
+Autor: Thiago
+Descrição: Novas tabelas TBLVPKIT e TBLVPITEMKIT
+------------------------------------------------------------------------*/
+
+/*==============================================================*/
+/* Table: TBLVPKIT                                              */
+/*==============================================================*/
+create table TBLVPKIT (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDKIT                VARCHAR(20)                    not null,
+DSKIT                VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPKIT primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMKIT                                          */
+/*==============================================================*/
+create table TBLVPITEMKIT (
+CDPRODUTO            VARCHAR(20)                    not null,
+QTITEMFISICO         DECIMAL(12,3),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDKIT                VARCHAR(20)                    not null,
+constraint PK_TBLVPITEMKIT primary key (CDPRODUTO, CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDKIT)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 05/09/2008
+Autor: Dirceu
+Descrição: Adicionado campo flDefault a tabela RepresentanteEmp
+------------------------------------------------------------------------*/
+alter table TBLVPREPRESENTANTEEMP
+add FLDEFAULT CHAR(1);
+
+
+/*-------------------------------------------------------------------------
+Data: 08/09/2008
+Autor: Dirceu
+Descrição: Adicionado campo CdFornecedor a tabela ProdutoTabPreco
+		Alterado campo CdFornecedor da tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTOTABPRECO
+add CDFORNECEDOR DECIMAL(9,0);
+
+alter table TBLVPPRODUTO
+alter column CDFORNECEDOR DECIMAL(9,0);
+
+alter table TBLVPFORNECEDORREP
+drop constraint PK_TBLVPFORNECEDORREP;
+
+alter table TBLVPFORNECEDORREP
+alter column CDFORNECEDOR DECIMAL(9,0) NOT NULL;
+
+alter table TBLVPFORNECEDORREP
+add constraint PK_TBLVPFORNECEDORREP primary key (CDEMPRESA, CDREPRESENTANTE, CDFORNECEDOR, CDUSUARIO);
+
+/*-------------------------------------------------------------------------
+Data: 09/09/2008
+Autor: Thiago
+Descrição: Adicionado nova tabela Fornecedor, KitTabPreco, RelNovidadeProduto, TipoNovidadeProduto
+------------------------------------------------------------------------*/
+/*==============================================================*/
+/* Table: TBLVPFORNECEDOR                                       */
+/*==============================================================*/
+create table TBLVPFORNECEDOR (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDFORNECEDOR         DECIMAL(9,0)                   not null,
+NMRAZAOSOCIAL        VARCHAR(100),
+NMFANTASIA           VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFORNECEDOR primary key (CDEMPRESA, CDFORNECEDOR, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPKITTABPRECO                                      */
+/*==============================================================*/
+create table TBLVPKITTABPRECO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDKIT                VARCHAR(20)                    not null,
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPKITTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDTABELAPRECO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPRELNOVIDADEPRODUTO                               */
+/*==============================================================*/
+create table TBLVPRELNOVIDADEPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDTIPONOVIDADEPRODUTO DECIMAL(9,0)                   not null,
+DSPRODUTO            VARCHAR(100),
+DSNOVIDADEPRODUTO    VARCHAR(100),
+DTEMISSAORELATORIO   DATETIME,
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPRELNOVIDADEPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPONOVIDADEPRODUTO                              */
+/*==============================================================*/
+create table TBLVPTIPONOVIDADEPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDTIPONOVIDADEPRODUTO DECIMAL(9,0)                   not null,
+DSTIPONOVIDADEPRODUTO VARCHAR(100),
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPTIPONOVIDADEPRODUTO primary key (CDEMPRESA, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 17/09/2008
+Autor: Thiago
+Descrição: Adicionado novo campo CDKIT na Tabela ItemPedido
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+add CDKIT VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 17/09/08
+Autor: Dirceu
+Descrição: alterado campo DsKit para tamanho 100
+------------------------------------------------------------------------*/
+alter table TBLVPKIT
+alter column DSKIT VARCHAR(100);
+

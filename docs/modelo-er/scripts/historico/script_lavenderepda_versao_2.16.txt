@@ -1,0 +1,11 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.16' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 17/05/2011
+Autor: Pedro
+Descrição: Nova coluna qtEmbalagemCompra na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add qtEmbalagemCompra              decimal(16,7);
+

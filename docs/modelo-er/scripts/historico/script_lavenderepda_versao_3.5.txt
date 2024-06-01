@@ -1,0 +1,25 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.5' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 22/12/2011
+Autor: Almir
+Descrição: Adicionadas colunas dinamicas a tabela de Cliente,
+Como a interface para gerenciamento de Cadastro Personalizado de Colunas e Tabelas 
+ainda não esta funcionando, as colunas já estão sendo criadas fisicamente na Base de Dados
+------------------------------------------------------------------------*/
+
+alter table TBLVPCLIENTE add DSLOGRADOUROENTREGA  VARCHAR(100);
+alter table TBLVPCLIENTE add DSCOMPLEMENTOENTREGA VARCHAR(100);
+alter table TBLVPCLIENTE add DSBAIRROENTREGA      VARCHAR(100);
+alter table TBLVPCLIENTE add DSCEPENTREGA         VARCHAR(20);
+alter table TBLVPCLIENTE add DSCIDADEENTREGA      VARCHAR(100);
+alter table TBLVPCLIENTE add DSESTADOENTREGA      VARCHAR(20);
+alter table TBLVPCLIENTE add DSPAISENTREGA        VARCHAR(20);
+alter table TBLVPCLIENTE add DSLOGRADOUROCOBRANCA VARCHAR(100);
+alter table TBLVPCLIENTE add DSCOMPLEMENTOCOBRANCA VARCHAR(100);
+alter table TBLVPCLIENTE add DSBAIRROCOBRANCA     VARCHAR(100);
+alter table TBLVPCLIENTE add DSCEPCOBRANCA        VARCHAR(20);
+alter table TBLVPCLIENTE add DSCIDADECOBRANCA     VARCHAR(100);
+alter table TBLVPCLIENTE add DSESTADOCOBRANCA     VARCHAR(20);
+alter table TBLVPCLIENTE add DSPAISCOBRANCA       VARCHAR(20);

@@ -1,0 +1,194 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.4' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2010
+Autor: PEDRO
+Descrição: Nova coluna FLBONIFICACAO em Produto e ProdutoTabPreco
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add FLBONIFICACAO	CHAR(1);
+
+alter table TBLVPPRODUTOTABPRECO
+add FLBONIFICACAO	CHAR(1);
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2010
+Autor: PEDRO
+Descrição: Nova coluna VLBONIFICACAOPEDIDO em Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add VLBONIFICACAOPEDIDO	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP
+add VLBONIFICACAOPEDIDO	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 31/05/2010
+Autor: Dirceu
+Descrição: Nova tabela ConfigPersonCad
+------------------------------------------------------------------------*/
+create table TBLVPCONFIGPERSONCAD (
+dsTabela             varchar(30)                    not null,
+dsColuna             varchar(30)                    not null,
+cdTipo               varchar(30),
+flObrigatorio        char(1),
+dsLabel              varchar(30),
+nuMaxLen             decimal(9),
+dsMascara            varchar(30),
+dsDominio            varchar(100),
+dsSecao              varchar(30),
+nuOrdem              decimal(9),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONFIGPERSONCAD primary key (dsTabela, dsColuna, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 31/05/2010
+Autor: Dirceu
+Descrição: Nova tabela NovoCliente
+------------------------------------------------------------------------*/
+create table TBLVPNOVOCLIENTE (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+FLORIGEMNOVOCLIENTE  CHAR(1)                        not null,
+CDNOVOCLIENTE        VARCHAR(20)                    not null,
+NUCNPJ               VARCHAR(20),
+DTCADASTRO           DATETIME,
+CDSTATUSNOVOCLIENTE  VARCHAR(20),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPNOVOCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMNOVOCLIENTE, CDNOVOCLIENTE, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/06/2010
+Autor: Dirceu
+Descrição: Nova coluna flPedidoNovoCliente nas tabelas Pedido, PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add FLPEDIDONOVOCLIENTE		CHAR(1);
+
+alter table TBLVPPEDIDOERP
+add FLPEDIDONOVOCLIENTE		CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 14/06/2010
+Autor: Dirceu
+Descrição: Nova tabela TipoFrete
+------------------------------------------------------------------------*/
+create table TBLVPTIPOFRETE (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+CDTIPOFRETE          VARCHAR(20)                    not null,
+DSTIPOFRETE          VARCHAR(100),
+FLFRETEFOB           CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOFRETE primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOFRETE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data:16/06/2010
+Autor: Dirceu
+Descrição: Nova coluna flPrecoLiberadoSenha nas tabelas ItemPedido, ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add FLPRECOLIBERADOSENHA	CHAR(1);
+alter table TBLVPITEMPEDIDOERP
+add FLPRECOLIBERADOSENHA	CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 21/06/2010
+Autor: Dirceu
+Descrição: Nova coluna cdTipoFrente na tabela Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add cdTipoFrete		VARCHAR(20);
+alter table TBLVPPEDIDOERP 
+add cdTipoFrete		VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 21/06/2010
+Autor: Dirceu
+Descrição: Nova coluna vlPrecoFrete na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO 
+add vlPrecoFrete	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data:21/06/2010
+Autor: Dirceu
+Descrição: Nova coluna vlItemPedidoFrete nas tabelas ItemPedido, ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add vlItemPedidoFrete	DECIMAL(16,7);
+alter table TBLVPITEMPEDIDOERP
+add vlItemPedidoFrete	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 21/06/2010
+Autor: Dirceu
+Descrição: Nova coluna vlFrete na tabela Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlFrete		DECIMAL(16,7);
+alter table TBLVPPEDIDOERP 
+add vlFrete		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/06/2010
+Autor: Dirceu
+Descrição: Nova coluna cdTabelaPreco na tabela DescProgressivo
+------------------------------------------------------------------------*/
+drop table TBLVPDESCPROGRESSIVO;
+
+go
+
+create table TBLVPDESCPROGRESSIVO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTabelaPreco        DECIMAL(9,0)                   not null,
+VLINICIOFAIXA        DECIMAL(16,7)                  not null,
+VLFINALFAIXA         DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCPROGRESSIVO primary key (CDEMPRESA, CDREPRESENTANTE, cdTabelaPreco, VLINICIOFAIXA, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/06/2010
+Autor: Dirceu
+Descrição: Nova coluna vlPctDesconto2 na tabela Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlPctDescProgressivo	DECIMAL(16,7);
+alter table TBLVPPEDIDOERP 
+add vlPctDescProgressivo	DECIMAL(16,7);
+
+
+

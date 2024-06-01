@@ -1,0 +1,112 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.28' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 04/09/2013
+Autor: Fernando
+Descrição: Novas colunas nas tabelas de GrupoProduto e itempedido
+------------------------------------------------------------------------*/
+alter table TBLVPGRUPOPRODUTO1 add flBloqueiaVendaPorMeta char(1) null;
+alter table TBLVPGRUPOPRODUTO2 add flBloqueiaVendaPorMeta char(1) null;
+alter table TBLVPGRUPOPRODUTO3 add flBloqueiaVendaPorMeta char(1) null;
+
+alter table tblvpitempedido add flMetaGrupoProdLiberadoSenha char(1) null;
+alter table tblvpitempedidoerp add flMetaGrupoProdLiberadoSenha char(1) null;
+
+/*-------------------------------------------------------------------------
+Data: 13/09/2013
+Autor: Guilherme Ribeiro
+Descrição: Nova coluna na tabela de Representante
+------------------------------------------------------------------------*/
+alter table TBLVPREPRESENTANTE add vlPctMaxDesconto decimal(16,7) null;
+
+/*-------------------------------------------------------------------------
+Data: 13/09/2013
+Autor: Guilherme(Digi)
+Descrição: Novo campo na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPITEMTABELAPRECO ADD NUCONVERSAOUNIDADE DECIMAL(16,7) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 19/09/2013
+Autor: Pedro
+Descrição: Nova tabela de saldo de rentabilidade
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPRENTABILIDADESALDO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   FLORIGEMSALDO        CHAR(1)              NOT NULL,
+   VLTOTALRENTABILIDADE DECIMAL(16,7)        NULL,
+   VLTOTALITENS         DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPRENTABILIDADESALDO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, FLORIGEMSALDO, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 21/09/2013
+Autor: Pedro
+Descrição: Novo campo na tabela TIPOPEDIDO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD FLVISITAPOSITIVADA CHAR(1) NULL;
+
+/*-------------------------------------------------------------------------
+Data: 21/09/2013
+Autor: Richard
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+alter table tblvpvisita add NUSEQUENCIA DECIMAL(9);
+
+
+/*-------------------------------------------------------------------------
+Data: 21/09/2013
+Autor: Pedro
+Descrição: Alterada chave tabela Estoque
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD CDLOCALESTOQUE VARCHAR(20) NULL;
+
+DROP TABLE TBLVPESTOQUE;
+CREATE TABLE TBLVPESTOQUE (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDITEMGRADE1         VARCHAR(20)          NOT NULL,
+   CDITEMGRADE2         VARCHAR(20)          NOT NULL,
+   CDITEMGRADE3         VARCHAR(20)          NOT NULL,
+   CDLOCALESTOQUE       VARCHAR(20)          NOT NULL,
+   QTESTOQUE            DECIMAL(16,7)        NULL,
+   QTESTOQUEPREVISTO    DECIMAL(16,7)        NULL,
+   DTESTOQUEPREVISTO    DATETIME             NULL,
+   QTESTOQUEMIN         DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPESTOQUE PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, CDUSUARIO, CDLOCALESTOQUE)
+);
+
+/*-------------------------------------------------------------------------
+Data: 23/09/2013
+Autor: Fernando
+Descrição: Renomeada tabela MetaVendaFamilia
+------------------------------------------------------------------------*/
+--SQLSERVER
+execute sp_rename TBLVPMETAVENDAFAMILIA, TBLVPMETAVENDATIPO;
+--/SQLSERVER
+
+--ORACLE
+Alter table TBLVPMETAVENDAFAMILIA rename to TBLVPMETAVENDATIPO;
+--/ORACLE
+
+--POSTGRES
+Alter table TBLVPMETAVENDAFAMILIA rename to TBLVPMETAVENDATIPO;
+--/POSTGRES
+
+/*-------------------------------------------------------------------------
+Data: 01/10/2013
+Autor: Guilherme(Digi)
+Descrição: Novo campo na tabela TIPOPEDIDO
+------------------------------------------------------------------------*/
+alter table TBLVPTIPOPEDIDO add flObrigaQtdProdutos char(1) null;

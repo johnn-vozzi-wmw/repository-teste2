@@ -1,0 +1,46 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.30' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 08/11/2013
+Autor: Pedro
+Descrição: Novo campo tabela TIPOPEDIDO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD flConsisteConversaoUnidade CHAR(1) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 21/11/13
+Autor: Tiago Goulart
+Descrição: Alterado o tamanho do campo dsMensagemEntrega para 4000 caracteres
+------------------------------------------------------------------------*/
+
+--SQLSERVER
+
+alter table TBLVPPEDIDO alter column dsMensagemEntrega varchar(4000);
+alter table TBLVPPEDIDOERP alter column dsMensagemEntrega varchar(4000);
+
+--/SQLSERVER
+
+--ORACLE
+
+alter table TBLVPPEDIDO alter column dsMensagemEntrega varchar(4000);
+alter table TBLVPPEDIDOERP alter column dsMensagemEntrega varchar(4000);
+
+--/ORACLE
+
+--POSTGRES
+
+alter table TBLVPPEDIDO alter column dsMensagemEntrega type varchar(4000);
+alter table TBLVPPEDIDOERP alter column dsMensagemEntrega type varchar(4000);
+
+--/POSTGRES
+
+
+/*-------------------------------------------------------------------------
+Data: 06/12/13
+Autor: Fernando
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+alter table TBLVPUSUARIOPDA add cdFuncao varchar(20) default '' not null;

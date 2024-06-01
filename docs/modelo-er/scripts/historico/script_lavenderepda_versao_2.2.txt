@@ -1,0 +1,177 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.2' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 19/03/2010
+Autor: Dirceu
+Descrição: Nova coluna cdTransportadora na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add CDTRANSPORTADORA	DECIMAL(9,0);
+
+
+/*-------------------------------------------------------------------------
+Data: 19/03/2010
+Autor: Dirceu
+Descrição: Nova tabela Transportadora
+------------------------------------------------------------------------*/
+create table TBLVPTRANSPORTADORA (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+CDTRANSPORTADORA     decimal(9,0)                   not null,
+NMTRANSPORTADORA     VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTRANSPORTADORA primary key (CDEMPRESA, CDREPRESENTANTE, CDTRANSPORTADORA, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/03/2010
+Autor: Dirceu
+Descrição: Nova coluna vlCotacaoDolar para as tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlCotacaoDolar	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlCotacaoDolar	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/03/2010
+Autor: Dirceu
+Descrição: Nova coluna qtMinValor para as tabelas CondicaoPagamento
+------------------------------------------------------------------------*/
+alter table TBLVPCONDICAOPAGAMENTO 
+add qtMinValor		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/03/2010
+Autor: Dirceu
+Descrição: Nova coluna vlPedidosCarteira na tabela ficha financeira
+------------------------------------------------------------------------*/
+alter table TBLVPFICHAFINANCEIRA 
+add vlPedidosCarteira		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/03/2010
+Autor: Dirceu
+Descrição: Excluída a coluna flLido da tabela PedidoErpDif
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDOERPDIF 
+drop column FLLIDO;
+
+alter table ERPLVPPEDIDOERPDIF 
+drop column FLLIDO;
+
+
+/*-------------------------------------------------------------------------
+Data: 01/04/2010
+Autor: Dirceu
+Descrição: Nova tabela ConfigWeb2Sync
+------------------------------------------------------------------------*/
+
+create table TBLVPCONFIGWEB2SYNC (
+dsTabela             varchar(20)                    not null,
+flRemessa            char(1),
+flRetorno            char(1),
+flAtivo              char(1),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONFIGWEB2SYNC primary key (dsTabela, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/04/2010
+Autor: Dirceu
+Descrição: Retinado not null da coluna nuPedidoRelacionado da tabela Pedido
+------------------------------------------------------------------------*/
+ALTER TABLE tblvppedido
+DROP COLUMN nupedidorelacionado;
+
+ALTER TABLE tblvppedido
+ADD nuPedidoRelacionado varchar(30);
+
+
+/*-------------------------------------------------------------------------
+Data: 12/04/2010
+Autor: Almir
+Descrição: Nova Coluna dsDestino da tabela de pedido e pedidoErp
+------------------------------------------------------------------------*/
+
+ALTER TABLE tblvppedido
+ADD dsDestino varchar(20);
+
+
+ALTER TABLE tblvppedidoerp
+ADD dsDestino varchar(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/04/2010
+Autor: Almir
+Descrição: Nova Coluna QTMINVALOR na tabela de TipoPagamento
+------------------------------------------------------------------------*/
+
+alter table tblvptipopagamento
+add QTMINVALOR DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/04/2010
+Autor: PEDRO
+Descrição: Novas Colunas na tabela de verbaSaldo
+------------------------------------------------------------------------*/
+
+ALTER TABLE tblvpverbasaldo
+ADD dtvigenciainicial DATETIME;
+
+
+ALTER TABLE tblvpverbasaldo
+ADD dtvigenciafinal DATETIME;
+
+
+/*-------------------------------------------------------------------------
+Data: 15/04/2010
+Autor: Dirceu
+Descrição: Alterado tipo da coluna nuPortaFtp da tabela ConexaoPda
+------------------------------------------------------------------------*/
+alter table tblvpConexaoPda 
+drop column nuPortaFtp;
+
+alter table tblvpConexaoPda
+add nuPortaFtp decimal(9, 0);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 19/04/2010
+Autor: PEDRO
+Descrição: Nova Coluna VLSALDOINICIAL na tabela de VerbaSaldo
+------------------------------------------------------------------------*/
+
+alter table tblvpverbasaldo
+add VLSALDOINICIAL DECIMAL(16,7);
+
+/*-- RC.5 --*/
+
+/*-------------------------------------------------------------------------
+Data: 12/05/2010
+Autor: Dirceu
+Descrição: Nova coluna vlPctDesconto na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlPctDesconto	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlPctDesconto	DECIMAL(16,7);

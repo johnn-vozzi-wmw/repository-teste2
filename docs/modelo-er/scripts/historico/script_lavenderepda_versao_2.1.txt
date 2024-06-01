@@ -1,0 +1,167 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.1-RC.1' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 10/03/2010
+Autor: Dirceu
+Descrição: Novas tabelas GrupoProduto2 e GrupoProduto3
+------------------------------------------------------------------------*/
+
+create table TBLVPGRUPOPRODUTO2 (
+CDGRUPOPRODUTO1      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO2      DECIMAL(9,0)                   not null,
+DSGRUPOPRODUTO2      VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO2 primary key (CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDUSUARIO)
+);
+
+create table TBLVPGRUPOPRODUTO3 (
+CDGRUPOPRODUTO1      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO2      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO3      DECIMAL(9,0)                   not null,
+DSGRUPOPRODUTO3      VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO3 primary key (CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/03/2010
+Autor: Dirceu
+Descrição: Nova tabela PedidoErpDif e a tabela ItemPedidoErpDif foi alterada
+------------------------------------------------------------------------*/
+
+create table TBLVPPEDIDOERPDIF (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDSTATUSPEDIDO       VARCHAR(20)                    not null,
+DSOBSERVACAOORG      VARCHAR(100),
+DSOBSERVACAOERP      VARCHAR(100),
+FLLIDO               CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVWPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDUSUARIO)
+);
+
+
+drop table TBLVPITEMPEDIDOERPDIF;
+
+create table TBLVPITEMPEDIDOERPDIF (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+QTITEMFISICOORG      DECIMAL(16,7),
+QTITEMFISICOERP      DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVWITEMPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/03/2010
+Autor: Dirceu
+Descrição: Coluna cdGrupoProduto1 da tabela GrupoProduto1 alterado para decimal(9,0)
+------------------------------------------------------------------------*/
+drop table TBLVPGRUPOPRODUTO1;
+
+create table TBLVPGRUPOPRODUTO1 (
+cdGrupoProduto1      DECIMAL(9,0)                   not null,
+dsGrupoProduto1      varchar(100),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO1 primary key (cdGrupoProduto1, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/03/2010
+Autor: Dirceu
+Descrição: Coluna cdGrupoProduto1 da tabela Produto alterado para decimal(9,0)
+	incluídas novas colunas cdGrupoProduto2, e cdGrupoProduto3
+------------------------------------------------------------------------*/
+drop table TBLVPPRODUTO;
+
+
+create table TBLVPPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+CDFORNECEDOR         DECIMAL(9,0),
+DSUNIDADEFISICA      VARCHAR(2),
+DSUNIDADEFATURAMENTO VARCHAR(2),
+FLSITUACAO           DECIMAL(4),
+NUCONVERSAOUNIDADESMEDIDA DECIMAL(16,7),
+FLCONSISTECONVERSAOUNIDADE CHAR(1),
+VLPCTIPI             DECIMAL(16,7),
+FLUNIDADEMEDIDAPADRAO CHAR(1),
+QTPESO               DECIMAL(16,7),
+FLESPECIAL           DECIMAL(4),
+CDLINHA              VARCHAR(20),
+CDCLASSE             VARCHAR(20),
+flProdutoControlado  CHAR(1),
+vlPrecoFabrica       DECIMAL(16,7),
+vlPrecoMaximoConsumidor DECIMAL(16,7),
+cdGrupoProduto1      DECIMAL(9,0),
+dsPrincipioAtivo     VARCHAR(100),
+cdTributacaoProduto  DECIMAL(9,0),
+nuCodigoBarras       VARCHAR(20),
+vlPctDepreciacaoTroca DECIMAL(16,7),
+dsEmbalagem          VARCHAR(100),
+vlSt                 DECIMAL(16,7),
+cdGrupoProduto2      DECIMAL(9,0),
+cdGrupoProduto3      DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/03/2010
+Autor: Dirceu
+Descrição: Coluna cdGrupoProduto1 da tabela DescVidaUtilGrupo alterado para decimal(9,0)
+------------------------------------------------------------------------*/
+drop table TBLVPDESCVIDAUTILGRUPO;
+
+create table TBLVPDESCVIDAUTILGRUPO (
+cdGrupoProduto1      DECIMAL(9,0)                   not null,
+vlPctVidaUtilMinimo  DECIMAL(16,7)                  not null,
+vlPctVidaUtilMaximo  DECIMAL(16,7),
+vlPctDesconto        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCVIDAUTILGRUPO primary key (cdGrupoProduto1, vlPctVidaUtilMinimo, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/03/2010
+Autor: Dirceu
+Descrição: Nova tabela TcActivation
+------------------------------------------------------------------------*/
+create table TBLVPTCACTIVATION (
+cdAtualizacao        VARCHAR(20)                    not null,
+flActivated          char(1),
+dsActivationCode     varchar(50),
+dsDeviceId           varchar(50),
+dsPlatform           varchar(50),
+dtAtualizacao        datetime,
+htAtualizacao        char(5),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTCACTIVATION primary key (cdAtualizacao, cdUsuario)
+);

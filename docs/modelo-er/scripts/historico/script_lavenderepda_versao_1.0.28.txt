@@ -1,0 +1,48 @@
+/*-------------------------------------------------------------------------
+Data: //
+Autor: 
+Descrição: 
+------------------------------------------------------------------------*/
+
+
+/*-------------------------------------------------------------------------
+Data: 23/12/2008
+Autor: Thiago
+Descrição: Novo Campo cdDesconto na Tabela TBLVPDescontoQuantidade
+------------------------------------------------------------------------*/
+alter table tblvpdescontoquantidade
+add cdDesconto Varchar(47);
+
+/*-------------------------------------------------------------------------
+Data:29/12/2008
+Autor: Thiago
+Descrição: Adição do campo FLGERAVERBA na chave primária da tabela TBLVPVERBAPRODUTO
+------------------------------------------------------------------------*/
+alter table TBLVPVERBAPRODUTO 
+alter column FLGERAVERBA CHAR(1) not null;
+
+alter table TBLVPVERBAPRODUTO
+drop constraint PK_TBLVPVERBAPRODUTO;
+
+alter table TBLVPVERBAPRODUTO
+add constraint PK_TBLVPVERBAPRODUTO primary key (cdEmpresa, cdRepresentante, cdVerba, cdProduto, flGeraVerba, cdUsuario);
+
+/*-------------------------------------------------------------------------
+Data: 07/01/2009
+Autor: Pedro
+Descrição: Novo Campo cdDesconto na Tabela TBLVPDescontoQuantidade
+------------------------------------------------------------------------*/
+alter table tblvpcliente
+add QTDIASMAXIMOPAGAMENTO DECIMAL(4);
+
+
+/*-------------------------------------------------------------------------
+Data: 09/01/2009
+Autor: Dirceu
+Descrição: Novo Campo cdRotaEntrega no Cliente e Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add CDROTAENTREGA varchar(20);
+
+alter table TBLVPPEDIDO
+add CDROTAENTREGA varchar(20);

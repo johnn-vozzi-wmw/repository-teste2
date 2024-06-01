@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lavenderepda_files" default="scripts">
+
+	<!-- ======================== properties ======================================= -->
+
+	<property name="sqlserver.name" value="sqlserver"/>
+	<property name="oracle.name" value="oracle"/>
+	<property name="postgres.name" value="postgres"/>
+	<property name="docs.modeloer.dir" value="docs/modelo-er/scripts"/>
+	<property name="resources.dir" value="${basedir}/release/resources/" />
+	<property name="resources.scripts.dir" value="${resources.dir}/scripts/" />
+	<property name="resources.scripts.sqlserver.dir" value="${resources.scripts.dir}/${sqlserver.name}"/>
+	<property name="resources.scripts.oracle.dir" value="${resources.scripts.dir}/${oracle.name}"/>
+	<property name="resources.scripts.postgres.dir" value="${resources.scripts.dir}/${postgres.name}"/>
+
+	<!-- =========================================================================== -->
+	<!-- SCRIPTS														 			 -->
+	<!-- =========================================================================== -->
+	<target if="${build.script}" name="scripts" depends="clean_scripts">
+
+		<!-- SqlServer -->
+
+		<copy todir="${resources.scripts.sqlserver.dir}">
+			<fileset dir="${docs.modeloer.dir}"/>
+		</copy>
+
+		<replaceregexp match="--POSTGRES(?:(?!--/POSTGRES)[\s\S])*--/POSTGRES" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.sqlserver.dir}" includes="**/**.txt" excludes="**/**_${sqlserver.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="--ORACLE(?:(?!--/ORACLE)[\s\S])*--/ORACLE" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.sqlserver.dir}" includes="**/**.txt" excludes="**/**_${sqlserver.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+		
+		<replaceregexp match="nonclustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.sqlserver.dir}" includes="**/**.txt" excludes="**/**_${sqlserver.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+		
+		<replaceregexp match="clustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.sqlserver.dir}" includes="**/**.txt" excludes="**/**_${sqlserver.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<!-- Oracle -->
+
+		<copy todir="${resources.scripts.oracle.dir}">
+			<fileset dir="${docs.modeloer.dir}"/>
+		</copy>
+
+		<replaceregexp match="decimal" replace="number" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt"/>
+		</replaceregexp>
+
+		<replaceregexp match="varchar" replace="varchar2" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt"/>
+		</replaceregexp>
+
+		<replaceregexp match="datetime" replace="date" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+text[,\s+]" replace="		clob		" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+text;" replace=" clob;" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+varbinary\(MAX\)[,;\s+]" replace="	blob	" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+varbinary;" replace=" blob;" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+image[,\s+]" replace="		blob 	" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+image;" replace=" blob;" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="alter column" replace="modify" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt"/>
+		</replaceregexp>
+
+		<replaceregexp match="(\r?\n)go(\b)" replace="${line.separator}/${line.separator}" flags="g i m" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+		
+		<replaceregexp match="nonclustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+		
+		<replaceregexp match="clustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="--SQLSERVER(?:(?!--/SQLSERVER)[\s\S])*--/SQLSERVER" replace=" " flags="g i s" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="--POSTGRES(?:(?!--/POSTGRES)[\s\S])*--/POSTGRES" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.oracle.dir}" includes="**/**.txt" excludes="**/**_${oracle.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<!-- Postgres -->
+
+		<copy todir="${resources.scripts.postgres.dir}">
+			<fileset dir="${docs.modeloer.dir}"/>
+		</copy>
+
+		<replaceregexp match="datetime" replace="timestamp" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt"/>
+		</replaceregexp>
+
+		<replaceregexp match="--SQLSERVER(?:(?!--/SQLSERVER)[\s\S])*--/SQLSERVER" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="--ORACLE(?:(?!--/ORACLE)[\s\S])*--/ORACLE" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="(\r?\n)go(\b)" replace="${line.separator}\\;${line.separator}" flags="g i m" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="\s+varbinary\(MAX\)[,;\s+]" replace="		bytea	" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+		
+		<replaceregexp match="\s+image[,;\s+]" replace="	bytea 	" flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="nonclustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+		<replaceregexp match="clustered" replace=" " flags="g i" encoding="iso-8859-1">
+			<fileset dir="${resources.scripts.postgres.dir}" includes="**/**.txt" excludes="**/**_${postgres.name}.txt" casesensitive="false"/>
+		</replaceregexp>
+
+	</target>
+
+	<!-- =========================================================================== -->
+	<!-- CLEAN_SCRIPTS 													 			 -->
+	<!-- =========================================================================== -->
+	<target if="${build.script}" name="clean_scripts">
+		<delete dir="${resources.scripts.dir}"/>
+		<mkdir dir="${resources.scripts.dir}"/>
+	</target>
+
+
+
+</project>

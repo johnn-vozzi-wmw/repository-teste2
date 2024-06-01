@@ -1,0 +1,36 @@
+/*-------------------------------------------------------------------------
+Data: //
+Descrição: 
+-------------------------------------------------------------------------*/
+
+drop table TBLVPVISITASUPERVISOR;
+
+/*==============================================================*/
+/* Table: TBLVPVISITASUPERVISOR                                 */
+/*==============================================================*/
+create table TBLVPVISITASUPERVISOR (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdVisita             varchar(20)                    not null,
+cdSupervisor         DECIMAL(9,0)                   not null,
+flOrigemVisita       char(1)                        not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+cdCliente            varchar(20)                    not null,
+dtVisita             date,
+hrVisita             char(5),
+dsObservacao         varchar(255),
+qtTempoAtendimento   char(5),
+flRepresentantePresente char(1),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPVISITASUPERVISOR primary key (cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 11/07/2008
+Autor: Dirceu
+Descrição: nov campo hrEmissao na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add hrEmissao VARCHAR(5);
+

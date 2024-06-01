@@ -1,0 +1,354 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.19' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2012
+Autor: Pedro
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+create table TBLVPTIPOCONDPAGTOCLI (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPAGAMENTO      VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOCONDPAGTOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 14/11/2012
+Autor: Fernando
+Descrição: Nova tabela TBLVPPRODUTOSIMILAR 
+------------------------------------------------------------------------*/
+create table TBLVPPRODUTOSIMILAR (
+CDEMPRESA            decimal(9,0)                   not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+CDPRODUTO            varchar(20)                    not null,
+CDPRODUTOSIMILAR     varchar(20)                    not null,
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOSIMILAR primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDPRODUTOSIMILAR, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 14/10/2012
+Autor: Pedro
+Descrição: Alteração na chave primária das tabelas ITEMPEDIDO e relacionadas
+------------------------------------------------------------------------*/
+drop table TBLVPVERBAITEMPEDIDO;
+
+create table TBLVPVERBAITEMPEDIDO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDVERBA              VARCHAR(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+VLCONSUMIDO          DECIMAL(16,7),
+VLGERADO             DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBAITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, NUSEQPRODUTO, FLTIPOITEMPEDIDO)
+);
+
+drop table TBLVPITEMPEDIDOERPDIF;
+
+create table TBLVPITEMPEDIDOERPDIF (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+QTITEMFISICOORG      DECIMAL(16,7),
+QTITEMFISICOERP      DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDUSUARIO)
+);
+
+drop table TBLVPITEMKITPEDIDO;
+
+create table TBLVPITEMKITPEDIDO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+drop table TBLVPITEMKITPEDIDOERP;
+
+create table TBLVPITEMKITPEDIDOERP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/10/2012
+Autor: Pedro
+Descrição: Alterações para sistemas comportar Grade de Produtos
+------------------------------------------------------------------------*/
+drop table TBLVPITEMPEDIDO;
+
+create table TBLVPITEMPEDIDO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDUNIDADE            VARCHAR(20),
+cdGrupoBonificacao   varchar(20),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        DECIMAL(9,0),
+QTITEMFISICO         DECIMAL(16,7),
+QTITEMFATURAMENTO    DECIMAL(16,7),
+VLITEMPEDIDO         DECIMAL(16,7),
+VLBASEITEMTABELAPRECO DECIMAL(16,7),
+VLBASEITEMPEDIDO     DECIMAL(16,7),
+VLBASEFLEX           DECIMAL(16,7),
+VLTOTALITEMPEDIDO    DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+VLPCTACRESCIMO       DECIMAL(16,7),
+VLRENTABILIDADE      DECIMAL(16,7),
+VLVERBAITEM          DECIMAL(16,7),
+CDCONTACORRENTE      VARCHAR(20),
+cdLoteProduto        VARCHAR(20),
+vlSt                 DECIMAL(16,7),
+vlVerbaItemPositivo  DECIMAL(16,7),
+qtPontosItem         DECIMAL(9,0),
+qtPeso               DECIMAL(16,7),
+dsObsMotivoTroca     VARCHAR(255),
+cdMotivoTroca        VARCHAR(20),
+FLPRECOLIBERADOSENHA CHAR(1),
+vlPctComissao        DECIMAL(16,7),
+vlItemPedidoFrete    DECIMAL(16,7),
+dsObservacao         VARCHAR(4000),
+vlReducaoOptanteSimples DECIMAL(16,7),
+flVendidoQtMinima    CHAR(1),
+vlTotalBrutoItemPedido DECIMAL(16,7),
+CDITEMGRADE1         VARCHAR(20),
+CDITEMGRADE2         VARCHAR(20),
+CDITEMGRADE3         VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+drop table TBLVPITEMPEDIDOERP;
+
+create table TBLVPITEMPEDIDOERP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDUNIDADE            VARCHAR(20),
+cdGrupoBonificacao   varchar(20),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        DECIMAL(9,0),
+QTITEMFISICO         DECIMAL(16,7),
+QTITEMFATURAMENTO    DECIMAL(16,7),
+VLITEMPEDIDO         DECIMAL(16,7),
+VLBASEITEMTABELAPRECO DECIMAL(16,7),
+VLBASEITEMPEDIDO     DECIMAL(16,7),
+VLBASEFLEX           DECIMAL(16,7),
+VLTOTALITEMPEDIDO    DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+VLPCTACRESCIMO       DECIMAL(16,7),
+VLRENTABILIDADE      DECIMAL(16,7),
+VLVERBAITEM          DECIMAL(16,7),
+CDCONTACORRENTE      VARCHAR(20),
+cdLoteProduto        VARCHAR(8),
+vlSt                 DECIMAL(16,7),
+vlVerbaItemPositivo  DECIMAL(16,7),
+qtPontosItem         DECIMAL(9,0),
+qtPeso               DECIMAL(16,7),
+dsObsMotivoTroca     VARCHAR(255),
+cdMotivoTroca        VARCHAR(20),
+FLPRECOLIBERADOSENHA CHAR(1),
+vlPctComissao        DECIMAL(16,7),
+vlItemPedidoFrete    DECIMAL(16,7),
+dsObservacao         VARCHAR(4000),
+vlReducaoOptanteSimples DECIMAL(16,7),
+flVendidoQtMinima    CHAR(1),
+vlTotalBrutoItemPedido decimal(16,7),
+CDITEMGRADE1         VARCHAR(20),
+CDITEMGRADE2         VARCHAR(20),
+CDITEMGRADE3         VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+
+create table TBLVPITEMPEDIDOGRADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+CDITEMGRADE1         VARCHAR(20)                    not null,
+CDITEMGRADE2         VARCHAR(20)                    not null,
+CDITEMGRADE3         VARCHAR(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOGRADE primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+create table TBLVPITEMPEDIDOGRADEERP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+CDITEMGRADE1         VARCHAR(20)                    not null,
+CDITEMGRADE2         VARCHAR(20)                    not null,
+CDITEMGRADE3         VARCHAR(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOGRADEERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+drop table TBLVPESTOQUE;
+
+create table TBLVPESTOQUE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDITEMGRADE1         varchar(20)                    not null,
+CDITEMGRADE2         varchar(20)                    not null,
+CDITEMGRADE3         varchar(20)                    not null,
+qtEstoque            DECIMAL(16,7),
+qtEstoquePrevisto    DECIMAL(16,7),
+qtEstoqueMin         decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPESTOQUE primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+drop table TBLVPITEMTABELAPRECO;
+
+create table TBLVPITEMTABELAPRECO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+CDUF                 VARCHAR(2)                     not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDITEMGRADE1         varchar(20)                    not null,
+CDITEMGRADE2         varchar(20)                    not null,
+CDITEMGRADE3         varchar(20)                    not null,
+CDLINHA              DECIMAL(9),
+VLUNITARIO           DECIMAL(16,7),
+VLPCTMAXDESCONTO     DECIMAL(16,7),
+VLPCTMAXACRESCIMO    DECIMAL(16,7),
+VLPRECOEMBALAGEMPRIMARIA DECIMAL(16,7),
+FLPROMOCAO           CHAR(1),
+VLPCTSUBSTTRIBUTARIAINFO DECIMAL(16,7),
+VLGNREINFO           DECIMAL(16,7),
+VLBASE               DECIMAL(16,7),
+VLPCTDESCONTOINFO    DECIMAL(16,7),
+VLPRECOLISTAINFO     DECIMAL(16,7),
+vlPctComissao        DECIMAL(16,7),
+vlPctDescPromocional DECIMAL(16,7),
+vlPrecoFrete         DECIMAL(16,7),
+flBloqueado          char(1),
+vlUnitarioEspecial   DECIMAL(16,7),
+vlReducaoOptanteSimples DECIMAL(16,7),
+vlBaseEspecial       DECIMAL(16,7),
+qtMaxVenda           decimal(17,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMTABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, CDUSUARIO)
+);
+
+create table TBLVPPRODUTOGRADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            varchar(20)                    not null,
+cdItemGrade1         varchar(20)                    not null,
+cdItemGrade2         varchar(20)                    not null,
+cdItemGrade3         varchar(20)                    not null,
+cdTipoItemGrade1     varchar(20),
+cdTipoItemGrade2     varchar(20),
+cdTipoItemGrade3     varchar(20),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOGRADE primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdItemGrade1, cdItemGrade2, cdItemGrade3, cdUsuario)
+);
+
+create table TBLVPITEMGRADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTipoItemGrade      varchar(20)                    not null,
+cdItemGrade          varchar(20)                    not null,
+dsItemGrade          varchar(100)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMGRADE primary key (CDEMPRESA, CDREPRESENTANTE, cdTipoItemGrade, cdItemGrade, cdUsuario)
+);
+
+create table TBLVPTIPOITEMGRADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTipoItemGrade      varchar(20)                    not null,
+dsTipoItemGrade      varchar(100)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTIPOITEMGRADE primary key (CDEMPRESA, CDREPRESENTANTE, cdTipoItemGrade, cdUsuario)
+);

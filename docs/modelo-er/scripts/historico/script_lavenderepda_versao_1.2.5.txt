@@ -1,0 +1,45 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.5-RC.1' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/09/2009
+Autor: Dirceu
+Descrição: Renomeadas as tabelas DescontoProgressivo e TipoNovidadeProduto
+------------------------------------------------------------------------*/
+create table TBLVPDESCPROGRESSIVO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+VLINICIOFAIXA        DECIMAL(16,7)                  not null,
+VLFINALFAIXA         DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCPROGRESSIVO primary key (CDEMPRESA, CDREPRESENTANTE, VLINICIOFAIXA, CDUSUARIO)
+);
+
+go
+
+insert into TBLVPDESCPROGRESSIVO select * from TBLVPDESCONTOPROGRESSIVO;
+
+go
+
+drop table TBLVPDESCONTOPROGRESSIVO;
+
+
+create table TBLVPTIPONOVIDADEPROD (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDTIPONOVIDADEPRODUTO DECIMAL(9,0)                   not null,
+DSTIPONOVIDADEPRODUTO VARCHAR(100),
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPTIPONOVIDADEPROD primary key (CDEMPRESA, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+go
+
+insert into TBLVPTIPONOVIDADEPROD select * from TBLVPTIPONOVIDADEPRODUTO;
+
+go
+
+drop table TBLVPTIPONOVIDADEPRODUTO;

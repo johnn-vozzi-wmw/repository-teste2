@@ -1,0 +1,16 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.15' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 19/04/2011
+Autor: Dirceu
+Descrição: Novas colunas dsSituacao e dtUltimoPedido na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add DTULTIMOPEDIDO       DATETIME;
+
+alter table TBLVPCLIENTE
+add DSSITUACAO           VARCHAR(20);
+

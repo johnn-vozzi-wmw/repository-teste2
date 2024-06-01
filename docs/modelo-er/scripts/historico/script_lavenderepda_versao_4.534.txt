@@ -1,0 +1,10 @@
+
+--VERSÃO 4.526
+
+/*-------------------------------------------------------------------------
+Data: 04/09/2017
+Autor: Eduardo
+Descrição: nova coluna
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPUSUARIO ADD CDUSUARIONUMERICO DECIMAL(9,0) NULL;
+GO

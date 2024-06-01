@@ -1,0 +1,84 @@
+
+/*-------------------------------------------------------------------------
+Data: 29/07/2008
+Autor: Dirceu
+Descrição: nova tabela ProdutoTabPreco
+------------------------------------------------------------------------*/
+create table TBLVPPRODUTOTABPRECO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+DSTABPRECOLIST       VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 31/07/2008
+Autor: Dirceu
+Descrição: nova tabela LogPda
+------------------------------------------------------------------------*/
+create table TBLVPLOGPDA (
+cdLog                decimal(9,0)                   not null,
+cdNivel              varchar(5)                     not null,
+cdCategoria          decimal(9,0),
+dsLog                varchar(200),
+dtLog                DATETIME,
+hrLog                varchar(5),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPLOGPDA primary key (cdUsuario, cdLog)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 04/08/2008
+Autor: Dirceu
+Descrição: nova tabela Recado
+------------------------------------------------------------------------*/
+create table TBLVPRECADO (
+CDRECADO             VARCHAR(20)                    not null,
+CDUSUARIOREMETENTE   VARCHAR(20),
+CDUSUARIODESTINATARIO VARCHAR(20),
+DSASSUNTO            VARCHAR(50),
+DSRECADO             VARCHAR(500),
+DTENVIO              DATETIME,
+HRENVIO              CHAR(5),
+CDSTATUS             VARCHAR(20),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPRECADO primary key (CDRECADO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 04/08/2008
+Autor: Dirceu
+Descrição: nova tabela UsuarioWeb
+------------------------------------------------------------------------*/
+create table TBLVPUSUARIOWEB (
+CDUSUARIOWEB         VARCHAR(20)                    not null,
+NMUSUARIOWEB         VARCHAR(100),
+FLTIPOUSUARIOWEB     CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUSUARIOWEB primary key (CDUSUARIOWEB, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 05/08/2008
+Autor: Dirceu
+Descrição: nova tabela UsuarioRep
+------------------------------------------------------------------------*/
+create table TBLVPUSUARIOREP (
+CDUSUARIOREP         VARCHAR(20)                    not null,
+CDREPRESENTANTE      DECIMAL(9,0),
+flTipoAlteracao      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUSUARIOREP primary key (CDUSUARIOREP, CDUSUARIO)
+);

@@ -1,0 +1,135 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.7' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 23/02/2012
+Autor: Dirceu 
+Descrição: Recriadas as tabelas Consignacao e ItemConsignacao eliminando colunas not null.
+------------------------------------------------------------------------*/
+drop table TBLVPCONSIGNACAO;
+
+create table TBLVPCONSIGNACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+DTCONSIGNACAO        datetime,
+VLTOTALCONSIGNADO    decimal(16,7),
+FLORIGEMPEDIDO       char(1),
+NUPEDIDO             varchar(30),
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONSIGNACAO, CDUSUARIO)
+);
+
+drop table TBLVPITEMCONSIGNACAO;
+
+create table TBLVPITEMCONSIGNACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+CDTABELAPRECO        DECIMAL(9,0),
+VLITEM               decimal(16,7),
+QTITEMCONSIGNADO     decimal(16,7),
+QTITEMSOBRA          decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDCONSIGNACAO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/02/2012
+Autor: Wellington 
+Descrição: Nova Tabeça
+------------------------------------------------------------------------*/
+
+create table TBLVPPAGAMENTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPAGAMENTO          varchar(30)                    not null,
+CDTIPOPAGAMENTO      varchar(20),
+DTPAGAMENTO          datetime,
+VLPAGO               decimal(16,7),
+dsObservacao         varchar(4000),
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPAGAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPAGAMENTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 28/02/2012
+Autor: Pedro
+Descrição: Adicionadas novas colunas
+------------------------------------------------------------------------*/
+alter table TBLVPTIPOPAGAMENTO add FLESPECIAL char(1) null;
+alter table TBLVPCONDICAOPAGAMENTO add FLESPECIAL char(1) null;
+alter table TBLVPREPRESENTANTE add FLESPECIAL char(1) null;
+alter table TBLVPREPRESENTANTE add VLPCTDESCESPECIAL decimal(19,7) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 01/03/2012
+Autor: Wellington
+Descrição: Novas tabelas UNIDADE,PRODUTOUNIDADE
+------------------------------------------------------------------------*/
+
+create table TBLVPUNIDADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDUNIDADE            VARCHAR(20)                    not null,
+DSUNIDADE            VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUNIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDUSUARIO, CDUNIDADE)
+);
+
+create table TBLVPPRODUTOUNIDADE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDUNIDADE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+NUCONVERSAOUNIDADE   DECIMAL(16,7),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+FLDIVIDEMULTIPLICA   CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPRODUTOUNIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDUNIDADE, CDPRODUTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 01/03/2012
+Autor: Wellington
+Descrição: Novos campos nas tabelas ItemPedido,ItemPedidoERP e Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add cdUnidade varchar(20) null;
+alter table TBLVPITEMPEDIDO add cdUnidade varchar(20) null;
+alter table TBLVPITEMPEDIDOERP add cdUnidade varchar(20) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 07/03/2012
+Autor: Pedro
+Descrição: Nova tabela de DESCONTOGRUPO
+------------------------------------------------------------------------*/
+create table TBLVPDESCONTOGRUPO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO1      DECIMAL(9,0)                   not null,
+QTITEM               DECIMAL(16,7)                  not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCONTOGRUPO primary key (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, CDUSUARIO)
+);

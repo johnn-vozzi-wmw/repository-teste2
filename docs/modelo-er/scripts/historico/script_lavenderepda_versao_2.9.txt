@@ -1,0 +1,208 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.9' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/11/2010
+Autor: Dirceu
+Descrição: Nova tabela ConfigDynEntity
+------------------------------------------------------------------------*/
+create table TBLVPCONFIGDYNENTITY (
+dsTabela             varchar(30)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONFIGDYNENTITY primary key (dsTabela, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/11/2010
+Autor: Dirceu
+Descrição: Nova coluna flPrimaryKey na tabela ConfigPersonCad
+------------------------------------------------------------------------*/
+alter table TBLVPCONFIGPERSONCAD
+add flPrimaryKey		char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 19/11/2010
+Autor: Dirceu
+Descrição: Nova coluna flColunaFixa na tabela ConfigPersonCad
+------------------------------------------------------------------------*/
+alter table TBLVPCONFIGPERSONCAD
+add flColunaFixa		char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 23/11/2010
+Autor: Dirceu
+Descrição: Nova coluna vlSaldoContaCorrente na tabela FichaFinanceira
+------------------------------------------------------------------------*/
+alter table TBLVPFICHAFINANCEIRA
+add vlSaldoContaCorrente		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/11/2010
+Autor: Dirceu
+Descrição: Nova coluna nuLinhas na tabela ConfigPersonCad
+------------------------------------------------------------------------*/
+alter table TBLVPCONFIGPERSONCAD
+add nuLinhas		decimal(9);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2010
+Autor: Dirceu
+Descrição: Nova tabela ContaCorrenteCli
+------------------------------------------------------------------------*/
+create table TBLVPCONTACORRENTECLI (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+nuDocumento          VARCHAR(20)                    not null,
+dtMovimentacao       datetime,
+vlCredito            DECIMAL(16,7),
+vlDebito             DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTACORRENTECLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, nuDocumento, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2010
+Autor: Dirceu
+Descrição: Nova coluna flCreditoAntecipado na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add flCreditoAntecipado		CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2010
+Autor: Dirceu
+Descrição: Nova coluna nuConversaoUMCreditoAntecipado na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add nuConversaoUMCreditoAntecipado		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2010
+Autor: Dirceu
+Descrição: Nova coluna nuMultiploEmbalagem na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO
+add nuMultiploEmbalagem		DECIMAL(16,7);
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 01/12/2010
+Autor: Dirceu
+Descrição: Coluna dsRecado da tabela recado alterada para 4.000 caracteres
+------------------------------------------------------------------------*/
+alter table TBLVPRECADO 
+add DSRECADO2 varchar(500);
+
+GO
+
+update TBLVPRECADO
+set DSRECADO2 = DSRECADO;
+
+GO
+
+alter table TBLVPRECADO
+drop column DSRECADO;
+
+GO
+
+alter table TBLVPRECADO 
+add DSRECADO	VARCHAR(4000);
+
+GO
+
+update TBLVPRECADO
+set DSRECADO = DSRECADO2;
+
+GO
+
+alter table TBLVPRECADO
+drop column DSRECADO2;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 07/12/2010
+Autor: Dirceu
+Descrição: Colunas dsObservacaoOrg e dsObservacaoErp da tabela PedidoErpDif alteradas para 4.000 caracteres
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDOERPDIF 
+add DSOBSERVACAOORG2 varchar(500);
+
+GO
+
+update TBLVPPEDIDOERPDIF
+set DSOBSERVACAOORG2 = DSOBSERVACAOORG;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF
+drop column DSOBSERVACAOORG;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF 
+add DSOBSERVACAOORG	VARCHAR(4000);
+
+GO
+
+update TBLVPPEDIDOERPDIF
+set DSOBSERVACAOORG = DSOBSERVACAOORG2;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF
+drop column DSOBSERVACAOORG2;
+
+
+
+alter table TBLVPPEDIDOERPDIF 
+add DSOBSERVACAOERP2 varchar(500);
+
+GO
+
+update TBLVPPEDIDOERPDIF
+set DSOBSERVACAOERP2 = DSOBSERVACAOERP;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF
+drop column DSOBSERVACAOERP;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF 
+add DSOBSERVACAOERP	VARCHAR(4000);
+
+GO
+
+update TBLVPPEDIDOERPDIF
+set DSOBSERVACAOERP = DSOBSERVACAOERP2;
+
+GO
+
+alter table TBLVPPEDIDOERPDIF
+drop column DSOBSERVACAOERP2;
+
+
+

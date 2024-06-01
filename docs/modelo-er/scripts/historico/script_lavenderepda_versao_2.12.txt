@@ -1,0 +1,48 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.12' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 21/02/2011
+Autor: Pedro
+Descrição: Novo campo na tabela de Pedido e PedidoErp
+------------------------------------------------------------------------*/
+
+alter table TBLVPPEDIDO 
+add VLPCTRENTABILIDADEPEDIDO	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add VLPCTRENTABILIDADEPEDIDO	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/03/2011
+Autor: Dirceu
+Descrição: Excluída coluna vlPctRentabilidade e incluida vlRentabilidade
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+drop column VLPCTRENTABILIDADE;
+
+alter table TBLVPITEMPEDIDO
+add VLRENTABILIDADE	DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP
+drop column VLPCTRENTABILIDADE;
+
+alter table TBLVPITEMPEDIDOERP
+add VLRENTABILIDADE	DECIMAL(16,7);
+
+alter table TBLVPPEDIDO
+drop column VLPCTRENTABILIDADEPEDIDO;
+
+alter table TBLVPPEDIDO
+add VLRENTABILIDADE	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP
+drop column VLPCTRENTABILIDADEPEDIDO;
+
+alter table TBLVPPEDIDOERP
+add VLRENTABILIDADE	DECIMAL(16,7);
+

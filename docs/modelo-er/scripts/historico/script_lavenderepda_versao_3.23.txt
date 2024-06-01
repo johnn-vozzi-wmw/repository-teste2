@@ -1,0 +1,100 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.23' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 04/04/13
+Autor: Fernando
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPMETAPORGRUPOPROD1
+
+CREATE TABLE TBLVPMETAPORGRUPOPROD (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   DSPERIODO            VARCHAR(30)          NOT NULL,
+   CDGRUPOPRODUTO1      VARCHAR(20)          NOT NULL,
+   CDGRUPOPRODUTO2      VARCHAR(20)          NOT NULL,
+   CDGRUPOPRODUTO3      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   NUSEQUENCIA          VARCHAR(20)          NULL,
+   VLMETA               DECIMAL(16,7)        NULL,
+   VLREALIZADO          DECIMAL(16,7)        NULL,
+   QTUNIDADEMETA        DECIMAL(16,7)        NULL,
+   QTCAIXAMETA          DECIMAL(16,7)        NULL,
+   QTMIXCLIENTEMETA     DECIMAL(16,7)        NULL,
+   QTUNIDADEREALIZADO   DECIMAL(16,7)        NULL,
+   QTCAIXAREALIZADO     DECIMAL(16,7)        NULL,
+   QTMIXCLIENTEREALIZADO DECIMAL(16,7)        NULL,
+   DSGRUPOPRODUTO1      VARCHAR(100)         NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   DTINICIAL            DATETIME             NULL,
+   DTFINAL              DATETIME             NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPMETAPORGRUPOPROD PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, CDPRODUTO, CDUSUARIO)
+)
+go
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 19/04/13
+Autor: Fernando
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPEDIDO ADD FLCLIENTEATRASADOLIBERADOSENHA CHAR(1) NULL;
+ALTER TABLE TBLVPPEDIDOERP ADD FLCLIENTEATRASADOLIBERADOSENHA CHAR(1) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 19/04/13
+Autor: Pedro
+Descrição: Nova tabela ROTAENTREGACLI
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPROTAENTREGACLI (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDROTAENTREGA        VARCHAR(20)          NOT NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPROTAENTREGACLI PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDROTAENTREGA, CDCLIENTE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/04/2013
+Autor: Wellington
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPMETAACOMPANHAMENTO ADD QTPEDIDOSREALIZADO DECIMAL(9);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/04/2013
+Autor: Pedro
+Descrição: Ajuste coluna DSTABELA da tabela TBLVPCONFIGINTEGWEBTC
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPCONFIGINTEGWEBTC;
+
+CREATE TABLE TBLVPCONFIGINTEGWEBTC (
+   DSTABELA             VARCHAR(50)          NOT NULL,
+   DSCHAVE              VARCHAR(200)         NULL,
+   FLREMESSA            CHAR(1)              NULL,
+   FLRETORNO            CHAR(1)              NULL,
+   FLATIVO              CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCONFIGINTEGWEBTC PRIMARY KEY (DSTABELA, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 03/05/13
+Autor: Pedro
+Descrição: Excluída tabela USUARIOREP
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPUSUARIOREP;

@@ -1,0 +1,188 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.6' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 26/07/2010
+Autor: PEDRO
+Descrição: Coluna flExigiSenha renomeada para flExigeSenha na tabela TipoPedido
+------------------------------------------------------------------------*/
+alter table TBLVPTIPOPEDIDO
+add FLEXIGESENHA	CHAR(1);
+
+go
+
+update TBLVPTIPOPEDIDO set FLEXIGESENHA = FLEXIGISENHA;
+
+go
+
+alter table TBLVPTIPOPEDIDO 
+drop column FLEXIGISENHA;
+
+
+/*-------------------------------------------------------------------------
+Data: 26/07/2010
+Autor: PEDRO
+Descrição: Nova tabela TBLVPCONDTIPOPAGTO
+------------------------------------------------------------------------*/
+
+create table TBLVPCONDTIPOPAGTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPAGAMENTO      VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDTIPOPAGTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 04/08/2010
+Autor: PEDRO
+Descrição: Nova tabela TBLVPDESCCOMIGRUPO
+------------------------------------------------------------------------*/
+create table TBLVPDESCCOMIGRUPO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDGRUPOPRODUTO1      DECIMAL(9,0)                    not null,
+QTITEM               DECIMAL(16,7)                   not null,
+VLPCTDESCONTO        DECIMAL(16,7)                  not null,
+vlPctComissao        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCCOMIGRUPO primary key (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, VLPCTDESCONTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 04/08/2010
+Autor: PEDRO
+Descrição: Nova tabela TBLVPDESCCOMIGRUPO
+------------------------------------------------------------------------*/
+create table TBLVPDESCCOMIPROD (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTITEM               DECIMAL(16,7)                   not null,
+VLPCTDESCONTO        DECIMAL(16,7)                  not null,
+vlPctComissao        DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCCOMIPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, QTITEM, VLPCTDESCONTO, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 04/08/2010
+Autor: PEDRO
+Descrição: Nova Coluna vlPctComissao nas tabelas ItemPdido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+add VLPCTCOMISSAO	DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP
+add VLPCTCOMISSAO	DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 12/08/2010
+Autor: PEDRO
+Descrição: Coluna dbObservacao alterada
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+alter column DSOBSERVACAO	CHAR(4000);
+
+alter table TBLVPPEDIDOERP
+alter column DSOBSERVACAO	CHAR(4000);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/08/2010
+Autor: Dirceu
+Descrição: Nova coluna vlIndiceComissao na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add vlIndiceComissao		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/08/2010
+Autor: Dirceu
+Descrição: Nova coluna vlIndiceFinanceiroEspecial na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add vlIndiceFinanceiroEspecial		DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/08/2010
+Autor: Dirceu
+Descrição: Nova coluna flIndiceFinanceiroEspecial na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add flIndiceFinanceiroEspecial		CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/08/2010
+Autor: Dirceu
+Descrição: Nova coluna cdRegiao nas tabelas Cliente e CondPagtoLinha
+------------------------------------------------------------------------*/
+
+alter table TBLVPCLIENTE 
+add cdRegiao		VARCHAR(20);
+
+alter table TBLVPCONDPAGTOLINHA 
+add cdRegiao		VARCHAR(20);
+
+update TBLVPCONDPAGTOLINHA set cdRegiao = '0';
+
+alter table TBLVPCONDPAGTOLINHA 
+alter column cdRegiao		VARCHAR(20) not null;
+
+alter table TBLVPCONDPAGTOLINHA 
+drop constraint PK_TBLVPCONDPAGTOLINHA;
+
+alter table TBLVPCONDPAGTOLINHA 
+add constraint PK_TBLVPCONDPAGTOLINHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, cdRegiao, CDUSUARIO);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 25/08/2010
+Autor: Dirceu
+Descrição: Nova coluna dsObservacao nas tabelas ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add dsObservacao	VARCHAR(4000);
+
+alter table TBLVPITEMPEDIDOERP 
+add dsObservacao	VARCHAR(4000);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 31/08/2010
+Autor: Dirceu
+Descrição: Nova coluna flBonificacao na tabela TipoPedido
+------------------------------------------------------------------------*/
+alter table TBLVPTIPOPEDIDO 
+add flBonificacao		CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 08/09/2010
+Autor: Dirceu
+Descrição: Nova coluna cdTipoPagamento na tabela CondicaoPagamento
+------------------------------------------------------------------------*/
+alter table TBLVPCONDICAOPAGAMENTO 
+add CDTIPOPAGAMENTO		VARCHAR(20);
+

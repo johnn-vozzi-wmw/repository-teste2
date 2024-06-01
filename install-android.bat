@@ -1,0 +1,1 @@
+adb install -r release\resources\app\android\wmwvendasapp.apk

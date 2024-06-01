@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="concatScripts" basedir="." default="default">
+
+	<property name="scripts.directory" value="C:/wmw/desenvolvimento/lavendere/lavenderepda/docs/modelo-er/scripts"/>
+	<property name="scripts.filter" value="script_lavenderepda_versao_4."/>
+	<property name="scripts.file.destination" value="c:/wmw/testes/gerado/script_lavenderepda_versao_4.00.txt" />
+	
+	<target name="default">
+		<echo>
+			***********************************************************
+			**************          GROUP FILES          ************** 
+			***********************************************************
+		</echo>
+		<echo>Diretório configurado: ${scripts.directory}</echo>
+		<echo>  Filtro dos arquivos: ${scripts.filter}</echo>
+		<echo>   Arquivo de destino: ${scripts.file.destination}</echo>
+		<concat destfile="${scripts.file.destination}" append="false" fixlastline="yes">
+			<fileset dir="${scripts.directory}" includes="${scripts.filter}**.txt" casesensitive="false" />
+		</concat>
+		
+		<echo>
+			
+			********************      SUCESSO   ***********************
+			
+		</echo>
+	</target>
+</project>

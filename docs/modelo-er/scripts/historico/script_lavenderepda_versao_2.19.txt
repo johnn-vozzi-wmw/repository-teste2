@@ -1,0 +1,10 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.19' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 26/08/2011
+Autor: Wellington
+Descrição: Nova coluna dsProduto na tabela de METASPORPRODUTO
+------------------------------------------------------------------------*/
+
+alter table TBLVPMETASPORPRODUTO add DSPRODUTO VARCHAR(100);

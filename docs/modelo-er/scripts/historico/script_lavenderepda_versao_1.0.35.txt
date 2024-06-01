@@ -1,0 +1,7 @@
+/*-------------------------------------------------------------------------
+Data: 17/03/2009
+Autor: Dirceu
+Descrição: Nova coluna flCreditoClienteAberto na tabela StatusPedidoPda
+------------------------------------------------------------------------*/
+alter table TBLVPSTATUSPEDIDOPDA 
+add flCreditoClienteAberto	CHAR(1);

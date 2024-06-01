@@ -1,0 +1,2 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.3' where CDSISTEMA = 20;

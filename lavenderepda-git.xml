@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<project name="LavenderePda" default="all" basedir=".">
+
+	<!-- Arquivo de configuração -->
+	<property name="commit-message" value="ant"/>
+	
+	<!-- Configuração do Git -->
+	<macrodef name = "git">
+	    <attribute name = "command" />
+	    <attribute name = "dir" default = "" />
+	    <element name = "args" optional = "true" />
+	    <sequential>
+	        <echo message = "git @{command}" />
+	        <exec executable = "git" dir = "@{dir}">
+	            <arg value = "@{command}" />
+	            <args/>
+	        </exec>
+	    </sequential>
+	</macrodef>
+	
+	
+	<target name="all" depends="commit-pull-push">
+	</target>
+	
+	<target name="commit-pull-push">
+		<echo> -------------------------------------------------------------------- </echo>
+		<echo> GIT - Commit | Pull | Push										    </echo>
+		<echo> -------------------------------------------------------------------- </echo>
+		<git command="add">
+			<args>
+				<arg value="." />
+			</args>
+		</git>
+		<git command="commit">
+			<args>
+				<arg value="-am ${commit-message}" />
+			</args>
+		</git>
+		<git command="pull" />
+		<git command="push">
+			<args>
+				<arg value="origin" />
+			</args>			
+		</git>
+	</target>
+</project>

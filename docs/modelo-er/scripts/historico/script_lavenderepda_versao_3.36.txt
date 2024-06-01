@@ -1,0 +1,861 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 23/05/2014
+Autor: Fernando
+Descrição: Nova coluna na Produto e ProdutoTabPreco
+------------------------------------------------------------------------*/
+alter table tblvpproduto add cdOrigemSetor varchar(20);
+GO
+
+alter table tblvpprodutotabpreco add cdOrigemSetor varchar(20);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 23/05/2014
+Autor: Pedro
+Descrição: Nova coluna na Sistema e SistemaPda
+------------------------------------------------------------------------*/
+alter table tblvpsistema add dsVersaoCargaCompleta varchar(200);
+GO
+alter table tblvpsistemapda add dsVersaoCargaCompleta varchar(200);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 29/05/2014
+Autor: Tiago
+Descrição: Nova coluna na tabela Pedido
+------------------------------------------------------------------------*/
+alter table tblvppedido add flimpresso char(1);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2014
+Autor: Pedro
+Descrição: Alterado tamanho coluna DSUTILIZACAO
+------------------------------------------------------------------------*/
+--SQLSERVER
+ALTER TABLE TBLVPCORSISTEMA alter column DSUTILIZACAO VARCHAR(200);
+GO
+--/SQLSERVER
+
+--ORACLE
+ALTER TABLE TBLVPCORSISTEMA alter column DSUTILIZACAO VARCHAR(200);
+GO
+--/ORACLE
+
+--POSTGRES
+ALTER TABLE TBLVPCORSISTEMA alter column DSUTILIZACAO TYPE VARCHAR(200);
+GO
+--/POSTGRES
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-7' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 05/06/2014
+Autor: Leonardo
+Descrição: Nova tabela e Nova coluna na tabela TBLVPPRODUTODESTAQUE
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPPRODUTODESTAQUE (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDGRUPODESTAQUE      VARCHAR(20)          NOT NULL,
+   CDESQUEMACOR         DECIMAL(9)           NOT NULL,
+   CDCOR                DECIMAL(9)           NOT NULL,
+   DSGRUPODESTAQUE      VARCHAR(100)         NULL,
+   IMICONE              IMAGE                NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPRODUTODESTAQUE PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDGRUPODESTAQUE, CDUSUARIO)
+)
+go
+
+
+ALTER TABLE TBLVPPRODUTO ADD CDGRUPODESTAQUE VARCHAR(20);
+GO
+
+ALTER TABLE TBLVPPRODUTOTABPRECO ADD CDGRUPODESTAQUE VARCHAR(20);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-13' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 20/06/2014
+Autor: Leonardo
+Descrição: Nova coluna na tabela Tipo Pedido
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD QTMINVALOR DECIMAL(16,7);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 18/07/2014
+Autor: Tiago
+Descrição: Nova coluna na tabela PedidoErp
+------------------------------------------------------------------------*/
+alter table tblvppedidoerp add flimpresso char(1);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 23/07/2014
+Autor: Leonardo
+Descrição: Nova tabela TBLVPCONDCOMERCIALEXCEC
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPCONDCOMERCIALEXCEC (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDCONDICAOCOMERCIAL  VARCHAR(20)          NOT NULL,
+   VLUNITARIO           DECIMAL(16,7)        NULL,
+   VLBASE               DECIMAL(16,7)        NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9)           NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCONDCOMERCIALEXCEC PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDCONDICAOCOMERCIAL, CDUSUARIO)
+)
+go
+
+/*-------------------------------------------------------------------------
+Data: 14/07/2014
+Autor: Tiago
+Descrição: Nova coluna e alteração de tamanho de coluna
+------------------------------------------------------------------------*/
+
+ALTER TABLE TBLVPITEMTABELAPRECO ADD CDGRUPODESTAQUE VARCHAR(20);
+GO
+
+--SQLSERVER
+ALTER TABLE TBLVPPRODUTOTABPRECO alter column CDGRUPODESTAQUE VARCHAR(4000);
+GO
+--/SQLSERVER
+
+--ORACLE
+ALTER TABLE TBLVPPRODUTOTABPRECO alter column CDGRUPODESTAQUE VARCHAR(4000);
+GO
+--/ORACLE
+
+--POSTGRES
+ALTER TABLE TBLVPPRODUTOTABPRECO alter column CDGRUPODESTAQUE TYPE VARCHAR(4000);
+GO
+--/POSTGRES
+
+/*-------------------------------------------------------------------------
+Data: 22/07/2014
+Autor: Leonardo
+Descrição: Nova Tabela TBLVPPRODUTOCLIENTE
+------------------------------------------------------------------------*/
+
+CREATE TABLE TBLVPPRODUTOCLIENTE (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDCLIENTE            VARCHAR(20)          NOT NULL,
+   FLTIPORELACAO        CHAR(1)              NOT NULL,
+   FLTIPOALTERACAO       CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9)           NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPRODUTOCLIENTE PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDCLIENTE, FLTIPORELACAO, CDUSUARIO)
+)
+go
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/06/2014
+Autor: Guilherme Ribeiro
+Descrição: Novos campos tabela SugestaoVenda
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPSUGESTAOVENDA ADD FLPOSSUIVIGENCIA CHAR(1);
+go
+ALTER TABLE TBLVPSUGESTAOVENDA ADD FLOBRIGAVENDA CHAR(1);
+go
+ALTER TABLE TBLVPSUGESTAOVENDA ADD FLTIPOFREQUENCIA CHAR(1);
+go
+
+
+/*-------------------------------------------------------------------------
+Data: 20/06/2014
+Autor: Tiago
+Descrição: Nova coluna na tabela TBLVPRESTRICAOVENDAUN
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPRESTRICAOVENDAUN ADD CDTIPOPEDIDO varchar(20) DEFAULT '0' NOT NULL;
+GO
+ALTER TABLE TBLVPRESTRICAOVENDAUN DROP CONSTRAINT PK_TBLVPRESTRICAOVENDAUN;
+GO
+ALTER TABLE TBLVPRESTRICAOVENDAUN ADD CONSTRAINT PK_TBLVPRESTRICAOVENDAUN PRIMARY KEY(CDEMPRESA, CDREPRESENTANTE, CDUNIDADE, CDPRODUTO, CDTIPOPEDIDO);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2014
+Autor: Fernando
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPITEMTABELAPRECO ADD vlOportunidade DECIMAL(16,7);
+GO
+ALTER TABLE TBLVPTIPOPEDIDO ADD flOportunidade char(1);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2014
+Autor: Leonardo
+Descrição: Nova coluna na tabela TBLVPPRODUTOTABPRECO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTOTABPRECO ADD DSTABPRECOOPORTUNIDADELIST VARCHAR(4000);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 22/07/2014
+Autor: Fernando
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD flSimulaControleVerba CHAR(1);
+GO
+
+
+/*-------------------------------------------------------------------------
+Data: 11/07/2014
+Autor: Fernando
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPLIMITEOPORTUNIDADE (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   VLLIMITE             DECIMAL(16,7)        NULL,
+   FLTIPOLIMITE         CHAR(1)              NULL,
+   VLSALDO              DECIMAL(16,7)        NULL,
+   FLORIGEMSALDO        CHAR(1)              NOT NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPLIMITEOPORTUNIDADE PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDUSUARIO, FLORIGEMSALDO)
+)
+go
+
+/*-------------------------------------------------------------------------
+Data: 27/08/2014
+Autor: Guilherme Ribeiro
+Descrição: Novas colunas tabela Produto
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTO ADD QTESTOQUEFISICO DECIMAL(16, 7);
+GO
+ALTER TABLE TBLVPPRODUTO ADD QTVENDAS DECIMAL(16, 7);
+GO
+
+/*----------------------------------------------------------------------
+Data: 08/08/2014
+Autor: Leonardo
+Descrição: Nova coluna na tabela TBLVPCLIENTE e nova mensagem
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD FLATENDIDO CHAR(1);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 21/08/2014
+Autor: Leonardo
+Descrição: Nova coluna na tabela TBLVPPRODUTO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTO ADD FLUTILIZAVERBA CHAR(1);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-72' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 11/08/2014
+Autor: Fernando
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPPRODUTORELACIONADO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDPRODUTORELACIONADO VARCHAR(20)          NOT NULL,
+   VLPCTVENDAMIN        DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPRODUTORELACIONADO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDPRODUTORELACIONADO, CDUSUARIO)
+)
+go
+
+
+/*-------------------------------------------------------------------------
+Data: 14/08/2014
+Autor: Fernando
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPITEMPEDIDO ADD FLLIBERADOVENDARELACIONADA CHAR(1);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-73' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 23/05/2014
+Autor: Fernando
+Descrição: Nova coluna na Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table tblvppedido add nuPedidoRelBonificacao varchar(30);
+GO
+alter table tblvppedidoerp add nuPedidoRelBonificacao varchar(30);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-76' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 22/08/2014
+Autor: Fernando
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCONDICAOCOMERCIAL ADD VLINDICEVERBA decimal(16,7);
+GO
+ALTER TABLE TBLVPCONDICAOCOMERCIAL ADD FLINDICEVERBASEQUENCIAL char(1);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 19/09/2014
+Autor: Tiago
+Descrição: Novas colunas tabela Empresa
+------------------------------------------------------------------------*/
+
+ALTER TABLE TBLVPEMPRESA ADD DSLOGRADOURO VARCHAR(100);
+GO
+ALTER TABLE TBLVPEMPRESA ADD DSBAIRRO VARCHAR(100);
+GO
+ALTER TABLE TBLVPEMPRESA ADD DSCEP VARCHAR(20);
+GO
+ALTER TABLE TBLVPEMPRESA ADD DSCIDADE VARCHAR(100);
+GO
+ALTER TABLE TBLVPEMPRESA ADD DSESTADO VARCHAR(20);
+GO
+ALTER TABLE TBLVPEMPRESA ADD NUFONE VARCHAR(20);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-81' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 15/09/2014
+Autor: Fernando
+Descrição: Novas tabelas
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPVARIACAOPRODEXCEC (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDREGIAO             VARCHAR(20)          NOT NULL,
+   CDCATEGORIA          VARCHAR(20)          NOT NULL,
+   VLPCTVARIACAO          DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPVARIACAOPRODEXCEC PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDREGIAO, CDCATEGORIA, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPVARIACAOPRODREG (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDREGIAO             VARCHAR(20)          NOT NULL,
+   VLPCTVARIACAO          DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPVARIACAOPRODREG PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDREGIAO, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPVARIACAOPRODCATEG (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDCATEGORIA          VARCHAR(20)          NOT NULL,
+   VLPCTVARIACAO          DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPVARIACAOPRODCATEG PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDCATEGORIA, CDUSUARIO)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-83' where CDSISTEMA = 20;
+
+/*----------------------------------------------------------------------
+Data: 08/08/2014
+Autor: Leonardo
+Descrição: Nova tabela criada
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPVERBAGRUPOSALDO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDGRUPOPRODUTO1      VARCHAR(20)          NOT NULL,
+   FLORIGEMSALDO        CHAR(1)              NOT NULL,
+   VLSALDOINICIAL       DECIMAL(16,7)        NULL,
+   VLSALDO              DECIMAL(16,7)        NULL,
+   DTSALDO              DATETIME             NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPVERBAGRUPOSALDO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, FLORIGEMSALDO, CDUSUARIO)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-86' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 26/08/2014
+Autor: Tiago
+Descrição: Nova Tabela TBLVPRESUMODIA
+------------------------------------------------------------------------*/
+
+CREATE TABLE TBLVPRESUMODIA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   DTRESUMO             DATETIME             NOT NULL,
+   VLTOTALVENDIDO       DECIMAL(16,7)        NULL,
+   QTITENSVENDIDOS      DECIMAL(9,0)         NULL,
+   QTPEDIDOS            DECIMAL(9,0)         NULL,
+   VLVERBACONSUMIDA     DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   VLTOTALBONIFICACAO   DECIMAL(16,7)        NULL,
+   VLVERBABONIFICACAO   DECIMAL(16,7)        NULL,
+   CONSTRAINT PK_TBLVPRESUMODIA PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, DTRESUMO, CDUSUARIO)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-88' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 03/10/2014
+Autor: Tiago
+Descrição: Nova coluna na Cliente
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD DTVENCIMENTOAFE DATETIME;
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-90' where CDSISTEMA = 20;
+
+/*----------------------------------------------------------------------
+Data: 26/09/2014
+Autor: Leonardo
+Descrição: Novas colunas na tabela TBLVPRECADO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPRECADO ADD FLOBRIGARESPOSTA CHAR(1);
+GO
+ALTER TABLE TBLVPRECADO ADD FLRESPOSTAENVIADA CHAR(1);
+GO
+ALTER TABLE TBLVPRECADO ADD FLTIPORECADO CHAR(1);
+GO
+ALTER TABLE TBLVPRECADO ADD CDRECADORELACIONADO VARCHAR(20);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-91' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 08/10/2014
+Autor: Tiago
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPRODUTO ADD VLPCTIPI decimal(16,7);
+GO
+ALTER TABLE TBLVPITEMPEDIDO ADD VLIPIITEM decimal(16,7);
+GO
+ALTER TABLE TBLVPITEMPEDIDOERP ADD VLIPIITEM decimal(16,7);
+GO
+ALTER TABLE TBLVPTRIBUTACAO ADD FLAPLICAIPIICMS CHAR(1);
+GO
+ALTER TABLE TBLVPTRIBUTACAO ADD FLAPLICAIPIRETIDO CHAR(1);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-106' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 20/10/2014
+Autor: Leonardo
+Descrição: Novas colunas na tabela TBLVPCLIENTE
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD VLMAXPEDIDO DECIMAL(16,7);
+GO
+
+ALTER TABLE TBLVPCLIENTE ADD VLMINPEDIDO DECIMAL(16,7);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-107' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 17/10/2014
+Autor: Fernando
+Descrição: Nova coluna
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPONTOGPS ADD flStatus char(1);
+GO
+
+/*-------------------------------------------------------------------------
+Data: 20/10/2014
+Autor: Fernando
+Descrição: Alteração na tabela PontoGps
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPPONTOGPSTEMP (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   DTCOLETA             DATETIME             NOT NULL,
+   HRCOLETA             CHAR(5)              NOT NULL,
+   VLLATITUDE           DECIMAL(16,7)        NULL,
+   VLLONGITUDE          DECIMAL(16,7)        NULL,
+   VLVELOCIDADE         DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPONTOGPSTEMP PRIMARY KEY NONCLUSTERED (CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, CDUSUARIO)
+)
+go
+
+
+INSERT INTO TBLVPPONTOGPSTEMP (CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, VLLATITUDE, VLLONGITUDE, VLVELOCIDADE,
+FLTIPOALTERACAO, NUCARIMBO, CDUSUARIO)
+SELECT CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, VLLATITUDE, VLLONGITUDE, VLVELOCIDADE,
+FLTIPOALTERACAO, NUCARIMBO, CDUSUARIO FROM TBLVPPONTOGPS;
+
+ALTER TABLE TBLVPPONTOGPS DROP CONSTRAINT PK_TBLVPPONTOGPS;
+GO
+
+DELETE FROM TBLVPPONTOGPS;
+
+ALTER TABLE TBLVPPONTOGPS DROP COLUMN VLLATITUDE;
+GO
+ALTER TABLE TBLVPPONTOGPS DROP COLUMN VLLONGITUDE;
+GO
+ALTER TABLE TBLVPPONTOGPS DROP COLUMN VLVELOCIDADE;
+GO
+ALTER TABLE TBLVPPONTOGPS DROP COLUMN HRCOLETA;
+GO
+
+ALTER TABLE TBLVPPONTOGPS ADD VLLATITUDE DECIMAL(23,20);
+GO
+ALTER TABLE TBLVPPONTOGPS ADD VLLONGITUDE DECIMAL(23,20);
+GO
+ALTER TABLE TBLVPPONTOGPS ADD VLVELOCIDADE DECIMAL(23,20);
+GO
+ALTER TABLE TBLVPPONTOGPS ADD HRCOLETA VARCHAR(8) NOT NULL;
+GO
+
+ALTER TABLE TBLVPPONTOGPS ADD CONSTRAINT PK_TBLVPPONTOGPS PRIMARY KEY(cdEmpresa, cdRepresentante, dtColeta, hrColeta);
+GO
+
+INSERT INTO TBLVPPONTOGPS (CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, VLLATITUDE, VLLONGITUDE, VLVELOCIDADE,
+FLTIPOALTERACAO, NUCARIMBO, CDUSUARIO)
+SELECT CDEMPRESA, CDREPRESENTANTE, DTCOLETA, HRCOLETA, VLLATITUDE, VLLONGITUDE, VLVELOCIDADE,
+FLTIPOALTERACAO, NUCARIMBO, CDUSUARIO FROM TBLVPPONTOGPSTEMP;
+
+DROP TABLE TBLVPPONTOGPSTEMP;
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-110' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 25/08/2014
+Autor: Fernando
+Descrição: Nova tabela
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPLOGCOMANDOPDA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDLOGCOMANDOPDA      VARCHAR(20)          NOT NULL,
+   DTLOG                DATETIME             NULL,
+   HRLOG                VARCHAR(5)           NULL,
+   DSTIPOCOMANDO        VARCHAR(10)          NULL,
+   DSLOG                VARCHAR(4000)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPLOGCOMANDOPDA PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDLOGCOMANDOPDA, CDUSUARIO)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-112' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 30/10/2014
+Autor: Fernando
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD cdGrupoCondicao VARCHAR(20);
+go
+ALTER TABLE TBLVPCONDICAOPAGAMENTO ADD cdGrupoCondicao VARCHAR(20);
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-113' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 03/11/2014
+Autor: Tiago
+Descrição: Retirada da coluna cdUsuario das tabelas migradas para framework
+------------------------------------------------------------------------*/
+
+DROP TABLE TBLVPCORSISTEMA;
+go
+
+CREATE TABLE TBLVPCORSISTEMA (
+   CDESQUEMACOR         DECIMAL(9)           NOT NULL,
+   CDCOR                DECIMAL(9)           NOT NULL,
+   DSUTILIZACAO         VARCHAR(200)         NULL,
+   VLR                  DECIMAL(9)           NULL,
+   VLG                  DECIMAL(9)           NULL,
+   VLB                  DECIMAL(9)           NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CONSTRAINT PK_TBLVPCORSISTEMA PRIMARY KEY NONCLUSTERED (CDESQUEMACOR, CDCOR)
+)
+go
+
+DROP TABLE TBLVPESQUEMACORSISTEMA;
+go
+
+CREATE TABLE TBLVPESQUEMACORSISTEMA (
+   CDESQUEMACOR         DECIMAL(9)           NOT NULL,
+   DSESQUEMACOR         VARCHAR(100)         NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CONSTRAINT PK_TBLVPESQUEMACORSISTEMA PRIMARY KEY NONCLUSTERED (CDESQUEMACOR)
+)
+go
+
+DROP TABLE TBLVPTEMASISTEMA;
+go
+
+CREATE TABLE TBLVPTEMASISTEMA (
+   CDTEMA               DECIMAL(9)           NOT NULL,
+   CDESQUEMACOR         DECIMAL(9)           NULL,
+   DSTEMA               VARCHAR(100)         NULL,
+   FLDEFAULT            CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CONSTRAINT PK_TBLVPTEMASISTEMA PRIMARY KEY NONCLUSTERED (CDTEMA)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-114' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 04/06/2014
+Autor: Guilherme Ribeiro
+Descrição: Novos campos tabela Pedido, PedidoErp: nuPedidoSugestao, flOrigemPedidoSugestao
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPEDIDO ADD NUPEDIDOSUGESTAO VARCHAR(30) DEFAULT NULL;
+go
+ALTER TABLE TBLVPPEDIDO ADD FLORIGEMPEDIDOSUGESTAO CHAR(1) DEFAULT  NULL;
+go
+
+ALTER TABLE TBLVPPEDIDOERP ADD NUPEDIDOSUGESTAO VARCHAR(30) DEFAULT NULL;
+go
+ALTER TABLE TBLVPPEDIDOERP ADD FLORIGEMPEDIDOSUGESTAO CHAR(1) DEFAULT  NULL;
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-116' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2014
+Autor: Pedro
+Descrição: Aumento coluna DSLOG tabela LOGPDA
+------------------------------------------------------------------------*/
+--SQLSERVER
+ALTER TABLE TBLVPLOGPDA ALTER COLUMN DSLOG varchar(400) null;
+go
+--/SQLSERVER
+
+--ORACLE
+ALTER TABLE TBLVPLOGPDA ALTER COLUMN DSLOG varchar(400);
+go
+--/ORACLE
+
+--POSTGRES
+ALTER TABLE TBLVPLOGPDA ALTER COLUMN DSLOG TYPE varchar(400);
+go
+--/POSTGRES
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-122' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 18/11/2014
+Autor: Guilherme[Digi]
+Descrição: Novos campos nas tabelas TBLVPPEDIDO, TBLVPPEDIDOERP, TBLVPITEMPEDIDO e TBLVPITEMPEDIDOERP
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO add vlTotalPedidoEstoquePositivo decimal(16,7);
+go
+alter table TBLVPITEMPEDIDO add qtItemEstoquePositivo decimal(16,7);
+go
+alter table TBLVPPEDIDOERP add vlTotalPedidoEstoquePositivo decimal(16,7);
+go
+alter table TBLVPITEMPEDIDOERP add qtItemEstoquePositivo decimal(16,7);
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-130' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 05/12/2014
+Autor:
+Descrição:
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPPONTOGPS DROP CONSTRAINT PK_TBLVPPONTOGPS;
+GO
+ALTER TABLE TBLVPPONTOGPS ADD CONSTRAINT PK_TBLVPPONTOGPS PRIMARY KEY(cdEmpresa, cdRepresentante, dtColeta, hrColeta, CDUSUARIO);
+GO
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-132' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 05/12/2014
+Autor: Guilherme Ribeiro
+Descrição: Ajusta tabela ProdutoRelacionado
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPPRODUTORELACIONADO;
+GO
+
+CREATE TABLE TBLVPPRODUTORELACIONADO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDPRODUTO            VARCHAR(20)          NOT NULL,
+   CDPRODUTORELACIONADO VARCHAR(20)          NOT NULL,
+   VLPCTVENDAMIN        DECIMAL(16,7)        NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPPRODUTORELACIONADO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDPRODUTORELACIONADO, CDUSUARIO)
+)
+go
+
+/*-------------------------------------------------------------------------
+Data: 12/11/2014
+Autor: Leonardo Machado Fernandes
+Descrição: Novas tabelas e novas colunas
+------------------------------------------------------------------------*/
+CREATE TABLE TBLVPCENTROCUSTO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDCENTROCUSTO        VARCHAR(20)          NOT NULL,
+   DSCENTROCUSTO        VARCHAR(100)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9)           NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCENTROCUSTO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDCENTROCUSTO, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPITEMCONTA (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDITEMCONTA          VARCHAR(20)          NOT NULL,
+   DSITEMCONTA          VARCHAR(100)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9)           NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPITEMCONTA PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDITEMCONTA, CDUSUARIO)
+)
+go
+
+CREATE TABLE TBLVPCLASSEVALOR (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   CDCLASSEVALOR        VARCHAR(20)          NOT NULL,
+   DSCLASSEVALOR        VARCHAR(100)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9)           NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCLASSEVALOR PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, CDCLASSEVALOR, CDUSUARIO)
+)
+go
+
+ALTER TABLE TBLVPPEDIDO ADD CDCENTROCUSTO VARCHAR(20);
+ALTER TABLE TBLVPPEDIDO ADD CDITEMCONTA VARCHAR(20);
+ALTER TABLE TBLVPPEDIDO ADD CDCLASSEVALOR VARCHAR(20);
+
+ALTER TABLE TBLVPPEDIDOERP ADD CDCENTROCUSTO VARCHAR(20);
+ALTER TABLE TBLVPPEDIDOERP ADD CDITEMCONTA VARCHAR(20);
+ALTER TABLE TBLVPPEDIDOERP ADD CDCLASSEVALOR VARCHAR(20);
+
+ALTER TABLE TBLVPTIPOPEDIDO ADD FLOBRIGAINFOADICIONAL CHAR(1);
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-145' where CDSISTEMA = 20;
+
+/*----------------------------------------------------------------------------
+Data: 19/11/2014
+Autor: Leonardo Machado Fernandes
+Descrição: Novos campos
+------------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOFRETE ADD VLPCTFRETE DECIMAL(16,7);
+ALTER TABLE TBLVPTIPOFRETE ADD VLPESOMINIMO DECIMAL(16,7);
+ALTER TABLE TBLVPTIPOFRETE ADD FLUSAINFOADICIONAL CHAR(1);
+
+/*----------------------------------------------------------------------------
+Data: 19/11/2014
+Autor: Leonardo Machado Fernandes
+Descrição: Nova Tabela
+------------------------------------------------------------------------------*/
+CREATE TABLE TBLVPINFOFRETEPEDIDO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDREPRESENTANTE      VARCHAR(20)          NOT NULL,
+   NUPEDIDO             VARCHAR(30)          NOT NULL,
+   FLORIGEMPEDIDO       CHAR(1)              NOT NULL,
+   FLTAXAENTREGA        CHAR(1)              NULL,
+   VLTAXAENTREGA        DECIMAL(16,7)        NULL,
+   FLAJUDANTE           CHAR(1)              NULL,
+   QTAJUDANTE           DECIMAL(9,0)         NULL,
+   FLANTECIPAENTREGA    CHAR(1)              NULL,
+   FLAGENDAMENTO        CHAR(1)              NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPINFOFRETEPEDIDO PRIMARY KEY (CDEMPRESA, CDREPRESENTANTE, NUPEDIDO, FLORIGEMPEDIDO, CDUSUARIO)
+)
+go
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-148' where CDSISTEMA = 20;
+
+
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.36-160' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 25/11/2014
+Autor: Fernando
+Descrição: Novas colunas
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPCLIENTE ADD FLDIVIDEVLMIN CHAR(1);
+go
+ALTER TABLE TBLVPCATEGORIA ADD VLMINPEDIDO DECIMAL(16,7);
+go
+ALTER TABLE TBLVPCATEGORIA ADD FLDIVIDEVLMIN CHAR(1);
+go
+ALTER TABLE TBLVPTIPOPEDIDO ADD FLIGNORAVALORMINIMOPEDIDO CHAR(1);
+go

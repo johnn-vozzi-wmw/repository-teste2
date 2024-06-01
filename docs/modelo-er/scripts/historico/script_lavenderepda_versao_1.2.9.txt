@@ -1,0 +1,44 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.9' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 30/10/2009
+Autor: Dirceu
+Descrição: Eliminadas as colunas cdRepresentante e dsSenha da tabela UsuarioPda
+------------------------------------------------------------------------*/
+alter table TBLVPUSUARIOPDA 
+drop column CDREPRESENTANTE;
+
+alter table ERPLVPUSUARIOPDA 
+drop column CDREPRESENTANTE;
+
+alter table PDALVPUSUARIOPDA 
+drop column CDREPRESENTANTE;
+
+
+alter table TBLVPUSUARIOPDA 
+drop column DSSENHA;
+
+alter table ERPLVPUSUARIOPDA 
+drop column DSSENHA;
+
+alter table PDALVPUSUARIOPDA 
+drop column DSSENHA;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 30/10/2009
+Autor: Dirceu
+Descrição: Incluída nova tabela UsuarioPdaRep
+------------------------------------------------------------------------*/
+create table TBLVPUSUARIOPDAREP (
+cdUsuario            varchar(8)                     not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+dsSenha              varchar(20),
+flTipoAlteracao      char(1),
+constraint PK_TBLVPUSUARIOPDAREP primary key (cdUsuario, CDREPRESENTANTE)
+);
+
+

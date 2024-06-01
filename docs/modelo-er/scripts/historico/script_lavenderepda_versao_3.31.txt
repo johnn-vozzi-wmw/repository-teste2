@@ -1,0 +1,11 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.31' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 10/12/2013
+Autor: Pedro
+Descrição: Novos campos tabela de TIPOPEDIDO
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPTIPOPEDIDO ADD flIgnoraControleVerba CHAR(1) NULL;
+ALTER TABLE TBLVPTIPOPEDIDO ADD flIgnoraControleEstoque CHAR(1) NULL;
+ALTER TABLE TBLVPTIPOPEDIDO ADD flIgnoraLimiteCreditoCliente CHAR(1) NULL;

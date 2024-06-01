@@ -1,0 +1,69 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.3' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 04/05/2010
+Autor: Almir
+Descrição: Novo campo nuMultiploEspecial na tabela de produto
+------------------------------------------------------------------------*/
+
+alter table tblvpproduto
+add nuMultiploEspecial DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 11/05/2010
+Autor: Dirceu
+Descrição: Nova coluna vlPctDesconto na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlPctDesconto	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlPctDesconto	DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 18/05/2010
+Autor: PEDRO
+Descrição: Nova coluna dsFichaTecnica na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add dsFichaTecnica	VARCHAR(500);
+
+
+/*-------------------------------------------------------------------------
+Data: 21/05/2010
+Autor: PEDRO
+Descrição: Novas colunas na tabela ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add dsObsMotivoTroca	VARCHAR(255);
+
+alter table TBLVPITEMPEDIDO 
+add cdMotivoTroca	VARCHAR(20);
+
+alter table TBLVPITEMPEDIDOERP
+add dsObsMotivoTroca	VARCHAR(255);
+
+alter table TBLVPITEMPEDIDOERP
+add cdMotivoTroca	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 21/05/2010
+Autor: PEDRO
+Descrição: Nova tabela MotivoTroca
+------------------------------------------------------------------------*/
+create table TBLVPMOTIVOTROCA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDMOTIVOTROCA        VARCHAR(20)                    not null,
+DSMOTIVOTROCA        VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMOTIVOTROCA primary key (CDEMPRESA, CDREPRESENTANTE, CDMOTIVOTROCA, CDUSUARIO)
+);
+
+

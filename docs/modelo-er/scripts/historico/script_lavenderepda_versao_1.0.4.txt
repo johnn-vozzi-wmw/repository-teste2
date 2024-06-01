@@ -1,0 +1,12 @@
+
+
+ALTER TABLE TBLVPCLIENTE
+ADD CDTABELAPRECO VARCHAR(20);
+
+
+/*
+Data: 	07/01/2008
+Descrição: novo campo no produto para saber se deve ou não consistir a conversão de unidade de medida
+*/
+alter table TBLVPPRODUTO 
+add FLCONSISTECONVERSAOUNIDADE CHAR(1);

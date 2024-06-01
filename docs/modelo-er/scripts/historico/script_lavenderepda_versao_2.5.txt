@@ -1,0 +1,14 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.5' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 13/07/2010
+Autor: PEDRO
+Descrição: Nova coluna VLPCTDESCITEM em Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add VLPCTDESCITEM	DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP
+add VLPCTDESCITEM	DECIMAL(16,7);

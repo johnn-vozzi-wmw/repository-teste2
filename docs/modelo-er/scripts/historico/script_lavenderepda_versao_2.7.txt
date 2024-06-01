@@ -1,0 +1,13 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.7' where CDSISTEMA = 20;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 13/09/2010
+Autor: Dirceu
+Descrição: Nova coluna flBonificacao na tabela TabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+add flBonificacao		CHAR(1);
+

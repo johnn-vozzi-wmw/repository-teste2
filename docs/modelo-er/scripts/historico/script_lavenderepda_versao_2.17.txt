@@ -1,0 +1,175 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '2.17' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 23/05/2011
+Autor: Pedro
+Descrição: Alteradas colunas cdParametro das tabelas CONFIGPARAMEMP e CONFIGPARAMGER 
+------------------------------------------------------------------------*/
+alter table TBLVPCONFIGPARAMEMP 
+drop constraint PK_TBLVPCONFIGPARAMEMP;
+
+alter table TBLVPCONFIGPARAMEMP
+alter column CDPARAMETRO	DECIMAL(9,0) not null;
+
+alter table TBLVPCONFIGPARAMEMP 
+add constraint PK_TBLVPCONFIGPARAMEMP primary key (CDEMPRESA, CDPARAMETRO, CDUSUARIO);
+
+alter table TBLVPCONFIGPARAMGER 
+drop constraint PK_TBLVPCONFIGPARAMGER;
+
+alter table TBLVPCONFIGPARAMGER
+alter column CDPARAMETRO	DECIMAL(9,0) not null;
+
+alter table TBLVPCONFIGPARAMGER 
+add constraint PK_TBLVPCONFIGPARAMGER primary key (CDPARAMETRO, CDUSUARIO);
+
+
+/*-------------------------------------------------------------------------
+Data: 24/05/2011
+Autor: Pedro
+Descrição: Nova tabela de Mensagem 
+------------------------------------------------------------------------*/
+create table TBLVPMENSAGEM (
+CDPAIS               DECIMAL(9)                     not null,
+CDMENSAGEM           DECIMAL(9)                     not null,
+DSMENSAGEM           VARCHAR(500)                   not null,
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMENSAGEM primary key (CDPAIS, CDMENSAGEM, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 31/05/2011
+Autor: Pedro
+Descrição: Excluidas colunas da tabela de Cliente 
+------------------------------------------------------------------------*/
+
+alter table TBLVPCLIENTE
+drop column DSLOGRADOUROENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCOMPLEMENTOENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSBAIRROENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCIDADEENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSESTADOENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSPAISENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCEPENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSLOGRADOUROCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCOMPLEMENTOCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSBAIRROCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCIDADECOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSESTADOCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSPAISCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCEPCOBRANCA;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/06/2011
+Autor: Pedro
+Descrição: Excluidas tabela de FornecedorRep e Linha
+------------------------------------------------------------------------*/
+drop table TBLVPFORNECEDORREP;
+drop table TBLVPLINHA;
+
+
+/*-------------------------------------------------------------------------
+Data: 02/06/2011
+Autor: Pedro
+Descrição: Excluidas colunas das tabelas ItemPedido, ItemPedidoErp, Produto e TabelaPreco
+------------------------------------------------------------------------*/
+
+alter table TBLVPITEMPEDIDO
+drop column VLPCTIPIITEM;
+
+alter table TBLVPITEMPEDIDO
+drop column VLIPIITEM;
+
+alter table TBLVPITEMPEDIDO
+drop column VLPCTDESCONTOFOB;
+
+alter table TBLVPITEMPEDIDO
+drop column QTTROCAESPECIAL;
+
+alter table TBLVPITEMPEDIDO
+drop column NULISTATABELAPRECO;
+
+alter table TBLVPITEMPEDIDOERP
+drop column VLPCTIPIITEM;
+
+alter table TBLVPITEMPEDIDOERP
+drop column VLIPIITEM;
+
+alter table TBLVPITEMPEDIDOERP
+drop column VLPCTDESCONTOFOB;
+
+alter table TBLVPITEMPEDIDOERP
+drop column QTTROCAESPECIAL;
+
+alter table TBLVPITEMPEDIDOERP
+drop column NULISTATABELAPRECO;
+
+alter table TBLVPPRODUTO
+drop column VLPCTIPI;
+
+alter table TBLVPPRODUTO
+drop column FLUNIDADEMEDIDAPADRAO;
+
+alter table TBLVPPRODUTO
+drop column FLESPECIAL;
+
+alter table TBLVPTABELAPRECO
+drop column DTVALIDADE;
+
+alter table TBLVPTIPOPEDIDO
+drop column FLFATURAR;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 09/06/2011
+Autor: Dirceu
+Descrição: Nova tabela CCCliPorTipo
+------------------------------------------------------------------------*/
+create table TBLVPCCCLIPORTIPO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+nuDocumento          VARCHAR(20)                    not null,
+vlQuebra             DECIMAL(16,7),
+vlMortalidade        DECIMAL(16,7),
+vlPeso               DECIMAL(16,7),
+dtDocumento          datetime,
+nuPedido             VARCHAR(30),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCCCLIPORTIPO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, nuDocumento, cdUsuario)
+);
+
+

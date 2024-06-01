@@ -1,0 +1,170 @@
+
+/*-------------------------------------------------------------------------
+Data: 28/04/2009
+Autor: Dirceu
+Descrição: Nova tabela MetasPorProduto
+------------------------------------------------------------------------*/
+
+create table TBLVPMETASPORPRODUTO (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+DSPERIODO            VARCHAR(30),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+
+
+
+/*-------------------------------------------------------------------------
+Data: 26/05/2009
+Autor: Dirceu
+Descrição: Nova coluna flConsisteConversaoUnidade na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add flConsisteConversaoUnidade	CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 26/05/2009
+Autor: Dirceu
+Descrição: Novas colunas cdListaTabelaPreco, cdColunaTabelaPreco na tabela Tabela de Preço
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+add cdListaTabelaPreco		DECIMAL(4);
+
+alter table TBLVPTABELAPRECO 
+add cdColunaTabelaPreco		DECIMAL(4);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2009
+Autor: Dirceu
+Descrição: Nova coluna cdTipoEntrega na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add cdTipoEntrega	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2009
+Autor: Dirceu
+Descrição: Nova tabela TipoEntrega
+------------------------------------------------------------------------*/
+create table TBLVPTIPOENTREGA (
+CDEMPRESA            DECIMAL(9,0)                    not null,
+CDTIPOENTREGA        VARCHAR(20)                    not null,
+DSTIPOENTREGA        VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOENTREGA primary key (CDEMPRESA, CDTIPOENTREGA, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2009
+Autor: Dirceu
+Descrição: Nova coluna cdTipoEntrega na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add cdTipoEntrega	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2009
+Autor: Dirceu
+Descrição: Novas tabelas de MetasPorCliente e MetasPorFornecedor
+------------------------------------------------------------------------*/
+create table TBLVPMETASPORCLIENTE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+DSPERIODO            VARCHAR(30)                    not null,
+cdCliente            VARCHAR(20)                    not null,
+nuSequencia          varchar(20),
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, cdCliente, cdUsuario)
+);
+
+create table TBLVPMETASPORFORNECEDOR (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+DSPERIODO            VARCHAR(30)                    not null,
+cdFornecedor         DECIMAL(9,0)                   not null,
+nuSequencia          varchar(20),
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixClienteMeta     DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORFORNECEDOR primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, cdFornecedor, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/05/2009
+Autor: Pedro
+Descrição: Nova coluna cdTipoEntrega na tabela Pedidoerp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDOERP 
+add cdTipoEntrega	VARCHAR(20);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 02/06/2009
+Autor: Dirceu
+Descrição: Renomeada a tabela Produtividade para Meta
+------------------------------------------------------------------------*/
+create table TBLVPMETA (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+qtPedidos            Decimal(9),
+vlRealizadoVendas    DECIMAL(16,7),
+vlMetaVendas         DECIMAL(16,7),
+dsPeriodo            Varchar(30)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPMETA primary key (cdEmpresa, cdRepresentante, dsPeriodo, cdUsuario)
+);
+
+go
+
+insert into TBLVPMETA (cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, qtPedidos, vlRealizadoVendas, vlMetaVendas, dsPeriodo, flTipoAlteracao, cdUsuario
+from TBLVPPRODUTIVIDADE;
+
+go
+
+drop table TBLVPPRODUTIVIDADE;
+drop table ERPLVPPRODUTIVIDADE;
+drop table PDALVPPRODUTIVIDADE;
+
+
+/*-------------------------------------------------------------------------
+Data: 03/06/2009
+Autor: Pedro
+Descrição: Nova coluna nuVersaoSistemaOrigem na tabela Pedido e PedidoERP
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add nuVersaoSistemaOrigem	VARCHAR(20);
+
+alter table TBLVPPEDIDOERP 
+add nuVersaoSistemaOrigem	VARCHAR(20);

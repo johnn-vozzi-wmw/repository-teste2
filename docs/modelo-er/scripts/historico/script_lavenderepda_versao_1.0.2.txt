@@ -1,0 +1,560 @@
+
+
+/*----------------------------------------------------------------------------------------------------------- 
+	Diminui o tamanho de campos em várias tabelas
+----------------------------------------------------------------------------------------------------------- */
+
+
+create table tmp_TBLVPCLIENTE
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    nmRazaoSocial              varchar(100)                   ,
+    nuFone                     varchar(20)                    ,
+    dsEmail                    varchar(100)                   ,
+    dsObservacao               varchar(255)                   ,
+    nmFantasia                 varchar(100)                   ,
+    nmContatoPrincipal         varchar(100)                   ,
+    dsLogradouroComercial      varchar(100)                   ,
+    dsComplementoComercial     varchar(100)                   ,
+    dsBairroComercial          varchar(100)                   ,
+    dsCepComercial             varchar(20)                    ,
+    dsCidadeComercial          varchar(100)                   ,
+    dsEstadoComercial          varchar(20)                    ,
+    dsPaisComercial            varchar(20)                    ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, 
+    dsEmail, dsObservacao, nmFantasia, nmContatoPrincipal, dsLogradouroComercial, 
+    dsComplementoComercial, dsBairroComercial, dsCepComercial, dsCidadeComercial, 
+    dsEstadoComercial, dsPaisComercial, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, dsEmail, dsObservacao, 
+    nmFantasia, nmContatoPrincipal, dsLogradouroComercial, dsComplementoComercial, 
+    dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, 
+    flTipoAlteracao, cdUsuario
+from TBLVPCLIENTE;
+
+GO
+
+drop table TBLVPCLIENTE;
+
+GO
+
+create table TBLVPCLIENTE
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    nmRazaoSocial              varchar(50)                    ,
+    nuFone                     varchar(20)                    ,
+    dsEmail                    varchar(50)                    ,
+    dsObservacao               varchar(50)                    ,
+    nmFantasia                 varchar(50)                    ,
+    nmContatoPrincipal         varchar(50)                    ,
+    dsLogradouroComercial      varchar(50)                    ,
+    dsComplementoComercial     varchar(30)                    ,
+    dsBairroComercial          varchar(30)                    ,
+    dsCepComercial             varchar(20)                    ,
+    dsCidadeComercial          varchar(30)                    ,
+    dsEstadoComercial          varchar(20)                    ,
+    dsPaisComercial            varchar(20)                    ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPCLIENTE primary key (CDUSUARIO,cdEmpresa, cdRepresentante, cdCliente)
+);
+
+GO
+
+insert into TBLVPCLIENTE (cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, dsEmail, 
+    dsObservacao, nmFantasia, nmContatoPrincipal, dsLogradouroComercial, dsComplementoComercial, 
+    dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, 
+    flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, nmRazaoSocial, nuFone, dsEmail, dsObservacao, 
+    nmFantasia, nmContatoPrincipal, dsLogradouroComercial, dsComplementoComercial, 
+    dsBairroComercial, dsCepComercial, dsCidadeComercial, dsEstadoComercial, dsPaisComercial, 
+    flTipoAlteracao, cdUsuario
+from tmp_TBLVPCLIENTE;
+
+GO
+
+drop table tmp_TBLVPCLIENTE;
+
+GO
+
+create table tmp_TBLVPPRODUTO
+(
+    CDEMPRESA                  VARCHAR(20)            not null,
+    CDREPRESENTANTE            VARCHAR(20)            not null,
+    CDPRODUTO                  VARCHAR(20)            not null,
+    DSPRODUTO                  VARCHAR(100)                   ,
+    DSUNIDADEFISICA            VARCHAR(2)                     ,
+    DSUNIDADEFATURAMENTO       VARCHAR(2)                     ,
+    FLSITUACAO                 DECIMAL(4)                     ,
+    NUCONVERSAOUNIDADESMEDIDA  DECIMAL(4)                     ,
+    VLPCTIPI                   DECIMAL(12,3)                  ,
+    FLUNIDADEMEDIDAPADRAO      DECIMAL(4)                     ,
+    QTPESO                     DECIMAL(12,3)                  ,
+    FLESPECIAL                 DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPPRODUTO (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, DSPRODUTO, DSUNIDADEFISICA, 
+    DSUNIDADEFATURAMENTO, FLSITUACAO, NUCONVERSAOUNIDADESMEDIDA, VLPCTIPI, FLUNIDADEMEDIDAPADRAO, 
+    QTPESO, FLESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, DSPRODUTO, DSUNIDADEFISICA, DSUNIDADEFATURAMENTO, 
+    FLSITUACAO, NUCONVERSAOUNIDADESMEDIDA, VLPCTIPI, 0, QTPESO, FLESPECIAL, 
+    FLTIPOALTERACAO, cdUsuario
+from TBLVPPRODUTO;
+
+GO
+
+drop table TBLVPPRODUTO;
+
+GO
+
+create table TBLVPPRODUTO
+(
+    CDEMPRESA                  VARCHAR(20)            not null,
+    CDREPRESENTANTE            VARCHAR(20)            not null,
+    CDPRODUTO                  VARCHAR(20)            not null,
+    DSPRODUTO                  VARCHAR(100)                   ,
+    DSUNIDADEFISICA            VARCHAR(2)                     ,
+    DSUNIDADEFATURAMENTO       VARCHAR(2)                     ,
+    FLSITUACAO                 DECIMAL(4)                     ,
+    NUCONVERSAOUNIDADESMEDIDA  DECIMAL(4)                     ,
+    VLPCTIPI                   DECIMAL(12,3)                  ,
+    FLUNIDADEMEDIDAPADRAO      CHAR(1)                        ,
+    QTPESO                     DECIMAL(12,3)                  ,
+    FLESPECIAL                 DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPPRODUTO primary key (CDUSUARIO,CDEMPRESA, CDREPRESENTANTE, CDPRODUTO)
+);
+
+GO
+
+insert into TBLVPPRODUTO (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, DSPRODUTO, DSUNIDADEFISICA, 
+    DSUNIDADEFATURAMENTO, FLSITUACAO, NUCONVERSAOUNIDADESMEDIDA, VLPCTIPI, FLUNIDADEMEDIDAPADRAO, 
+    QTPESO, FLESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, DSPRODUTO, DSUNIDADEFISICA, DSUNIDADEFATURAMENTO, 
+    FLSITUACAO, NUCONVERSAOUNIDADESMEDIDA, VLPCTIPI, FLUNIDADEMEDIDAPADRAO, QTPESO, FLESPECIAL, 
+    FLTIPOALTERACAO, cdUsuario
+from tmp_TBLVPPRODUTO;
+
+GO
+
+drop table tmp_TBLVPPRODUTO;
+
+GO
+
+create table tmp_TBLVPFICHAFINANCEIRA
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    VLMAIORFATURA              DECIMAL(12,3)                  ,
+    VLMEDIOCOMPRA              DECIMAL(12,3)                  ,
+    VLSALDOCLIENTE             DECIMAL(12,3)                  ,
+    DSPAGAMENTOANTECIPADO      VARCHAR(100)                   ,
+    DSPAGAMENTOVENCIMENTO      VARCHAR(100)                   ,
+    DSPAGAMENTOATRASADO        VARCHAR(100)                   ,
+    QTMEDIADIASATRASO          DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPFICHAFINANCEIRA (cdEmpresa, cdRepresentante, cdCliente, VLMAIORFATURA, 
+    VLMEDIOCOMPRA, VLSALDOCLIENTE, DSPAGAMENTOANTECIPADO, DSPAGAMENTOVENCIMENTO, 
+    DSPAGAMENTOATRASADO, QTMEDIADIASATRASO, FLTIPOALTERACAO, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, VLMAIORFATURA, VLMEDIOCOMPRA, VLSALDOCLIENTE, 
+    DSPAGAMENTOANTECIPADO, DSPAGAMENTOVENCIMENTO, DSPAGAMENTOATRASADO, QTMEDIADIASATRASO, 
+    FLTIPOALTERACAO, cdUsuario
+from TBLVPFICHAFINANCEIRA;
+
+GO
+
+drop table TBLVPFICHAFINANCEIRA;
+
+GO
+
+create table TBLVPFICHAFINANCEIRA
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    VLMAIORFATURA              DECIMAL(12,3)                  ,
+    VLMEDIOCOMPRA              DECIMAL(12,3)                  ,
+    VLSALDOCLIENTE             DECIMAL(12,3)                  ,
+    DSPAGAMENTOANTECIPADO      VARCHAR(30)                    ,
+    DSPAGAMENTOVENCIMENTO      VARCHAR(30)                    ,
+    DSPAGAMENTOATRASADO        VARCHAR(30)                    ,
+    QTMEDIADIASATRASO          DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPFICHAFINANCEIRA primary key (CDUSUARIO,cdEmpresa, cdRepresentante, cdCliente)
+);
+
+GO
+
+insert into TBLVPFICHAFINANCEIRA (cdEmpresa, cdRepresentante, cdCliente, VLMAIORFATURA, 
+    VLMEDIOCOMPRA, VLSALDOCLIENTE, DSPAGAMENTOANTECIPADO, DSPAGAMENTOVENCIMENTO, 
+    DSPAGAMENTOATRASADO, QTMEDIADIASATRASO, FLTIPOALTERACAO, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, VLMAIORFATURA, VLMEDIOCOMPRA, VLSALDOCLIENTE, 
+    DSPAGAMENTOANTECIPADO, DSPAGAMENTOVENCIMENTO, DSPAGAMENTOATRASADO, QTMEDIADIASATRASO, 
+    FLTIPOALTERACAO, cdUsuario
+from tmp_TBLVPFICHAFINANCEIRA;
+
+GO
+
+drop table tmp_TBLVPFICHAFINANCEIRA;
+
+GO
+
+create table tmp_TBLVPPEDIDO
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    nuPedido                   varchar(30)            not null,
+    flOrigemPedido             char(1)                not null,
+    cdCliente                  varchar(20)            not null,
+    nuPedidoRelacionado        varchar(30)            not null,
+    dtEmissao                  DateTime                           ,
+    vlTotalPedido              decimal(12,3)                  ,
+    dsObservacao               varchar(255)                   ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPPEDIDO (cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdCliente, 
+    nuPedidoRelacionado, dtEmissao, vlTotalPedido, dsObservacao, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdCliente, nuPedidoRelacionado, 
+    dtEmissao, vlTotalPedido, dsObservacao, flTipoAlteracao, cdUsuario
+from TBLVPPEDIDO;
+
+GO
+
+drop table TBLVPPEDIDO;
+
+GO
+
+create table TBLVPPEDIDO
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    nuPedido                   varchar(30)            not null,
+    flOrigemPedido             char(1)                not null,
+    cdCliente                  varchar(20)            not null,
+    nuPedidoRelacionado        varchar(30)            not null,
+    dtEmissao                  DateTime                           ,
+    vlTotalPedido              decimal(12,3)                  ,
+    dsObservacao               varchar(100)                   ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPPEDIDO primary key (CDUSUARIO,cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido)
+);
+
+GO
+
+insert into TBLVPPEDIDO (cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdCliente, 
+    nuPedidoRelacionado, dtEmissao, vlTotalPedido, dsObservacao, flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdCliente, nuPedidoRelacionado, 
+    dtEmissao, vlTotalPedido, dsObservacao, flTipoAlteracao, cdUsuario
+from tmp_TBLVPPEDIDO;
+
+GO
+
+drop table tmp_TBLVPPEDIDO;
+
+GO
+
+create table tmp_TBLVPTITULOFINANCEIRO
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    NUNF                       VARCHAR(15)                    ,
+    NUSERIE                    VARCHAR(15)                    ,
+    NUTITULO                   VARCHAR(15)                    ,
+    NUSUBDOC                   VARCHAR(15)                    ,
+    VLNF                       DECIMAL(12,3)                  ,
+    VLTITULO                   DECIMAL(12,3)                  ,
+    VLPAGO                     DECIMAL(12,3)                  ,
+    DTEMISSAO                  DateTime                           ,
+    DTVENCIMENTO               DateTime                           ,
+    DSHISTORICO                VARCHAR(100)                   ,
+    DSOBSERVACAO               VARCHAR(100)                   ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPTITULOFINANCEIRO (cdEmpresa, cdRepresentante, cdCliente, 
+    NUNF, NUSERIE, NUTITULO, NUSUBDOC, VLNF, VLTITULO, VLPAGO, DTEMISSAO, DTVENCIMENTO, 
+    DSHISTORICO, DSOBSERVACAO, FLTIPOALTERACAO, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, NUNF, NUSERIE, NUTITULO, 
+    NUSUBDOC, VLNF, VLTITULO, VLPAGO, DTEMISSAO, DTVENCIMENTO, DSHISTORICO, DSOBSERVACAO, 
+    FLTIPOALTERACAO, cdUsuario
+from TBLVPTITULOFINANCEIRO;
+
+GO
+
+drop table TBLVPTITULOFINANCEIRO;
+
+GO
+
+create table TBLVPTITULOFINANCEIRO
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    NUNF                       VARCHAR(15)            not null,
+    NUSERIE                    VARCHAR(15)            not null,
+    NUTITULO                   VARCHAR(15)            not null,
+    NUSUBDOC                   VARCHAR(15)            not null,
+    VLNF                       DECIMAL(12,3)                  ,
+    VLTITULO                   DECIMAL(12,3)                  ,
+    VLPAGO                     DECIMAL(12,3)                  ,
+    DTEMISSAO                  DateTime                           ,
+    DTVENCIMENTO               DateTime                           ,
+    DSHISTORICO                VARCHAR(50)                    ,
+    DSOBSERVACAO               VARCHAR(50)                    ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPTITULOFINANCEIRO primary key (CDUSUARIO,cdEmpresa, cdRepresentante, cdCliente, NUNF, NUSERIE, NUTITULO, NUSUBDOC)
+);
+
+GO
+
+insert into TBLVPTITULOFINANCEIRO (cdEmpresa, cdRepresentante, cdCliente, NUNF, NUSERIE, NUTITULO
+    , NUSUBDOC, VLNF, VLTITULO, VLPAGO, DTEMISSAO, DTVENCIMENTO, DSHISTORICO, DSOBSERVACAO, 
+    FLTIPOALTERACAO, cdUsuario)
+select cdEmpresa, cdRepresentante, cdCliente, NUNF, NUSERIE, NUTITULO, NUSUBDOC, VLNF, VLTITULO, 
+    VLPAGO, DTEMISSAO, DTVENCIMENTO, DSHISTORICO, DSOBSERVACAO, FLTIPOALTERACAO, cdUsuario
+from tmp_TBLVPTITULOFINANCEIRO;
+
+GO
+
+drop table tmp_TBLVPTITULOFINANCEIRO;
+
+GO
+
+create table tmp_TBLVPVISITA
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdVisita                   varchar(20)            not null,
+    cdSupervisor               varchar(20)            not null,
+    flOrigemVisita             char(1)                not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    dtVisita                   DateTime                           ,
+    hrVisita                   char(5)                        ,
+    dsObservacao               varchar(255)                   ,
+    qtTempoAtendimento         char(5)                        ,
+    flRepresentantePresente    char(1)                        ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPVISITA (cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdRepresentante, 
+    cdCliente, dtVisita, hrVisita, dsObservacao, qtTempoAtendimento, flRepresentantePresente, 
+    flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdRepresentante, cdCliente, dtVisita, 
+    hrVisita, dsObservacao, qtTempoAtendimento, flRepresentantePresente, flTipoAlteracao, 
+    cdUsuario
+from TBLVPVISITA;
+
+GO
+
+drop table TBLVPVISITA;
+
+GO
+
+create table TBLVPVISITA
+(
+    cdEmpresa                  varchar(20)            not null,
+    cdVisita                   varchar(20)            not null,
+    cdSupervisor               varchar(20)            not null,
+    flOrigemVisita             char(1)                not null,
+    cdRepresentante            varchar(20)            not null,
+    cdCliente                  varchar(20)            not null,
+    dtVisita                   DateTime                           ,
+    hrVisita                   char(5)                        ,
+    dsObservacao               varchar(255)                   ,
+    qtTempoAtendimento         char(5)                        ,
+    flRepresentantePresente    char(1)                        ,
+    flTipoAlteracao            char(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPVISITA primary key (CDUSUARIO,cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita)
+);
+
+GO
+
+insert into TBLVPVISITA (cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdRepresentante, 
+    cdCliente, dtVisita, hrVisita, dsObservacao, qtTempoAtendimento, flRepresentantePresente, 
+    flTipoAlteracao, cdUsuario)
+select cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdSupervisor, cdCliente, dtVisita, 
+    hrVisita, dsObservacao, qtTempoAtendimento, flRepresentantePresente, flTipoAlteracao, 
+    cdUsuario
+from tmp_TBLVPVISITA;
+
+GO
+
+drop table tmp_TBLVPVISITA;
+
+GO
+
+create table tmp_TBLVPITEMPEDIDO
+(
+    CDEMPRESA                  VARCHAR(20)            not null,
+    CDREPRESENTANTE            VARCHAR(20)            not null,
+    FLORIGEMPEDIDO             CHAR(1)                not null,
+    NUPEDIDO                   VARCHAR(30)            not null,
+    cdProduto                  varchar(20)            not null,
+    FLTIPOITEMPEDIDO           CHAR(1)                not null,
+    NUSEQITEMPEDIDO            DECIMAL(4)                     ,
+    CDTABELAPRECO              VARCHAR(20)            not null,
+    QTITEMFISICO               DECIMAL(4)                     ,
+    QTITEMFATURAMENTO          DECIMAL(4)                     ,
+    VLITEMPEDIDO               DECIMAL(12,3)                  ,
+    VLPRECOBASEPRODUTO         DECIMAL(12,3)                  ,
+    VLTOTALITEMPEDIDO          DECIMAL(12,3)                  ,
+    VLPCTDESCONTO              DECIMAL(12,3)                  ,
+    VLPCTDESCONTOFOB           DECIMAL(12,3)                  ,
+    VLPCTACRESCIMO             DECIMAL(12,3)                  ,
+    VLPCTIPIITEM               DECIMAL(12,3)                  ,
+    VLIPIITEM                  DECIMAL(12,3)                  ,
+    VLPCTRENTABILIDADE         DECIMAL(12,3)                  ,
+    NULISTATABELAPRECO         DECIMAL(4)                     ,
+    QTTROCAESPECIAL            DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null
+);
+
+GO
+
+insert into tmp_TBLVPITEMPEDIDO (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, 
+    FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, 
+    VLITEMPEDIDO, VLPRECOBASEPRODUTO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, 
+    VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, 
+    QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, 
+    NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, 
+    VLPRECOBASEPRODUTO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, 
+    VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, 
+    FLTIPOALTERACAO, cdUsuario
+from TBLVPITEMPEDIDO;
+
+GO
+
+drop table TBLVPITEMPEDIDO;
+
+GO
+
+create table TBLVPITEMPEDIDO
+(
+    CDEMPRESA                  VARCHAR(20)            not null,
+    CDREPRESENTANTE            VARCHAR(20)            not null,
+    FLORIGEMPEDIDO             CHAR(1)                not null,
+    NUPEDIDO                   VARCHAR(30)            not null,
+    cdProduto                  varchar(20)            not null,
+    FLTIPOITEMPEDIDO           CHAR(1)                not null,
+    NUSEQITEMPEDIDO            DECIMAL(4)                     ,
+    CDTABELAPRECO              VARCHAR(20)            not null,
+    QTITEMFISICO               DECIMAL(12,3)                  ,
+    QTITEMFATURAMENTO          DECIMAL(12,3)                  ,
+    VLITEMPEDIDO               DECIMAL(12,3)                  ,
+    VLPRECOBASEPRODUTO         DECIMAL(12,3)                  ,
+    VLTOTALITEMPEDIDO          DECIMAL(12,3)                  ,
+    VLPCTDESCONTO              DECIMAL(12,3)                  ,
+    VLPCTDESCONTOFOB           DECIMAL(12,3)                  ,
+    VLPCTACRESCIMO             DECIMAL(12,3)                  ,
+    VLPCTIPIITEM               DECIMAL(12,3)                  ,
+    VLIPIITEM                  DECIMAL(12,3)                  ,
+    VLPCTRENTABILIDADE         DECIMAL(12,3)                  ,
+    NULISTATABELAPRECO         DECIMAL(4)                     ,
+    QTTROCAESPECIAL            DECIMAL(4)                     ,
+    FLTIPOALTERACAO            CHAR(1)                        ,
+    cdUsuario                  varchar(8)             not null,
+    constraint PK_TBLVPITEMPEDIDO primary key (CDUSUARIO,CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO)
+);
+
+GO
+
+insert into TBLVPITEMPEDIDO (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, 
+    FLTIPOITEMPEDIDO, NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, 
+    VLITEMPEDIDO, VLPRECOBASEPRODUTO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, 
+    VLPCTACRESCIMO, VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, 
+    QTTROCAESPECIAL, FLTIPOALTERACAO, cdUsuario)
+select CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, 
+    NUSEQITEMPEDIDO, CDTABELAPRECO, QTITEMFISICO, QTITEMFATURAMENTO, VLITEMPEDIDO, 
+    VLPRECOBASEPRODUTO, VLTOTALITEMPEDIDO, VLPCTDESCONTO, VLPCTDESCONTOFOB, VLPCTACRESCIMO, 
+    VLPCTIPIITEM, VLIPIITEM, VLPCTRENTABILIDADE, NULISTATABELAPRECO, QTTROCAESPECIAL, 
+    FLTIPOALTERACAO, cdUsuario
+from tmp_TBLVPITEMPEDIDO;
+
+GO
+
+drop table tmp_TBLVPITEMPEDIDO;
+
+GO
+
+/*----------------------------------------------------------------------------------------------------------- 
+	EXCLUI TABELAS NAO MAIS UTILIZADAS
+----------------------------------------------------------------------------------------------------------- */
+drop table TBLVPCLIENTEERP;
+drop table TBLVPCLIENTEPALM;
+drop table TBLVPEMPRESAERP;
+drop table TBLVPEMPRESAPALM;
+drop table TBLVPESTOQUEERP;
+drop table TBLVPESTOQUEPALM;
+drop table TBLVPFICHAFINANCEIRAERP;
+drop table TBLVPFICHAFINANCEIRAPALM;
+drop table TBLVPINDICADORERP;
+drop table TBLVPINDICADORPALM;
+drop table TBLVPITEMPEDIDOERP;
+drop table TBLVPITEMPEDIDOPALM;
+drop table TBLVPITEMTABELAPRECOERP;
+drop table TBLVPITEMTABELAPRECOPALM;
+drop table TBLVPPEDIDOERP;
+drop table TBLVPPEDIDOPALM;
+drop table TBLVPPRODUTIVIDADEERP;
+drop table TBLVPPRODUTIVIDADEPALM;
+drop table TBLVPPRODUTOERP;
+drop table TBLVPPRODUTOPALM;
+drop table TBLVPRELINADIMPCLIERP;
+drop table TBLVPRELINADIMPCLIPALM;
+drop table TBLVPRELINADIMPREPERP;
+drop table TBLVPRELINADIMPREPPALM;
+drop table TBLVPREPRESENTANTEERP;
+drop table TBLVPREPRESENTANTEPALM;
+drop table TBLVPREPRESENTANTEEMPERP;
+drop table TBLVPREPRESENTANTEEMPPALM;
+drop table TBLVPSUPERVISORREPERP;
+drop table TBLVPSUPERVISORREPPALM;
+drop table TBLVPTABELAPRECOERP;
+drop table TBLVPTABELAPRECOPALM;
+drop table TBLVPTITULOFINANCEIROERP;
+drop table TBLVPTITULOFINANCEIROPALM;
+drop table TBLVPUSUARIOPDAERP;
+drop table TBLVPUSUARIOPDAPALM;
+drop table TBLVPUSUARIOPDACONEXAOERP;
+drop table TBLVPUSUARIOPDACONEXAOPALM;
+drop table TBLVPVALORINDICADORERP;
+drop table TBLVPVALORINDICADORPALM;
+drop table TBLVPVISITAERP;
+drop table TBLVPVISITAPALM;

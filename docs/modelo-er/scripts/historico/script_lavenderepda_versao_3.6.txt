@@ -1,0 +1,153 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.6' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 19/01/2012
+Autor: Wellington
+Descrição: Novas tabelas - Consignacao e ItemConsignacao
+------------------------------------------------------------------------*/
+
+create table TBLVPCONSIGNACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+DTCONSIGNACAO        datetime                       not null,
+VLTOTALCONSIGNADO    decimal(16,7)                  not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+constraint PK_TBLVPCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONSIGNACAO, CDUSUARIO)
+);
+
+
+create table TBLVPITEMCONSIGNACAO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+CDTABELAPRECO        DECIMAL(9,0)                   not null,
+VLITEM               decimal(16,7),
+QTITEMCONSIGNADO     decimal(16,7),
+QTITEMSOBRA          decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDCONSIGNACAO, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 27/01/2012
+Autor: Wellington
+Descrição: Nova coluna vlToleranciaVerba na tabela Representante
+------------------------------------------------------------------------*/
+alter table TBLVPREPRESENTANTE
+add vlToleranciaVerba decimal(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 09/02/2012
+Autor: Dirceu
+Descrição: Tabelas ConfigDynEntity e ConfigPersonCad substituídas por Entidade e Campo
+------------------------------------------------------------------------*/
+drop table TBLVPCONFIGDYNENTITY;
+drop table TBLVPCONFIGPERSONCAD;
+
+create table TBLVPENTIDADE (
+CDSISTEMA            decimal(9)                     not null,
+NMENTIDADE           varchar(30)                    not null,
+NMDOMAIN             varchar(30)                    not null,
+DSENTIDADE           varchar(1000),
+FLAUDITAINS          char(1)                        not null,
+FLAUDITAUPD          char(1)                        not null,
+FLAUDITADEL          char(1)                        not null,
+FLDINAMICO           char(1)                        not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPENTIDADE primary key (CDSISTEMA, NMENTIDADE, cdUsuario)
+);
+
+create table TBLVPCAMPO (
+CDSISTEMA            decimal(9)                     not null,
+NMENTIDADE           varchar(30)                    not null,
+NMCAMPO              varchar(30)                    not null,
+NMENTIDADERELACIONAMENTO varchar(30),
+DSLABEL              varchar(30)                    not null,
+DSCAMPO              varchar(500),
+CDDOMINIO            decimal(9)                     not null,
+DSOPCOESDOMINIO      varchar(1000),
+FLCHAVEPRIMARIA      char(1)                        not null,
+FLDESCRICAO          char(1)                        not null,
+FLOBRIGATORIO        char(1)                        not null,
+FLAUDITA             char(1)                        not null,
+FLDINAMICO           char(1)                        not null,
+FLVISIVELCAD         char(1)                        not null,
+FLVISIVELLIST        char(1)                        not null,
+FLVISIVELFILTRO      char(1)                        not null,
+NUCOLSPAN            decimal(4),
+NUORDEM              decimal(4),
+VLPADRAO             varchar(1000),
+DSFORMATO            varchar(50),
+DSMASCARA            varchar(250),
+DSSECAO              varchar(250),
+NUROWSPAN            decimal(4),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCAMPO primary key (CDSISTEMA, NMENTIDADE, cdUsuario, NMCAMPO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 16/02/2012
+Autor: Israel
+Descrição: Reversão do problema gerado na versão anterior.
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+drop column DSLOGRADOUROENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCOMPLEMENTOENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSBAIRROENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCIDADEENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSESTADOENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSPAISENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSCEPENTREGA;
+
+alter table TBLVPCLIENTE
+drop column DSLOGRADOUROCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCOMPLEMENTOCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSBAIRROCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCIDADECOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSESTADOCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSPAISCOBRANCA;
+
+alter table TBLVPCLIENTE
+drop column DSCEPCOBRANCA;
+
+

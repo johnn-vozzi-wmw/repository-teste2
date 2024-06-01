@@ -1,0 +1,100 @@
+
+/*-------------------------------------------------------------------------
+Data: 14/11/2008
+Autor: Dirceu
+Descrição: sai configParametro e entra configParametroEmp
+------------------------------------------------------------------------*/
+drop table TBLVPCONFIGPARAMETRO, ERPLVPCONFIGPARAMETRO, PDALVPCONFIGPARAMETRO;
+
+create table TBLVPCONFIGPARAMETROEMP (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDPARAMETRO          VARCHAR(20)                    not null,
+VLPARAMETROPDA       VARCHAR(50),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGPARAMETROEMP primary key (CDEMPRESA, CDPARAMETRO, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/11/2008
+Autor: Dirceu
+Descrição: novo campo flEspecial
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add flEspecial char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2008
+Autor: Dirceu
+Descrição: nova tabela ConfigParametroGer
+------------------------------------------------------------------------*/
+create table TBLVPCONFIGPARAMETROGER (
+CDPARAMETRO          VARCHAR(20)                    not null,
+VLPARAMETROPDA       VARCHAR(50),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGPARAMETROGER primary key (CDPARAMETRO, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 02/12/2008
+Autor: Dirceu
+Descrição: Nova coluna flLido na tabela Recado
+------------------------------------------------------------------------*/
+alter table TBLVPRECADO
+add flLido char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 02/12/2008
+Autor: Dirceu
+Descrição: Nova coluna FlPrecoLiberadoSenha na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add FLPRECOLIBERADOSENHA char(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 03/12/2008
+Autor: Dirceu
+Descrição: Nova coluna DsMensagemEntrega na tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add DSMENSAGEMENTREGA varchar(100);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 04/12/2008
+Autor: Dirceu
+Descrição: excluido campo cdStatus e incluido cdStatusEnvio na tabela Recado
+------------------------------------------------------------------------*/
+alter table TBLVPRECADO
+drop column CDSTATUS;
+
+alter table TBLVPRECADO
+add CDSTATUSENVIO VARCHAR(20);
+
+/*-------------------------------------------------------------------------
+Data: 06/12/2008
+Autor: Thiago
+Descrição: Novo campo nuOrdemCompraCliente na Tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add NUORDEMCOMPRACLIENTE varchar(20);
+
+/*-------------------------------------------------------------------------
+Data: 18/12/2008
+Autor: Thiago
+Descrição: Novo campo flCreditoClienteLiberadoSenha na Tabela Pedido
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO
+add FLCREDITOCLIENTELIBERADOSENHA char(1);

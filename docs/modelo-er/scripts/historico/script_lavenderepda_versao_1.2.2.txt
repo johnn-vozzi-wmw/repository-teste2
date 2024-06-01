@@ -1,0 +1,103 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.2' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 12/08/2009
+Autor: Pedro
+Descrição: Renomeado campo vlReducaoIcms para vlPctReducaoIcms
+------------------------------------------------------------------------*/
+alter table TBLVPTRIBUTACAO 
+add vlPctReducaoIcms	DECIMAL(16,7);
+
+go
+
+update TBLVPTRIBUTACAO set vlPctReducaoIcms = vlReducaoIcms;
+
+go
+
+alter table TBLVPTRIBUTACAO 
+drop column vlReducaoIcms;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 14/08/2009
+Autor: Dirceu
+Descrição: Novo campo vlSt nas tabelas ItemPedido e ItemPedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO 
+add vlSt	DECIMAL(16,7);
+
+alter table TBLVPITEMPEDIDOERP 
+add vlSt	DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 14/08/2009
+Autor: Dirceu
+Descrição: Nova tabela TributacaoVlBase
+------------------------------------------------------------------------*/
+create table TBLVPTRIBUTACAOVLBASE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+cdTributacaoCliente  DECIMAL(9,0)                   not null,
+cdTributacaoProduto  DECIMAL(9,0)                   not null,
+cdProduto            VARCHAR(20)                    not null,
+vlBaseIcms           DECIMAL(16,7),
+vlBaseIcmsCalcRetido DECIMAL(16,7),
+vlBaseIcmsRetidoCalcRetido DECIMAL(16,7),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPTRIBUTACAOVLBASE primary key (CDEMPRESA, CDREPRESENTANTE, cdTributacaoCliente, cdTributacaoProduto, cdProduto, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 20/08/2009
+Autor: Dirceu
+Descrição: Novos campos Data/Hora de Fechamento e TransmissaoPda
+	para as tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add DtFechamento	datetime;
+
+alter table TBLVPPEDIDO 
+add HrFechamento	char(5);
+
+alter table TBLVPPEDIDO 
+add DtTransmissaoPda	datetime;
+
+alter table TBLVPPEDIDO 
+add HrTransmissaoPda	char(5);
+
+alter table TBLVPPEDIDOERP 
+add DtFechamento	datetime;
+
+alter table TBLVPPEDIDOERP 
+add HrFechamento	char(5);
+
+alter table TBLVPPEDIDOERP 
+add DtTransmissaoPda	datetime;
+
+alter table TBLVPPEDIDOERP 
+add HrTransmissaoPda	char(5);
+
+
+/*-------------------------------------------------------------------------
+Data: 20/08/2009
+Autor: Pedro
+Descrição: Novo campo na tabela TabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+add flPromocional	CHAR(1);
+
+
+/*-------------------------------------------------------------------------
+Data: 20/08/2009
+Autor: Pedro
+Descrição: Novo campo na tabela ProdutoTabPreco
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTOTABPRECO 
+add DSTABPRECOPROMOLIST	VARCHAR(15);

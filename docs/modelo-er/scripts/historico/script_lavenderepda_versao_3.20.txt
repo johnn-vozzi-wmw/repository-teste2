@@ -1,0 +1,2925 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.20' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2012
+Autor: Pedro
+Descrição: Alterações para desativar correspondencia-chave (todas as tabelas)
+------------------------------------------------------------------------*/
+drop table TBLVPAGENDAVISITA;
+drop table TBLVPAREAVENDA;
+drop table TBLVPAREAVENDACLIENTE;
+drop table TBLVPAREAVENDAPRODUTO;
+drop table TBLVPATRIBUTOOPCAOPROD;
+drop table TBLVPATRIBUTOPROD;
+drop table TBLVPBANDEIRA;
+drop table TBLVPCAMPANHA;
+drop table TBLVPCAMPO;
+drop table TBLVPCATEGORIA;
+drop table TBLVPCCCLIPORTIPO;
+drop table TBLVPCESTA;
+drop table TBLVPCESTAPOSITCLIENTE;
+drop table TBLVPCESTAPOSITPRODUTO;
+drop table TBLVPCESTAPRODUTO;
+drop table TBLVPCESTAPROMOCIONAL;
+drop table TBLVPCLASSIFICFISCAL;
+drop table TBLVPCLIENTE;
+drop table TBLVPCLIENTEATUA;
+drop table TBLVPCLIENTESETORORIGEM;
+drop table TBLVPCONCORRENTE;
+drop table TBLVPCONDICAOPAGAMENTO;
+drop table TBLVPCONDPAGTOCLI;
+drop table TBLVPCONDPAGTOLINHA;
+drop table TBLVPCONDPAGTOTABPRECO;
+drop table TBLVPCONDTIPOPAGTO;
+drop table TBLVPCONDTIPOPEDIDO;
+drop table TBLVPCONEXAOPDA;
+drop table TBLVPCONFIGINTEGWEBTC;
+drop table TBLVPCONFIGINTERNO;
+drop table TBLVPCONSIGNACAO;
+drop table TBLVPCONTACORRENTECLI;
+drop table TBLVPCONTATO;
+drop table TBLVPCONTATOERP;
+drop table TBLVPCONTRATOCLIENTE;
+drop table TBLVPCONTRATOPRODEST;
+drop table TBLVPCONTRATOPRODUTO;
+drop table TBLVPCORSISTEMA;
+drop table TBLVPDESCCOMIGRUPO;
+drop table TBLVPDESCCOMIPROD;
+drop table TBLVPDESCONTOCCP;
+drop table TBLVPDESCONTOGRUPO;
+drop table TBLVPDESCPROGQTD;
+drop table TBLVPDESCPROGRESSIVO;
+drop table TBLVPDESCQUANTIDADE;
+drop table TBLVPDESCVIDAUTILGRUPO;
+drop table TBLVPEMPRESA;
+drop table TBLVPENTIDADE;
+drop table TBLVPESQUEMACORSISTEMA;
+drop table TBLVPESTOQUE;
+drop table TBLVPFACEAMENTO;
+drop table TBLVPFACEAMENTOESTOQUE;
+drop table TBLVPFICHAFINANCEIRA;
+drop table TBLVPFORNECEDOR;
+drop table TBLVPFOTOPRODUTO;
+drop table TBLVPGIROPRODUTO;
+drop table TBLVPGRUPOPRODTIPOPED;
+drop table TBLVPGRUPOPRODUTO1;
+drop table TBLVPGRUPOPRODUTO2;
+drop table TBLVPGRUPOPRODUTO3;
+drop table TBLVPINDICADOR;
+drop table TBLVPITEMCONSIGNACAO;
+drop table TBLVPITEMGRADE;
+drop table TBLVPITEMKIT;
+drop table TBLVPITEMKITPEDIDO;
+drop table TBLVPITEMKITPEDIDOERP;
+drop table TBLVPITEMPEDIDO;
+drop table TBLVPITEMPEDIDOERP;
+drop table TBLVPITEMPEDIDOERPDIF;
+drop table TBLVPITEMPEDIDOGRADE;
+drop table TBLVPITEMPEDIDOGRADEERP;
+drop table TBLVPITEMTABELAPRECO;
+drop table TBLVPKIT;
+drop table TBLVPKITTABPRECO;
+drop table TBLVPLOGPDA;
+drop table TBLVPLOTEPRODUTO;
+drop table TBLVPMENSAGEM;
+drop table TBLVPMETA;
+drop table TBLVPMETAACOMPANHAMENTO;
+drop table TBLVPMETAPORGRUPOPROD1;
+drop table TBLVPMETASPORCLIENTE;
+drop table TBLVPMETASPORFORN;
+drop table TBLVPMETASPORPRODUTO;
+drop table TBLVPMOTIVOTROCA;
+drop table TBLVPMOTREGISTROVISITA;
+drop table TBLVPNOTIFICACAOPDA;
+drop table TBLVPNOVOCLIENTE;
+drop table TBLVPPAGAMENTO;
+drop table TBLVPPARCELAPEDIDO;
+drop table TBLVPPEDIDO;
+drop table TBLVPPEDIDOERP;
+drop table TBLVPPEDIDOERPDIF;
+drop table TBLVPPESQUISAMERCADO;
+drop table TBLVPPONTUACAO;
+drop table TBLVPPRODUTO;
+drop table TBLVPPRODUTOATRIBUTO;
+drop table TBLVPPRODUTOGRADE;
+drop table TBLVPPRODUTOKIT;
+drop table TBLVPPRODUTOSIMILAR;
+drop table TBLVPPRODUTOTABPRECO;
+drop table TBLVPPRODUTOTIPOPED;
+drop table TBLVPPRODUTOUNIDADE;
+drop table TBLVPRECADO;
+drop table TBLVPRELINADIMPCLI;
+drop table TBLVPRELINADIMPREP;
+drop table TBLVPRELNOVIDADEPROD;
+drop table TBLVPREPRESENTANTE;
+drop table TBLVPREPRESENTANTEEMP;
+drop table TBLVPROTAENTREGA;
+drop table TBLVPSISTEMA;
+drop table TBLVPSISTEMAPDA;
+drop table TBLVPSTATUSPEDIDOPDA;
+drop table TBLVPSUPERVISORREP;
+drop table TBLVPTABELAPRECO;
+drop table TBLVPTABELAPRECOCLI;
+drop table TBLVPTABELAPRECOREG;
+drop table TBLVPTABELAPRECOREP;
+drop table TBLVPTCACTIVATION;
+drop table TBLVPTEMASISTEMA;
+drop table TBLVPTIPOCONDPAGTOCLI;
+drop table TBLVPTIPOENTREGA;
+drop table TBLVPTIPOFRETE;
+drop table TBLVPTIPOITEMGRADE;
+drop table TBLVPTIPONOVIDADEPROD;
+drop table TBLVPTIPOPAGAMENTO;
+drop table TBLVPTIPOPEDIDO;
+drop table TBLVPTITULOFINANCEIRO;
+drop table TBLVPTRANSPORTADORA;
+drop table TBLVPTRIBUTACAO;
+drop table TBLVPTRIBUTACAOVLBASE;
+drop table TBLVPUNIDADE;
+drop table TBLVPUSUARIOPDA;
+drop table TBLVPUSUARIOPDAREP;
+drop table TBLVPUSUARIOREP;
+drop table TBLVPUSUARIOWEB;
+drop table TBLVPVALORINDICADOR;
+drop table TBLVPVALORPARAMETRO;
+drop table TBLVPVERBA;
+drop table TBLVPVERBACLIENTE;
+drop table TBLVPVERBACONTACOR;
+drop table TBLVPVERBAITEMPEDIDO;
+drop table TBLVPVERBAPRODUTO;
+drop table TBLVPVERBASALDO;
+drop table TBLVPVERBATABELAPRECO;
+drop table TBLVPVISITA;
+drop table TBLVPVISITAACOMP;
+drop table TBLVPVISITASUPERVISOR;
+
+/*==============================================================*/
+/* Table: TBLVPAGENDAVISITA                                     */
+/*==============================================================*/
+create table TBLVPAGENDAVISITA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+NUDIASEMANA          DECIMAL(9,0)                   not null,
+FLSEMANAMES          CHAR(1)                        not null,
+flTipoFrequencia     CHAR(1)                        not null,
+nuSequencia          DECIMAL(9,0),
+dtBase               DATETIME,
+hrAgenda             VARCHAR(5),
+dsObservacao         VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAGENDAVISITA primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, NUDIASEMANA, FLSEMANAMES, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPAREAVENDA                                        */
+/*==============================================================*/
+create table TBLVPAREAVENDA (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+dsAreaVenda          varchar(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDA primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPAREAVENDACLIENTE                                 */
+/*==============================================================*/
+create table TBLVPAREAVENDACLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDACLIENTE primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdCliente, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPAREAVENDAPRODUTO                                 */
+/*==============================================================*/
+create table TBLVPAREAVENDAPRODUTO (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+cdProduto            varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDAPRODUTO primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdProduto, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPATRIBUTOOPCAOPROD                                */
+/*==============================================================*/
+create table TBLVPATRIBUTOOPCAOPROD (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDATRIBUTOPRODUTO    varchar(20)                    not null,
+CDATRIBUTOOPCAOPRODUTO varchar(20)                    not null,
+DSATRIBUTOOPCAOPRODUTO VARCHAR(100),
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPATRIBUTOOPCAOPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDATRIBUTOOPCAOPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPATRIBUTOPROD                                     */
+/*==============================================================*/
+create table TBLVPATRIBUTOPROD (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDATRIBUTOPRODUTO    varchar(20)                    not null,
+DSATRIBUTOPRODUTO    VARCHAR(100),
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPATRIBUTOPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPBANDEIRA                                         */
+/*==============================================================*/
+create table TBLVPBANDEIRA (
+CDEMPRESA            varchar(20)                    not null,
+cdBandeira           varchar(20)                    not null,
+dsBandeira           varchar(100),
+nuCarimbo            Decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPBANDEIRA primary key (CDEMPRESA, cdBandeira, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCAMPANHA                                         */
+/*==============================================================*/
+create table TBLVPCAMPANHA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCAMPANHA           varchar(20)                    not null,
+DSCAMPANHA           VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCAMPANHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCAMPO                                            */
+/*==============================================================*/
+create table TBLVPCAMPO (
+CDSISTEMA            decimal(9)                     not null,
+NMENTIDADE           varchar(30)                    not null,
+NMCAMPO              varchar(30)                    not null,
+NMENTIDADERELACIONAMENTO varchar(30),
+DSLABEL              varchar(30)                    not null,
+DSCAMPO              varchar(500),
+CDDOMINIO            decimal(9)                     not null,
+DSOPCOESDOMINIO      varchar(1000),
+FLCHAVEPRIMARIA      char(1)                        not null,
+FLDESCRICAO          char(1)                        not null,
+FLOBRIGATORIO        char(1)                        not null,
+FLAUDITA             char(1)                        not null,
+FLDINAMICO           char(1)                        not null,
+FLVISIVELCAD         char(1)                        not null,
+FLVISIVELLIST        char(1)                        not null,
+FLVISIVELFILTRO      char(1)                        not null,
+FLEDITAVEL           char(1),
+NUCOLSPAN            decimal(4),
+NUORDEM              decimal(4),
+VLPADRAO             varchar(1000),
+DSFORMATO            varchar(50),
+DSMASCARA            varchar(250),
+DSSECAO              varchar(250),
+NUROWSPAN            decimal(4),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCAMPO primary key (CDSISTEMA, NMENTIDADE, cdUsuario, NMCAMPO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCATEGORIA                                        */
+/*==============================================================*/
+create table TBLVPCATEGORIA (
+cdEmpresa            varchar(20)                    not null,
+cdCategoria          varchar(20)                    not null,
+dsCategoria          varchar(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCATEGORIA primary key (cdEmpresa, cdCategoria, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCCCLIPORTIPO                                     */
+/*==============================================================*/
+create table TBLVPCCCLIPORTIPO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+nuDocumento          VARCHAR(20)                    not null,
+vlQuebra             DECIMAL(16,7),
+vlMortalidade        DECIMAL(16,7),
+vlPeso               DECIMAL(16,7),
+dtDocumento          datetime,
+nuPedido             VARCHAR(30),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCCCLIPORTIPO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, nuDocumento, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCESTA                                            */
+/*==============================================================*/
+create table TBLVPCESTA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCESTA              varchar(20)                    not null,
+DSCESTA              VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCESTA primary key (CDEMPRESA, CDREPRESENTANTE, CDCESTA, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCESTAPOSITCLIENTE                                */
+/*==============================================================*/
+create table TBLVPCESTAPOSITCLIENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCAMPANHA           varchar(20)                    not null,
+CDCESTA              varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+vlPctPositivacao     DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPOSITCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDCESTA, CDCLIENTE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCESTAPOSITPRODUTO                                */
+/*==============================================================*/
+create table TBLVPCESTAPOSITPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCAMPANHA           varchar(20)                    not null,
+CDCESTA              varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+vlMeta               DECIMAL(16,7),
+vlRealizado          DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPOSITPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDCESTA, CDPRODUTO, CDCLIENTE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCESTAPRODUTO                                     */
+/*==============================================================*/
+create table TBLVPCESTAPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCESTA              varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCESTAPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCESTA, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCESTAPROMOCIONAL                                 */
+/*==============================================================*/
+create table TBLVPCESTAPROMOCIONAL (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+DTVIGENCIAINICIAL    DATETIME,
+DTVIGENCIAFINAL      DATETIME,
+VLUNITARIO           DECIMAL(16,7),
+vlPctMaxDesconto     DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPROMOCIONAL primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDTABELAPRECO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCLASSIFICFISCAL                                  */
+/*==============================================================*/
+create table TBLVPCLASSIFICFISCAL (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdClassificFiscal    varchar(20)                    not null,
+dsClassificFiscal    varchar(50),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCLASSIFICFISCAL primary key (cdEmpresa, cdRepresentante, cdClassificFiscal, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCLIENTE                                          */
+/*==============================================================*/
+create table TBLVPCLIENTE (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+nmRazaoSocial        varchar(50),
+nuFone               varchar(20),
+NUFONEFAX            VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+dsEmail              varchar(50),
+dsObservacao         varchar(50),
+nmFantasia           varchar(50),
+nmContatoPrincipal   varchar(50),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+VLLIMITECREDITO      DECIMAL(16,7),
+dsLogradouroComercial varchar(50),
+dsComplementoComercial varchar(30),
+dsBairroComercial    varchar(30),
+dsCepComercial       varchar(20),
+dsCidadeComercial    varchar(30),
+dsEstadoComercial    varchar(20),
+dsPaisComercial      varchar(20),
+dsUfPreco            varchar(2),
+flEspecial           char(1),
+flStatusCliente      VARCHAR(1),
+dtVencimentoAlvara   DATETIME,
+vlIndiceFinanceiro   DECIMAL(16,7),
+qtDiasMaximoPagamento DECIMAL(4),
+CDROTAENTREGA        varchar(20),
+CDCATEGORIA          VARCHAR(20),
+cdContratoEspecial   VARCHAR(20),
+flConsisteConversaoUnidade CHAR(1),
+cdTipoEntrega        VARCHAR(20),
+NUCNPJ               varchar(20),
+NUINSCRICAOESTADUAL  varchar(20),
+cdTributacaoCliente  varchar(20),
+flAplicaSt           CHAR(1),
+CDTRANSPORTADORA     varchar(20),
+vlIndiceComissao     DECIMAL(16,7),
+vlIndiceFinanceiroEspecial DECIMAL(16,7),
+cdRegiao             VARCHAR(20),
+vlIndiceFinanceiroCondPagto DECIMAL(16,7),
+flCreditoAntecipado  CHAR(1),
+flOptanteSimples     CHAR(1),
+nuDiasSemPedido      decimal(9,0),
+nuDiasPrevisaoEntrega DECIMAL(9,0),
+DTULTIMOPEDIDO       DATETIME,
+DSSITUACAO           VARCHAR(20),
+dtAtualizacaoCadastro DATETIME,
+CDTABELAPRECO        varchar(30),
+cdBandeira           varchar(20),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCLIENTE primary key (cdEmpresa, cdRepresentante, cdCliente, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCLIENTEATUA                                      */
+/*==============================================================*/
+create table TBLVPCLIENTEATUA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDREGISTRO           varchar(20)                    not null,
+DTATUALIZACAO        DATETIME,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCLIENTEATUA primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDREGISTRO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCLIENTESETORORIGEM                               */
+/*==============================================================*/
+create table TBLVPCLIENTESETORORIGEM (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTipoCliRede        VARCHAR(5)                     not null,
+cdCliRede            VARCHAR(20)                    not null,
+cdSetor              VARCHAR(20)                    not null,
+cdOrigemSetor        VARCHAR(20)                    not null,
+dsSetor              VARCHAR(100),
+dsOrigemSetor        VARCHAR(100),
+cdCondicaoPagamento  VARCHAR(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCLIENTESETORORIGEM primary key (CDEMPRESA, CDREPRESENTANTE, cdCliRede, cdSetor, cdTipoCliRede, cdOrigemSetor, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONCORRENTE                                      */
+/*==============================================================*/
+create table TBLVPCONCORRENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDCONCORRENTE        varchar(20)                    not null,
+DSCONCORRENTE        VARCHAR(50),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONCORRENTE primary key (CDEMPRESA, CDCONCORRENTE, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDICAOPAGAMENTO                                */
+/*==============================================================*/
+create table TBLVPCONDICAOPAGAMENTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOCONDPAGTO      VARCHAR(20),
+DSCONDICAOPAGAMENTO  VARCHAR(100),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+QTDIASMEDIOSPAGAMENTO DECIMAL(4),
+VLPCTDESCONTOTOTALPEDIDO DECIMAL(16,7),
+NUPARCELAS           DECIMAL(4,0),
+NUINTERVALOENTRADA   DECIMAL(4,0),
+NUINTERVALOPARCELAS  DECIMAL(4,0),
+DTPAGAMENTO          DATETIME,
+NUPRAZOBASE          DECIMAL(4,0),
+FLPERIODICIDADEPRAZOBASE CHAR(1),
+qtMinValor           DECIMAL(16,7),
+CDTIPOPAGAMENTO      VARCHAR(20),
+FLESPECIAL           CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDICAOPAGAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDPAGTOCLI                                     */
+/*==============================================================*/
+create table TBLVPCONDPAGTOCLI (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDPAGTOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONDICAOPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDPAGTOLINHA                                   */
+/*==============================================================*/
+create table TBLVPCONDPAGTOLINHA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDLINHA              VARCHAR(20)                    not null,
+cdRegiao             VARCHAR(20)                    not null,
+NUDIASPRAZO          DECIMAL(9),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDPAGTOLINHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDLINHA, cdRegiao, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDPAGTOTABPRECO                                */
+/*==============================================================*/
+create table TBLVPCONDPAGTOTABPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONDPAGTOTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTABELAPRECO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDTIPOPAGTO                                    */
+/*==============================================================*/
+create table TBLVPCONDTIPOPAGTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPAGAMENTO      VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDTIPOPAGTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONDTIPOPEDIDO                                   */
+/*==============================================================*/
+create table TBLVPCONDTIPOPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONDTIPOPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONDICAOPAGAMENTO, CDTIPOPEDIDO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONEXAOPDA                                       */
+/*==============================================================*/
+create table TBLVPCONEXAOPDA (
+cdConexao            varchar(20)                    not null,
+dsConexao            varchar(30),
+dsHostFtp            varchar(20),
+nuPortaFtp           decimal(9),
+dsUrlWebService      varchar(100),
+flConexaoDiscada     char(1),
+flDefault            char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONEXAOPDA primary key (cdConexao, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONFIGINTEGWEBTC                                 */
+/*==============================================================*/
+create table TBLVPCONFIGINTEGWEBTC (
+dsTabela             varchar(20)                    not null,
+dsChave              varchar(100),
+flRemessa            char(1),
+flRetorno            char(1),
+flAtivo              char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCONFIGINTEGWEBTC primary key (dsTabela, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONFIGINTERNO                                    */
+/*==============================================================*/
+create table TBLVPCONFIGINTERNO (
+CDEMPRESA            varchar(20)                    not null,
+CDCONFIGINTERNO      DECIMAL(9,0)                   not null,
+VLCONFIGINTERNO      VARCHAR(500),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONFIGINTERNO primary key (CDEMPRESA, CDCONFIGINTERNO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONSIGNACAO                                      */
+/*==============================================================*/
+create table TBLVPCONSIGNACAO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+DTCONSIGNACAO        datetime,
+VLTOTALCONSIGNADO    decimal(16,7),
+FLPAGAMENTOEFETUADO  char(1),
+FLORIGEMPEDIDO       char(1),
+NUPEDIDO             varchar(30),
+DTPROXIMAVISITA      datetime,
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONSIGNACAO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTACORRENTECLI                                 */
+/*==============================================================*/
+create table TBLVPCONTACORRENTECLI (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+nuDocumento          VARCHAR(20)                    not null,
+dtMovimentacao       datetime,
+vlCredito            DECIMAL(16,7),
+vlDebito             DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTACORRENTECLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, nuDocumento, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTATO                                          */
+/*==============================================================*/
+create table TBLVPCONTATO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+FLORIGEMCONTATO      CHAR(1)                        not null,
+CDCONTATO            VARCHAR(20)                    not null,
+CDREGISTRO           VARCHAR(20)                    not null,
+NMCONTATO            VARCHAR(100),
+NUFONE               VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+DSCARGO              VARCHAR(50),
+FLSEXO               CHAR(1),
+DSEMAIL              VARCHAR(100),
+DSOBSERVACAO         VARCHAR(255),
+DTANIVERSARIO        DATETIME,
+flAcaoAlteracao      CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTATO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONTATO, FLORIGEMCONTATO, CDREGISTRO, cdUsuario, FLTIPOALTERACAO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTATOERP                                       */
+/*==============================================================*/
+create table TBLVPCONTATOERP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONTATO            VARCHAR(20)                    not null,
+NMCONTATO            VARCHAR(100),
+NUFONE               VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+DSCARGO              VARCHAR(50),
+FLSEXO               CHAR(1),
+DSEMAIL              VARCHAR(100),
+DSOBSERVACAO         VARCHAR(255),
+DTANIVERSARIO        DATETIME,
+CDCONTATORELACIONADO VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTATOERP primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONTATO, cdUsuario, FLSEXO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTRATOCLIENTE                                  */
+/*==============================================================*/
+create table TBLVPCONTRATOCLIENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+DTVIGENCIAFINAL      datetime,
+NUDIASPERIODICIDADE  decimal(9),
+CDTABELAPRECO        varchar(30),
+CDCONDICAOPAGAMENTO  varchar(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTRATOPRODEST                                  */
+/*==============================================================*/
+create table TBLVPCONTRATOPRODEST (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+CDPRODUTO            varchar(20)                    not null,
+DTCADASTRO           datetime                       not null,
+QTESTOQUEATUAL       decimal(16,7),
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOPRODEST primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDPRODUTO, DTCADASTRO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCONTRATOPRODUTO                                  */
+/*==============================================================*/
+create table TBLVPCONTRATOPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+FLTIPOCONTRATO       char(1)                        not null,
+DTVIGENCIAINICIAL    datetime                       not null,
+CDPRODUTO            varchar(20)                    not null,
+QTPRODUTOCONTRATO    decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTRATOPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, FLTIPOCONTRATO, DTVIGENCIAINICIAL, CDPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPCORSISTEMA                                       */
+/*==============================================================*/
+create table TBLVPCORSISTEMA (
+cdEsquemaCor         decimal(9)                     not null,
+cdCor                decimal(9)                     not null,
+dsUtilizacao         varchar(100),
+vlR                  decimal(9),
+vlG                  decimal(9),
+vlB                  decimal(9),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCORSISTEMA primary key (cdEsquemaCor, cdCor, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCCOMIGRUPO                                    */
+/*==============================================================*/
+create table TBLVPDESCCOMIGRUPO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+QTITEM               DECIMAL(16,7)                  not null,
+VLPCTDESCONTO        DECIMAL(16,7)                  not null,
+vlPctComissao        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCCOMIGRUPO primary key (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, VLPCTDESCONTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCCOMIPROD                                     */
+/*==============================================================*/
+create table TBLVPDESCCOMIPROD (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTITEM               DECIMAL(16,7)                  not null,
+VLPCTDESCONTO        DECIMAL(16,7)                  not null,
+vlPctComissao        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCCOMIPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, QTITEM, VLPCTDESCONTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCONTOCCP                                      */
+/*==============================================================*/
+create table TBLVPDESCONTOCCP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLASSECLIENTE      VARCHAR(20)                    not null,
+CDCLASSEPRODUTO      VARCHAR(20)                    not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCONTOCCP primary key (CDEMPRESA, CDREPRESENTANTE, CDCLASSECLIENTE, CDCLASSEPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCONTOGRUPO                                    */
+/*==============================================================*/
+create table TBLVPDESCONTOGRUPO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+QTITEM               DECIMAL(16,7)                  not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCONTOGRUPO primary key (CDEMPRESA, CDREPRESENTANTE, CDGRUPOPRODUTO1, QTITEM, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCPROGQTD                                      */
+/*==============================================================*/
+create table TBLVPDESCPROGQTD (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDUNIDADE            varchar(20)                    not null,
+QTUNIDADE            decimal(9)                     not null,
+VLPCTDESCONTO        decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCPROGQTD primary key (CDEMPRESA, CDREPRESENTANTE, CDUNIDADE, QTUNIDADE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCPROGRESSIVO                                  */
+/*==============================================================*/
+create table TBLVPDESCPROGRESSIVO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTabelaPreco        varchar(30)                    not null,
+VLINICIOFAIXA        DECIMAL(16,7)                  not null,
+VLFINALFAIXA         DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCPROGRESSIVO primary key (CDEMPRESA, CDREPRESENTANTE, cdTabelaPreco, VLINICIOFAIXA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCQUANTIDADE                                   */
+/*==============================================================*/
+create table TBLVPDESCQUANTIDADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTITEM               DECIMAL(9)                     not null,
+VLPCTDESCONTO        DECIMAL(16,7),
+CDDESCONTO           VARCHAR(90),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCQUANTIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, QTITEM, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPDESCVIDAUTILGRUPO                                */
+/*==============================================================*/
+create table TBLVPDESCVIDAUTILGRUPO (
+cdGrupoProduto1      varchar(20)                    not null,
+vlPctVidaUtilMinimo  DECIMAL(16,7)                  not null,
+vlPctVidaUtilMaximo  DECIMAL(16,7),
+vlPctDesconto        DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPDESCVIDAUTILGRUPO primary key (cdGrupoProduto1, vlPctVidaUtilMinimo, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPEMPRESA                                          */
+/*==============================================================*/
+create table TBLVPEMPRESA (
+cdEmpresa            varchar(20)                    not null,
+nmEmpresa            varchar(100),
+NMEMPRESACURTO       VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPEMPRESA primary key (cdEmpresa, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPENTIDADE                                         */
+/*==============================================================*/
+create table TBLVPENTIDADE (
+CDSISTEMA            decimal(9)                     not null,
+NMENTIDADE           varchar(30)                    not null,
+NMDOMAIN             varchar(30)                    not null,
+DSENTIDADE           varchar(1000),
+FLAUDITAINS          char(1)                        not null,
+FLAUDITAUPD          char(1)                        not null,
+FLAUDITADEL          char(1)                        not null,
+FLDINAMICO           char(1)                        not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPENTIDADE primary key (CDSISTEMA, NMENTIDADE, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPESQUEMACORSISTEMA                                */
+/*==============================================================*/
+create table TBLVPESQUEMACORSISTEMA (
+cdEsquemaCor         decimal(9)                     not null,
+dsEsquemaCor         varchar(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPESQUEMACORSISTEMA primary key (cdEsquemaCor, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPESTOQUE                                          */
+/*==============================================================*/
+create table TBLVPESTOQUE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDITEMGRADE1         varchar(20)                    not null,
+CDITEMGRADE2         varchar(20)                    not null,
+CDITEMGRADE3         varchar(20)                    not null,
+qtEstoque            DECIMAL(16,7),
+qtEstoquePrevisto    DECIMAL(16,7),
+qtEstoqueMin         decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPESTOQUE primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPFACEAMENTO                                       */
+/*==============================================================*/
+create table TBLVPFACEAMENTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTPONTOEQUILIBRIO    decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFACEAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPFACEAMENTOESTOQUE                                */
+/*==============================================================*/
+create table TBLVPFACEAMENTOESTOQUE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+DTCADASTRO           datetime                       not null,
+QTESTOQUEATUAL       decimal(16,7),
+FLULTILIZADOPEDIDODTATUAL char(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFACEAMENTOESTOQUE primary key (CDEMPRESA, CDREPRESENTANTE, DTCADASTRO, CDCLIENTE, CDPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPFICHAFINANCEIRA                                  */
+/*==============================================================*/
+create table TBLVPFICHAFINANCEIRA (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+VLMAIORFATURA        DECIMAL(16,7),
+VLMEDIOCOMPRA        DECIMAL(16,7),
+VLSALDOCLIENTE       DECIMAL(16,7),
+DSPAGAMENTOANTECIPADO VARCHAR(30),
+DSPAGAMENTOVENCIMENTO VARCHAR(30),
+DSPAGAMENTOATRASADO  VARCHAR(30),
+QTMEDIADIASATRASO    DECIMAL(4),
+FLSTATUSCLIENTE      CHAR(1),
+vlPedidosCarteira    DECIMAL(16,7),
+vlSaldoContaCorrente DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPFICHAFINANCEIRA primary key (cdEmpresa, cdRepresentante, cdCliente, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPFORNECEDOR                                       */
+/*==============================================================*/
+create table TBLVPFORNECEDOR (
+CDEMPRESA            varchar(20)                    not null,
+CDFORNECEDOR         varchar(20)                    not null,
+NMRAZAOSOCIAL        VARCHAR(100),
+NMFANTASIA           VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFORNECEDOR primary key (CDEMPRESA, CDFORNECEDOR, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPFOTOPRODUTO                                      */
+/*==============================================================*/
+create table TBLVPFOTOPRODUTO (
+CDPRODUTO            varchar(20)                    not null,
+NMFOTO               varchar(100)                   not null,
+NUTAMANHO            decimal(9),
+DTMODIFICACAO        datetime,
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPFOTOPRODUTO primary key (CDPRODUTO, NMFOTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPGIROPRODUTO                                      */
+/*==============================================================*/
+create table TBLVPGIROPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTMEDIASEMANAL       DECIMAL(16,7),
+QTMAIORCOMPRA        DECIMAL(16,7),
+DSDIA                VARCHAR(20),
+qtCompra             DECIMAL(16,7),
+vlUnitario           DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPGIROPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPGRUPOPRODTIPOPED                                 */
+/*==============================================================*/
+create table TBLVPGRUPOPRODTIPOPED (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+CDGRUPOPRODUTO2      varchar(20)                    not null,
+CDGRUPOPRODUTO3      varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODTIPOPED primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPGRUPOPRODUTO1                                    */
+/*==============================================================*/
+create table TBLVPGRUPOPRODUTO1 (
+cdGrupoProduto1      varchar(20)                    not null,
+dsGrupoProduto1      varchar(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO1 primary key (cdGrupoProduto1, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPGRUPOPRODUTO2                                    */
+/*==============================================================*/
+create table TBLVPGRUPOPRODUTO2 (
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+CDGRUPOPRODUTO2      varchar(20)                    not null,
+DSGRUPOPRODUTO2      VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO2 primary key (CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPGRUPOPRODUTO3                                    */
+/*==============================================================*/
+create table TBLVPGRUPOPRODUTO3 (
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+CDGRUPOPRODUTO2      varchar(20)                    not null,
+CDGRUPOPRODUTO3      varchar(20)                    not null,
+DSGRUPOPRODUTO3      VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO3 primary key (CDGRUPOPRODUTO1, CDGRUPOPRODUTO2, CDGRUPOPRODUTO3, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPINDICADOR                                        */
+/*==============================================================*/
+create table TBLVPINDICADOR (
+cdIndicador          varchar(20)                    not null,
+dsIndicador          varchar(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPINDICADOR primary key (cdIndicador, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMCONSIGNACAO                                  */
+/*==============================================================*/
+create table TBLVPITEMCONSIGNACAO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDCONSIGNACAO        varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+CDTABELAPRECO        varchar(30),
+VLITEM               decimal(16,7),
+QTITEMCONSIGNADO     decimal(16,7),
+QTITEMSOBRA          decimal(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMCONSIGNACAO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDCONSIGNACAO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMGRADE                                        */
+/*==============================================================*/
+create table TBLVPITEMGRADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTipoItemGrade      varchar(20)                    not null,
+cdItemGrade          varchar(20)                    not null,
+dsItemGrade          varchar(100)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMGRADE primary key (CDEMPRESA, CDREPRESENTANTE, cdTipoItemGrade, cdItemGrade, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMKIT                                          */
+/*==============================================================*/
+create table TBLVPITEMKIT (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDKIT                VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+qtMinItem            DECIMAL(16,7),
+qtMaxItem            DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMKIT primary key (CDPRODUTO, CDUSUARIO, CDEMPRESA, CDREPRESENTANTE, CDKIT)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMKITPEDIDO                                    */
+/*==============================================================*/
+create table TBLVPITEMKITPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMKITPEDIDOERP                                 */
+/*==============================================================*/
+create table TBLVPITEMKITPEDIDOERP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMKITPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDKIT, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMPEDIDO                                       */
+/*==============================================================*/
+create table TBLVPITEMPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDUNIDADE            VARCHAR(20),
+cdGrupoBonificacao   varchar(20),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        varchar(30),
+QTITEMFISICO         DECIMAL(16,7),
+QTITEMFATURAMENTO    DECIMAL(16,7),
+VLITEMPEDIDO         DECIMAL(16,7),
+VLBASEITEMTABELAPRECO DECIMAL(16,7),
+VLBASEITEMPEDIDO     DECIMAL(16,7),
+VLBASEFLEX           DECIMAL(16,7),
+VLTOTALITEMPEDIDO    DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+VLPCTACRESCIMO       DECIMAL(16,7),
+VLRENTABILIDADE      DECIMAL(16,7),
+VLVERBAITEM          DECIMAL(16,7),
+CDCONTACORRENTE      VARCHAR(20),
+cdLoteProduto        VARCHAR(20),
+vlSt                 DECIMAL(16,7),
+vlVerbaItemPositivo  DECIMAL(16,7),
+qtPontosItem         DECIMAL(9,0),
+qtPeso               DECIMAL(16,7),
+dsObsMotivoTroca     VARCHAR(255),
+cdMotivoTroca        VARCHAR(20),
+FLPRECOLIBERADOSENHA CHAR(1),
+vlPctComissao        DECIMAL(16,7),
+vlItemPedidoFrete    DECIMAL(16,7),
+dsObservacao         VARCHAR(4000),
+vlReducaoOptanteSimples DECIMAL(16,7),
+flVendidoQtMinima    CHAR(1),
+vlTotalBrutoItemPedido DECIMAL(16,7),
+CDITEMGRADE1         VARCHAR(20),
+CDITEMGRADE2         VARCHAR(20),
+CDITEMGRADE3         VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMPEDIDOERP                                    */
+/*==============================================================*/
+create table TBLVPITEMPEDIDOERP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+CDUNIDADE            VARCHAR(20),
+cdGrupoBonificacao   varchar(20),
+CDLINHA              DECIMAL(9),
+CDTABELAPRECO        varchar(30),
+QTITEMFISICO         DECIMAL(16,7),
+QTITEMFATURAMENTO    DECIMAL(16,7),
+VLITEMPEDIDO         DECIMAL(16,7),
+VLBASEITEMTABELAPRECO DECIMAL(16,7),
+VLBASEITEMPEDIDO     DECIMAL(16,7),
+VLBASEFLEX           DECIMAL(16,7),
+VLTOTALITEMPEDIDO    DECIMAL(16,7),
+VLPCTDESCONTO        DECIMAL(16,7),
+VLPCTACRESCIMO       DECIMAL(16,7),
+VLRENTABILIDADE      DECIMAL(16,7),
+VLVERBAITEM          DECIMAL(16,7),
+CDCONTACORRENTE      VARCHAR(20),
+cdLoteProduto        VARCHAR(8),
+vlSt                 DECIMAL(16,7),
+vlVerbaItemPositivo  DECIMAL(16,7),
+qtPontosItem         DECIMAL(9,0),
+qtPeso               DECIMAL(16,7),
+dsObsMotivoTroca     VARCHAR(255),
+cdMotivoTroca        VARCHAR(20),
+FLPRECOLIBERADOSENHA CHAR(1),
+vlPctComissao        DECIMAL(16,7),
+vlItemPedidoFrete    DECIMAL(16,7),
+dsObservacao         VARCHAR(4000),
+vlReducaoOptanteSimples DECIMAL(16,7),
+flVendidoQtMinima    CHAR(1),
+vlTotalBrutoItemPedido decimal(16,7),
+CDITEMGRADE1         VARCHAR(20),
+CDITEMGRADE2         VARCHAR(20),
+CDITEMGRADE3         VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, FLTIPOITEMPEDIDO, NUSEQPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMPEDIDOERPDIF                                 */
+/*==============================================================*/
+create table TBLVPITEMPEDIDOERPDIF (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+NUSEQITEMPEDIDO      DECIMAL(4),
+QTITEMFISICOORG      DECIMAL(16,7),
+QTITEMFISICOERP      DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMPEDIDOGRADE                                  */
+/*==============================================================*/
+create table TBLVPITEMPEDIDOGRADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+CDITEMGRADE1         VARCHAR(20)                    not null,
+CDITEMGRADE2         VARCHAR(20)                    not null,
+CDITEMGRADE3         VARCHAR(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOGRADE primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMPEDIDOGRADEERP                               */
+/*==============================================================*/
+create table TBLVPITEMPEDIDOGRADEERP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       char(1)                        not null,
+NUPEDIDO             varchar(30)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     char(1)                        not null,
+NUSEQPRODUTO         decimal(4)                     not null,
+CDITEMGRADE1         VARCHAR(20)                    not null,
+CDITEMGRADE2         VARCHAR(20)                    not null,
+CDITEMGRADE3         VARCHAR(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPITEMPEDIDOGRADEERP primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPRODUTO, FLTIPOITEMPEDIDO, NUSEQPRODUTO, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPITEMTABELAPRECO                                  */
+/*==============================================================*/
+create table TBLVPITEMTABELAPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+CDUF                 VARCHAR(2)                     not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDITEMGRADE1         varchar(20)                    not null,
+CDITEMGRADE2         varchar(20)                    not null,
+CDITEMGRADE3         varchar(20)                    not null,
+CDLINHA              DECIMAL(9),
+VLUNITARIO           DECIMAL(16,7),
+VLPCTMAXDESCONTO     DECIMAL(16,7),
+VLPCTMAXACRESCIMO    DECIMAL(16,7),
+VLPRECOEMBALAGEMPRIMARIA DECIMAL(16,7),
+FLPROMOCAO           CHAR(1),
+VLPCTSUBSTTRIBUTARIAINFO DECIMAL(16,7),
+VLGNREINFO           DECIMAL(16,7),
+VLBASE               DECIMAL(16,7),
+VLPCTDESCONTOINFO    DECIMAL(16,7),
+VLPRECOLISTAINFO     DECIMAL(16,7),
+vlPctComissao        DECIMAL(16,7),
+vlPctDescPromocional DECIMAL(16,7),
+vlPrecoFrete         DECIMAL(16,7),
+flBloqueado          char(1),
+vlUnitarioEspecial   DECIMAL(16,7),
+vlReducaoOptanteSimples DECIMAL(16,7),
+vlBaseEspecial       DECIMAL(16,7),
+qtMaxVenda           decimal(17,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPITEMTABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDPRODUTO, CDUF, CDITEMGRADE1, CDITEMGRADE2, CDITEMGRADE3, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPKIT                                              */
+/*==============================================================*/
+create table TBLVPKIT (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDKIT                VARCHAR(20)                    not null,
+DSKIT                VARCHAR(100),
+qtMinItensKit        decimal(9,0),
+dtVigenciaInicial    DATETIME,
+dtVigenciaFinal      DATETIME,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPKIT primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPKITTABPRECO                                      */
+/*==============================================================*/
+create table TBLVPKITTABPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDKIT                VARCHAR(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPKITTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDTABELAPRECO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPLOGPDA                                           */
+/*==============================================================*/
+create table TBLVPLOGPDA (
+cdLog                varchar(20)                    not null,
+cdNivel              varchar(5)                     not null,
+cdCategoria          decimal(9,0),
+dsLog                varchar(200),
+dtLog                DATETIME,
+hrLog                varchar(5),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPLOGPDA primary key (cdUsuario, cdLog)
+);
+
+/*==============================================================*/
+/* Table: TBLVPLOTEPRODUTO                                      */
+/*==============================================================*/
+create table TBLVPLOTEPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+cdLoteProduto        VARCHAR(20)                    not null,
+qtEstoqueDisponivel  DECIMAL(16,7),
+qtEstoqueReservado   DECIMAL(16,7),
+dtValidade           DATETIME,
+vlPctVidaUtilProduto DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPLOTEPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdLoteProduto, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMENSAGEM                                         */
+/*==============================================================*/
+create table TBLVPMENSAGEM (
+CDPAIS               DECIMAL(9)                     not null,
+CDMENSAGEM           DECIMAL(9)                     not null,
+DSMENSAGEM           VARCHAR(500)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMENSAGEM primary key (CDPAIS, CDMENSAGEM, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETA                                             */
+/*==============================================================*/
+create table TBLVPMETA (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+dsPeriodo            Varchar(30)                    not null,
+dtInicial            datetime,
+dtFinal              datetime,
+qtPedidos            Decimal(9),
+vlRealizadoVendas    DECIMAL(16,7),
+vlMetaVendas         DECIMAL(16,7),
+nuSequencia          varchar(20),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixClienteMeta     DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPMETA primary key (cdEmpresa, cdRepresentante, dsPeriodo, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETAACOMPANHAMENTO                               */
+/*==============================================================*/
+create table TBLVPMETAACOMPANHAMENTO (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+dsPeriodo            Varchar(30)                    not null,
+dtRegistro           datetime                       not null,
+vlRealizadoMeta      DECIMAL(16,7),
+vlRealizadoFlex      DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPMETAACOMPANHAMENTO primary key (cdEmpresa, cdRepresentante, dsPeriodo, dtRegistro, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETAPORGRUPOPROD1                                */
+/*==============================================================*/
+create table TBLVPMETAPORGRUPOPROD1 (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+DSPERIODO            varchar(30)                    not null,
+CDGRUPOPRODUTO1      varchar(20)                    not null,
+nuSequencia          varchar(20),
+VlMeta               decimal(16,7),
+VlRealizado          decimal(16,7),
+qtUnidadeMeta        decimal(16,7),
+qtCaixaMeta          decimal(16,7),
+qtMixClienteMeta     decimal(16,7),
+qtUnidadeRealizado   decimal(16,7),
+qtCaixaRealizado     decimal(16,7),
+qtMixClienteRealizado decimal(16,7),
+dsGrupoProduto1      varchar(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETAPORGRUPOPROD1 primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, CDGRUPOPRODUTO1, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETASPORCLIENTE                                  */
+/*==============================================================*/
+create table TBLVPMETASPORCLIENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+DSPERIODO            VARCHAR(30)                    not null,
+cdCliente            VARCHAR(20)                    not null,
+nuSequencia          varchar(20),
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, cdCliente, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETASPORFORN                                     */
+/*==============================================================*/
+create table TBLVPMETASPORFORN (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+DSPERIODO            VARCHAR(30)                    not null,
+cdFornecedor         varchar(20)                    not null,
+nuSequencia          varchar(20),
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixClienteMeta     DECIMAL(16,7),
+qtMixProdutoMeta     DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORFORN primary key (CDEMPRESA, CDREPRESENTANTE, DSPERIODO, cdFornecedor, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMETASPORPRODUTO                                  */
+/*==============================================================*/
+create table TBLVPMETASPORPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+VlMeta               DECIMAL(16,7),
+VlRealizado          DECIMAL(16,7),
+DSPERIODO            VARCHAR(30),
+nuSequencia          VARCHAR(20),
+qtUnidadeMeta        DECIMAL(16,7),
+qtCaixaMeta          DECIMAL(16,7),
+qtMixClienteMeta     DECIMAL(16,7),
+qtUnidadeRealizado   DECIMAL(16,7),
+qtCaixaRealizado     DECIMAL(16,7),
+qtMixClienteRealizado DECIMAL(16,7),
+DSPRODUTO            VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPMETASPORPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMOTIVOTROCA                                      */
+/*==============================================================*/
+create table TBLVPMOTIVOTROCA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDMOTIVOTROCA        VARCHAR(20)                    not null,
+DSMOTIVOTROCA        VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMOTIVOTROCA primary key (CDEMPRESA, CDREPRESENTANTE, CDMOTIVOTROCA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPMOTREGISTROVISITA                                */
+/*==============================================================*/
+create table TBLVPMOTREGISTROVISITA (
+CDEMPRESA            varchar(20)                    not null,
+CDMOTIVOREGISTROVISITA VARCHAR(20)                    not null,
+DSMOTIVOREGISTROVISITA VARCHAR(100),
+FLVISITAPOSITIVADA   CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPMOTREGISTROVISITA primary key (CDEMPRESA, CDMOTIVOREGISTROVISITA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPNOTIFICACAOPDA                                   */
+/*==============================================================*/
+create table TBLVPNOTIFICACAOPDA (
+CDNOTIFICACAO        varchar(20)                    not null,
+CDCHAVE              varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+dtNotificacao        datetime,
+hrNotificacao        varchar(5),
+cdCliente            varchar(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPNOTIFICACAOPDA primary key (CDNOTIFICACAO, CDCHAVE, CDREPRESENTANTE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPNOVOCLIENTE                                      */
+/*==============================================================*/
+create table TBLVPNOVOCLIENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMNOVOCLIENTE  CHAR(1)                        not null,
+CDNOVOCLIENTE        VARCHAR(20)                    not null,
+NUCNPJ               VARCHAR(20),
+DTCADASTRO           DATETIME,
+CDSTATUSNOVOCLIENTE  VARCHAR(20),
+nmRazaoSocial        varchar(100),
+nuFone               varchar(20),
+cdTipoNovoCliente    varchar(20),
+dsLogradouroComercial varchar(100),
+dsCepComercial       varchar(20),
+flTipoPessoa         CHAR(1),
+flTipoFrequencia     CHAR(1),
+flSemanaMes          CHAR(1),
+nuDiaSemana          DECIMAL(9,0),
+hrAgenda             varchar(5),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPNOVOCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMNOVOCLIENTE, CDNOVOCLIENTE, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPAGAMENTO                                        */
+/*==============================================================*/
+create table TBLVPPAGAMENTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            varchar(20)                    not null,
+CDPAGAMENTO          varchar(30)                    not null,
+CDTIPOPAGAMENTO      varchar(20),
+DTPAGAMENTO          datetime,
+VLPAGO               decimal(16,7),
+dsObservacao         varchar(4000),
+FLTIPOALTERACAO      char(1),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPAGAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPARCELAPEDIDO                                    */
+/*==============================================================*/
+create table TBLVPPARCELAPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDPARCELA            VARCHAR(20)                    not null,
+VLPARCELA            DECIMAL(16,7),
+DTVENCIMENTO         DATETIME,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPARCELAPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDPARCELA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPEDIDO                                           */
+/*==============================================================*/
+create table TBLVPPEDIDO (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+nuPedido             varchar(30)                    not null,
+flOrigemPedido       char(1)                        not null,
+cdCliente            varchar(20)                    not null,
+nuPedidoRelacionado  varchar(30),
+flOrigemPedidoRelacionado char(1),
+CDSTATUSPEDIDO       VARCHAR(20),
+dtEmissao            DATETIME,
+hrEmissao            VARCHAR(5),
+hrFimEmissao         VARCHAR(5),
+dtEntrega            DATETIME,
+VLTOTALITENS         DECIMAL(16,7),
+vlTotalPedido        DECIMAL(16,7),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTABELAPRECO        varchar(30),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+dsMensagemEntrega    varchar(100),
+dsObservacao         varchar(4000),
+CDSUPERVISOR         varchar(20),
+vlVerbaPedido        DECIMAL(16,7),
+FLPRECOLIBERADOSENHA char(1),
+FLCREDITOCLIENTELIBERADOSENHA char(1),
+nuOrdemCompraCliente varchar(20),
+CDROTAENTREGA        varchar(20),
+FLPOSSUIDIFERENCA    CHAR(1),
+cdSetor              VARCHAR(20),
+cdOrigemSetor        VARCHAR(20),
+cdTipoEntrega        VARCHAR(20),
+nuVersaoSistemaOrigem varchar(20),
+vlDesconto           DECIMAL(16,7),
+cdAreaVenda          varchar(20),
+DtFechamento         DATETIME,
+HrFechamento         char(5),
+DtTransmissaoPda     DATETIME,
+HrTransmissaoPda     char(5),
+qtPeso               DECIMAL(16,7),
+vlTrocaRecolher      DECIMAL(16,7),
+vlTrocaEntregar      DECIMAL(16,7),
+vlCotacaoDolar       DECIMAL(16,7),
+dsDestino            VARCHAR(20),
+qtPontosPedido       DECIMAL(9,0),
+FLPEDIDONOVOCLIENTE  CHAR(1),
+vlBonificacaoPedido  DECIMAL(16,7),
+vlPctDesconto        DECIMAL(16,7),
+vlPctDescProgressivo DECIMAL(16,7),
+vlPctDescItem        DECIMAL(16,7),
+cdTipoFrete          VARCHAR(20),
+vlFrete              DECIMAL(16,7),
+DSCONDICAOPAGAMENTOSEMCADASTRO VARCHAR(100),
+vlRentabilidade      DECIMAL(16,7),
+vlTotalBrutoItens    DECIMAL(16,7),
+flBloqueadoEdicao    char(1),
+FLMAXVENDALIBERADOSENHA char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPEDIDO primary key (cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPEDIDOERP                                        */
+/*==============================================================*/
+create table TBLVPPEDIDOERP (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+nuPedido             varchar(30)                    not null,
+flOrigemPedido       char(1)                        not null,
+cdCliente            varchar(20)                    not null,
+nuPedidoRelacionado  varchar(30),
+flOrigemPedidoRelacionado char(1),
+CDSTATUSPEDIDO       VARCHAR(20),
+dtEmissao            DATETIME,
+hrEmissao            VARCHAR(5),
+hrFimEmissao         VARCHAR(5),
+dtEntrega            DATETIME,
+VLTOTALITENS         DECIMAL(16,7),
+vlTotalPedido        DECIMAL(16,7),
+CDCONDICAOPAGAMENTO  VARCHAR(40),
+CDTABELAPRECO        varchar(30),
+CDTIPOPAGAMENTO      VARCHAR(20),
+CDTIPOPEDIDO         VARCHAR(20),
+dsMensagemEntrega    varchar(100),
+dsObservacao         varchar(4000),
+CDSUPERVISOR         varchar(20),
+vlVerbaPedido        DECIMAL(16,7),
+FLPRECOLIBERADOSENHA char(1),
+FLCREDITOCLIENTELIBERADOSENHA char(1),
+nuOrdemCompraCliente varchar(20),
+CDROTAENTREGA        varchar(20),
+FLPOSSUIDIFERENCA    CHAR(1),
+cdSetor              VARCHAR(20),
+cdOrigemSetor        VARCHAR(20),
+cdTipoEntrega        VARCHAR(20),
+nuVersaoSistemaOrigem varchar(20),
+vlDesconto           DECIMAL(16,7),
+cdAreaVenda          varchar(20),
+DtFechamento         DATETIME,
+HrFechamento         char(5),
+DtTransmissaoPda     DATETIME,
+HrTransmissaoPda     char(5),
+qtPeso               DECIMAL(16,7),
+vlTrocaRecolher      DECIMAL(16,7),
+vlTrocaEntregar      DECIMAL(16,7),
+vlCotacaoDolar       DECIMAL(16,7),
+dsDestino            VARCHAR(20),
+qtPontosPedido       DECIMAL(9,0),
+FLPEDIDONOVOCLIENTE  CHAR(1),
+vlBonificacaoPedido  DECIMAL(16,7),
+vlPctDesconto        DECIMAL(16,7),
+vlPctDescProgressivo DECIMAL(16,7),
+vlPctDescItem        DECIMAL(16,7),
+cdTipoFrete          VARCHAR(20),
+vlFrete              DECIMAL(16,7),
+DSCONDICAOPAGAMENTOSEMCADASTRO VARCHAR(100),
+vlRentabilidade      DECIMAL(16,7),
+vlTotalBrutoItens    decimal(16,7),
+flBloqueadoEdicao    char(1),
+FLMAXVENDALIBERADOSENHA char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPEDIDOERP primary key (cdEmpresa, cdRepresentante, nuPedido, flOrigemPedido, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPEDIDOERPDIF                                     */
+/*==============================================================*/
+create table TBLVPPEDIDOERPDIF (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+CDSTATUSPEDIDO       VARCHAR(20)                    not null,
+DSOBSERVACAOORG      VARCHAR(4000),
+DSOBSERVACAOERP      VARCHAR(4000),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPEDIDOERPDIF primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPEDIDO, NUPEDIDO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPESQUISAMERCADO                                  */
+/*==============================================================*/
+create table TBLVPPESQUISAMERCADO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMPESQUISAMERCADO CHAR(1)                        not null,
+CDPESQUISAMERCADO    varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20),
+CDPRODUTO            VARCHAR(20),
+CDCONCORRENTE        varchar(20),
+DTEMISSAO            DATETIME,
+VLUNITARIO           DECIMAL(16,7),
+QTITEM               DECIMAL(16,7),
+DSOBSERVACAO         VARCHAR(255),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPPESQUISAMERCADO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPESQUISAMERCADO, CDPESQUISAMERCADO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPONTUACAO                                        */
+/*==============================================================*/
+create table TBLVPPONTUACAO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+VLPCTLUCRO           DECIMAL(16,7)                  not null,
+QTPONTOS             DECIMAL(9,0),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPONTUACAO primary key (CDEMPRESA, CDREPRESENTANTE, VLPCTLUCRO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTO                                          */
+/*==============================================================*/
+create table TBLVPPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+CDFORNECEDOR         varchar(20),
+DSUNIDADEFISICA      VARCHAR(2),
+DSUNIDADEFATURAMENTO VARCHAR(2),
+FLSITUACAO           DECIMAL(4),
+NUCONVERSAOUNIDADESMEDIDA DECIMAL(16,7),
+FLCONSISTECONVERSAOUNIDADE CHAR(1),
+QTPESO               DECIMAL(16,7),
+CDCLASSE             VARCHAR(20),
+flProdutoControlado  CHAR(1),
+vlPrecoFabrica       DECIMAL(16,7),
+vlPrecoMaximoConsumidor DECIMAL(16,7),
+cdGrupoProduto1      varchar(20),
+dsPrincipioAtivo     VARCHAR(100),
+cdTributacaoProduto  varchar(20),
+nuCodigoBarras       VARCHAR(200),
+vlPctDepreciacaoTroca DECIMAL(16,7),
+dsEmbalagem          VARCHAR(100),
+vlSt                 DECIMAL(16,7),
+cdLinha              varchar(20),
+CDUNIDADE            VARCHAR(20),
+cdGrupoProduto2      varchar(20),
+cdGrupoProduto3      varchar(20),
+DSFICHATECNICA       VARCHAR(500),
+flBonificacao        CHAR(1),
+nuMultiploIdeal      decimal(16,7),
+qtMinimaVenda        decimal(16,7),
+nuMultiploEspecial   DECIMAL(16,7),
+flIndiceFinanceiroEspecial CHAR(1),
+nuConversaoUMCreditoAntecipado DECIMAL(16,7),
+nuMultiploEmbalagem  DECIMAL(16,7),
+qtEmbalagemCompra    DECIMAL(16,7),
+vlPrecoCusto         DECIMAL(16,7),
+flPreAltaCusto       char(1),
+flKit                char(1),
+dsMarca              varchar(100),
+flNeutro             char(1),
+cdClassificFiscal    varchar(20),
+cdGrupoBonificacao   varchar(20),
+cdProdutoBonificacao varchar(20),
+flAutoBonifica       char(1),
+vlPctMaxBonificacao  decimal(16,7),
+dsReferencia         VARCHAR(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOATRIBUTO                                  */
+/*==============================================================*/
+create table TBLVPPRODUTOATRIBUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDATRIBUTOPRODUTO    varchar(20)                    not null,
+CDATRIBUTOOPCAOPRODUTO varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPRODUTOATRIBUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDATRIBUTOOPCAOPRODUTO, CDPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOGRADE                                     */
+/*==============================================================*/
+create table TBLVPPRODUTOGRADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+cdItemGrade1         varchar(20)                    not null,
+cdItemGrade2         varchar(20)                    not null,
+cdItemGrade3         varchar(20)                    not null,
+cdTipoItemGrade1     varchar(20),
+cdTipoItemGrade2     varchar(20),
+cdTipoItemGrade3     varchar(20),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOGRADE primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdItemGrade1, cdItemGrade2, cdItemGrade3, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOKIT                                       */
+/*==============================================================*/
+create table TBLVPPRODUTOKIT (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDKIT                varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+QTITEMFISICO         decimal(16,7),
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOKIT primary key (CDEMPRESA, CDREPRESENTANTE, CDKIT, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOSIMILAR                                   */
+/*==============================================================*/
+create table TBLVPPRODUTOSIMILAR (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+CDPRODUTOSIMILAR     varchar(20)                    not null,
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOSIMILAR primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDPRODUTOSIMILAR, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOTABPRECO                                  */
+/*==============================================================*/
+create table TBLVPPRODUTOTABPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+DSPRINCIPIOATIVO     VARCHAR(100),
+CDFORNECEDOR         varchar(20),
+DSTABPRECOLIST       VARCHAR(4000),
+nuCodigoBarras       VARCHAR(200),
+DSTABPRECOPROMOLIST  VARCHAR(4000),
+CDGRUPOPRODUTO1      varchar(20),
+CDGRUPOPRODUTO2      varchar(20),
+CDGRUPOPRODUTO3      varchar(20),
+flBonificacao        CHAR(1),
+flPreAltaCusto       char(1),
+flKit                char(1),
+dsMarca              varchar(100),
+dsReferencia         VARCHAR(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOTABPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOTIPOPED                                   */
+/*==============================================================*/
+create table TBLVPPRODUTOTIPOPED (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTIPOPEDIDO         varchar(20)                    not null,
+CDPRODUTO            varchar(20)                    not null,
+nuCarimbo            decimal(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPPRODUTOTIPOPED primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDPRODUTO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPPRODUTOUNIDADE                                   */
+/*==============================================================*/
+create table TBLVPPRODUTOUNIDADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDUNIDADE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+NUCONVERSAOUNIDADE   DECIMAL(16,7),
+VLINDICEFINANCEIRO   DECIMAL(16,7),
+FLDIVIDEMULTIPLICA   CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPRODUTOUNIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDUNIDADE, CDPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPRECADO                                           */
+/*==============================================================*/
+create table TBLVPRECADO (
+CDRECADO             VARCHAR(20)                    not null,
+CDUSUARIOREMETENTE   VARCHAR(20),
+CDUSUARIODESTINATARIO VARCHAR(20),
+DSASSUNTO            VARCHAR(50),
+DSRECADO             VARCHAR(4000),
+DTENVIO              DATETIME,
+HRENVIO              CHAR(5),
+FLLIDO               CHAR(1),
+CDSTATUSENVIO        VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPRECADO primary key (CDRECADO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPRELINADIMPCLI                                    */
+/*==============================================================*/
+create table TBLVPRELINADIMPCLI (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+qtTitulos            decimal(9),
+vlTitulos            DECIMAL(16,7),
+qtDiasMaior          decimal(4),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPRELINADIMPCLI primary key (cdEmpresa, cdRepresentante, cdCliente, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPRELINADIMPREP                                    */
+/*==============================================================*/
+create table TBLVPRELINADIMPREP (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+qtClientes           decimal(9),
+qtTitulos            decimal(9),
+vlTitulos            DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPRELINADIMPREP primary key (cdEmpresa, cdRepresentante, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPRELNOVIDADEPROD                                  */
+/*==============================================================*/
+create table TBLVPRELNOVIDADEPROD (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDTIPONOVIDADEPRODUTO varchar(20)                    not null,
+DSPRODUTO            VARCHAR(100),
+DSNOVIDADEPRODUTO    VARCHAR(100),
+DTEMISSAORELATORIO   DATETIME,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPRELNOVIDADEPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDPRODUTO, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPREPRESENTANTE                                    */
+/*==============================================================*/
+create table TBLVPREPRESENTANTE (
+cdRepresentante      varchar(20)                    not null,
+nmRepresentante      varchar(100),
+vlToleranciaVerba    decimal(16,7),
+flTipoCadastro       char(1),
+FLESPECIAL           CHAR(1),
+VLPCTDESCESPECIAL    DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPREPRESENTANTE primary key (cdRepresentante, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPREPRESENTANTEEMP                                 */
+/*==============================================================*/
+create table TBLVPREPRESENTANTEEMP (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+flDefault            CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPREPRESENTANTEEMP primary key (cdEmpresa, cdRepresentante, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPROTAENTREGA                                      */
+/*==============================================================*/
+create table TBLVPROTAENTREGA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdRotaEntrega        VARCHAR(20)                    not null,
+dsRotaEntrega        VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPROTAENTREGA primary key (CDEMPRESA, CDREPRESENTANTE, cdRotaEntrega, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPSISTEMA                                          */
+/*==============================================================*/
+create table TBLVPSISTEMA (
+CDSISTEMA            DECIMAL(9)                     not null,
+SGSISTEMA            CHAR(3)                        not null,
+NMSISTEMA            VARCHAR(100)                   not null,
+DSVERSAOSISTEMA      VARCHAR(200),
+constraint PK_TBLVPSISTEMA primary key (CDSISTEMA)
+);
+
+/*==============================================================*/
+/* Table: TBLVPSISTEMAPDA                                       */
+/*==============================================================*/
+create table TBLVPSISTEMAPDA (
+CDSISTEMA            DECIMAL(9)                     not null,
+SGSISTEMA            CHAR(3)                        not null,
+NMSISTEMA            VARCHAR(100)                   not null,
+DSVERSAOSISTEMA      VARCHAR(200),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPSISTEMAPDA primary key (CDSISTEMA, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPSTATUSPEDIDOPDA                                  */
+/*==============================================================*/
+create table TBLVPSTATUSPEDIDOPDA (
+CDSTATUSPEDIDO       VARCHAR(20)                    not null,
+DSSTATUSPEDIDO       VARCHAR(100),
+flCreditoClienteAberto CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPSTATUSPEDIDOPDA primary key (CDSTATUSPEDIDO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPSUPERVISORREP                                    */
+/*==============================================================*/
+create table TBLVPSUPERVISORREP (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdSupervisor         varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPSUPERVISORREP primary key (cdEmpresa, cdRepresentante, cdSupervisor, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTABELAPRECO                                      */
+/*==============================================================*/
+create table TBLVPTABELAPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+DSTABELAPRECO        VARCHAR(100),
+VLPCTCOMISSAO        DECIMAL(16,7),
+FLACESSAOUTRASTAB    CHAR(1),
+FLACESSIVELOUTRASTAB CHAR(1),
+FLDESCONTOQTDAUTO    CHAR(1),
+VLPCTMAXDESCADICIONALITEM DECIMAL(16,7),
+QTMINVALOR           DECIMAL(16,7),
+cdListaTabelaPreco   DECIMAL(4),
+cdColunaTabelaPreco  DECIMAL(4),
+flEspecial           CHAR(1),
+flTroca              CHAR(1),
+FLPROMOCIONAL        CHAR(1),
+flBonificacao        CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTABELAPRECOCLI                                   */
+/*==============================================================*/
+create table TBLVPTABELAPRECOCLI (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTABELAPRECOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDTABELAPRECO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTABELAPRECOREG                                   */
+/*==============================================================*/
+create table TBLVPTABELAPRECOREG (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTabelaPreco        varchar(30)                    not null,
+cdRegiao             varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTABELAPRECOREG primary key (CDEMPRESA, CDREPRESENTANTE, cdTabelaPreco, cdRegiao, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTABELAPRECOREP                                   */
+/*==============================================================*/
+create table TBLVPTABELAPRECOREP (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTABELAPRECOREP primary key (CDEMPRESA, CDREPRESENTANTE, CDTABELAPRECO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTCACTIVATION                                     */
+/*==============================================================*/
+create table TBLVPTCACTIVATION (
+cdAtualizacao        VARCHAR(20)                    not null,
+flActivated          char(1),
+dsActivationCode     varchar(50),
+dsDeviceId           varchar(50),
+dsPlatform           varchar(50),
+dtAtualizacao        datetime,
+htAtualizacao        char(5),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTCACTIVATION primary key (cdAtualizacao, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTEMASISTEMA                                      */
+/*==============================================================*/
+create table TBLVPTEMASISTEMA (
+cdTema               decimal(9)                     not null,
+cdEsquemaCor         decimal(9),
+dsTema               varchar(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTEMASISTEMA primary key (cdTema, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOCONDPAGTOCLI                                 */
+/*==============================================================*/
+create table TBLVPTIPOCONDPAGTOCLI (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONDICAOPAGAMENTO  VARCHAR(40)                    not null,
+CDTIPOPAGAMENTO      VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOCONDPAGTOCLI primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONDICAOPAGAMENTO, CDTIPOPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOENTREGA                                      */
+/*==============================================================*/
+create table TBLVPTIPOENTREGA (
+CDEMPRESA            varchar(20)                    not null,
+CDTIPOENTREGA        VARCHAR(20)                    not null,
+DSTIPOENTREGA        VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOENTREGA primary key (CDEMPRESA, CDTIPOENTREGA, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOFRETE                                        */
+/*==============================================================*/
+create table TBLVPTIPOFRETE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTIPOFRETE          VARCHAR(20)                    not null,
+DSTIPOFRETE          VARCHAR(100),
+FLFRETEFOB           CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOFRETE primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOFRETE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOITEMGRADE                                    */
+/*==============================================================*/
+create table TBLVPTIPOITEMGRADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTipoItemGrade      varchar(20)                    not null,
+dsTipoItemGrade      varchar(100)                   not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTIPOITEMGRADE primary key (CDEMPRESA, CDREPRESENTANTE, cdTipoItemGrade, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPONOVIDADEPROD                                 */
+/*==============================================================*/
+create table TBLVPTIPONOVIDADEPROD (
+CDEMPRESA            varchar(20)                    not null,
+CDTIPONOVIDADEPRODUTO varchar(20)                    not null,
+DSTIPONOVIDADEPRODUTO VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+CDUSUARIO            VARCHAR(8)                     not null,
+FLTIPOALTERACAO      CHAR(1),
+constraint PK_TBLVPTIPONOVIDADEPROD primary key (CDEMPRESA, CDTIPONOVIDADEPRODUTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOPAGAMENTO                                    */
+/*==============================================================*/
+create table TBLVPTIPOPAGAMENTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTIPOPAGAMENTO      VARCHAR(20)                    not null,
+DSTIPOPAGAMENTO      VARCHAR(100),
+NUNIVEL              DECIMAL(4),
+QTMINVALOR           DECIMAL(16,7),
+FLESPECIAL           CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOPAGAMENTO primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPAGAMENTO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTIPOPEDIDO                                       */
+/*==============================================================*/
+create table TBLVPTIPOPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTIPOPEDIDO         VARCHAR(20)                    not null,
+DSTIPOPEDIDO         VARCHAR(100),
+FLDEFAULT            CHAR(1),
+FLEXIGESENHA         CHAR(1),
+flIgnorarIndiceFinanCli char(1),
+flBonificacao        CHAR(1),
+flExcecaoGrupoProduto CHAR(1),
+FLEXCECAOCONDPAGTO   CHAR(1),
+FLEXCECAOPRODUTO     char(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPTIPOPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDTIPOPEDIDO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTITULOFINANCEIRO                                 */
+/*==============================================================*/
+create table TBLVPTITULOFINANCEIRO (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+NUNF                 VARCHAR(15)                    not null,
+NUSERIE              VARCHAR(15)                    not null,
+NUTITULO             VARCHAR(15)                    not null,
+NUSUBDOC             VARCHAR(15)                    not null,
+VLNF                 DECIMAL(16,7),
+VLTITULO             DECIMAL(16,7),
+VLPAGO               DECIMAL(16,7),
+DTEMISSAO            DATETIME,
+DTVENCIMENTO         DATETIME,
+DSHISTORICO          VARCHAR(50),
+DSOBSERVACAO         VARCHAR(50),
+cdRepresentanteTitulo varchar(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTITULOFINANCEIRO primary key (cdEmpresa, cdRepresentante, cdCliente, NUNF, NUSERIE, NUTITULO, NUSUBDOC, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTRANSPORTADORA                                   */
+/*==============================================================*/
+create table TBLVPTRANSPORTADORA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDTRANSPORTADORA     varchar(20)                    not null,
+NMTRANSPORTADORA     VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTRANSPORTADORA primary key (CDEMPRESA, CDREPRESENTANTE, CDTRANSPORTADORA, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTRIBUTACAO                                       */
+/*==============================================================*/
+create table TBLVPTRIBUTACAO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTributacaoCliente  varchar(20)                    not null,
+cdTributacaoProduto  varchar(20)                    not null,
+cdTipoPrecoBaseTributacao DECIMAL(9,0),
+vlPctRepasseIcms     DECIMAL(16,7),
+vlPctReducaoBaseIcms DECIMAL(16,7),
+vlPctReducaoIcms     DECIMAL(16,7),
+vlPctIcms            DECIMAL(16,7),
+cdTipoRecolhimento   DECIMAL(9,0),
+flBaseIcmsRetidoComDesconto char(1),
+flBaseIcmsRetidoComRepasse CHAR(1),
+vlPctMargemAgregada  DECIMAL(16,7),
+vlPctIcmsRetido      DECIMAL(16,7),
+vlPctReducaoBaseIcmsRetido DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPTRIBUTACAO primary key (CDEMPRESA, CDREPRESENTANTE, cdTributacaoCliente, cdTributacaoProduto, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPTRIBUTACAOVLBASE                                 */
+/*==============================================================*/
+create table TBLVPTRIBUTACAOVLBASE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+cdTributacaoCliente  varchar(20)                    not null,
+cdTributacaoProduto  varchar(20)                    not null,
+cdProduto            VARCHAR(20)                    not null,
+vlBaseIcms           DECIMAL(16,7),
+vlBaseIcmsCalcRetido DECIMAL(16,7),
+vlBaseIcmsRetidoCalcRetido DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPTRIBUTACAOVLBASE primary key (CDEMPRESA, CDREPRESENTANTE, cdTributacaoCliente, cdTributacaoProduto, cdProduto, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPUNIDADE                                          */
+/*==============================================================*/
+create table TBLVPUNIDADE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDUNIDADE            VARCHAR(20)                    not null,
+DSUNIDADE            VARCHAR(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUNIDADE primary key (CDEMPRESA, CDREPRESENTANTE, CDUSUARIO, CDUNIDADE)
+);
+
+/*==============================================================*/
+/* Table: TBLVPUSUARIOPDA                                       */
+/*==============================================================*/
+create table TBLVPUSUARIOPDA (
+cdUsuario            varchar(8)                     not null,
+dsDirFtp             varchar(20),
+dsUsuarioFtp         varchar(20),
+dsSenhaFtp           varchar(20),
+nuHoraDiferencaServidor decimal(9,0),
+nuHoraDiferencaHrVerao decimal(9,0),
+dsSenha              varchar(40),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+constraint PK_TBLVPUSUARIOPDA primary key (cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPUSUARIOPDAREP                                    */
+/*==============================================================*/
+create table TBLVPUSUARIOPDAREP (
+cdUsuario            varchar(8)                     not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+constraint PK_TBLVPUSUARIOPDAREP primary key (cdUsuario, CDREPRESENTANTE)
+);
+
+/*==============================================================*/
+/* Table: TBLVPUSUARIOREP                                       */
+/*==============================================================*/
+create table TBLVPUSUARIOREP (
+CDUSUARIOREP         VARCHAR(20)                    not null,
+CDREPRESENTANTE      varchar(20),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUSUARIOREP primary key (CDUSUARIOREP, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPUSUARIOWEB                                       */
+/*==============================================================*/
+create table TBLVPUSUARIOWEB (
+CDUSUARIOWEB         VARCHAR(20)                    not null,
+NMUSUARIOWEB         VARCHAR(100),
+FLTIPOUSUARIOWEB     CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPUSUARIOWEB primary key (CDUSUARIOWEB, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVALORINDICADOR                                   */
+/*==============================================================*/
+create table TBLVPVALORINDICADOR (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+cdIndicador          varchar(20)                    not null,
+dsVlIndicador        varchar(20),
+DSPERIODO            VARCHAR(30)                    not null,
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPVALORINDICADOR primary key (cdEmpresa, cdRepresentante, cdIndicador, DSPERIODO, cdUsuario)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVALORPARAMETRO                                   */
+/*==============================================================*/
+create table TBLVPVALORPARAMETRO (
+CDSISTEMA            decimal(9)                     not null,
+CDPARAMETRO          DECIMAL(9)                     not null,
+NMENTIDADE           VARCHAR(30)                    not null,
+VLCHAVE              VARCHAR(150)                   not null,
+VLPARAMETRO          VARCHAR(1000),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVALORPARAMETRO primary key (CDSISTEMA, CDPARAMETRO, VLCHAVE, NMENTIDADE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBA                                            */
+/*==============================================================*/
+create table TBLVPVERBA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDTIPOGERACAO        VARCHAR(20),
+CDCONTACORRENTE      VARCHAR(20),
+CDTIPOMULTIPLO       VARCHAR(20),
+DSVERBA              VARCHAR(100),
+FLMIXOBRIGATORIO     CHAR(1),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBA primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBACLIENTE                                     */
+/*==============================================================*/
+create table TBLVPVERBACLIENTE (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMSALDO        CHAR(1)                        not null,
+CDCLIENTE            varchar(20)                    not null,
+VLSALDO              DECIMAL(16,7),
+dsControleAtualizacao varchar(40),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBACLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMSALDO, CDCLIENTE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBACONTACOR                                    */
+/*==============================================================*/
+create table TBLVPVERBACONTACOR (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+DSCONTACORRENTE      VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBACONTACOR primary key (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBAITEMPEDIDO                                  */
+/*==============================================================*/
+create table TBLVPVERBAITEMPEDIDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+FLORIGEMPEDIDO       CHAR(1)                        not null,
+NUPEDIDO             VARCHAR(30)                    not null,
+cdProduto            varchar(20)                    not null,
+FLTIPOITEMPEDIDO     CHAR(1)                        not null,
+NUSEQPRODUTO         DECIMAL(4)                     not null,
+VLCONSUMIDO          DECIMAL(16,7),
+VLGERADO             DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBAITEMPEDIDO primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO, FLORIGEMPEDIDO, NUPEDIDO, cdProduto, NUSEQPRODUTO, FLTIPOITEMPEDIDO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBAPRODUTO                                     */
+/*==============================================================*/
+create table TBLVPVERBAPRODUTO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+VLMULTIPLO           DECIMAL(16,7),
+VLVERBA              DECIMAL(16,7),
+FLGERAVERBA          CHAR(1)                        not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBAPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO, FLGERAVERBA, CDPRODUTO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBASALDO                                       */
+/*==============================================================*/
+create table TBLVPVERBASALDO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDCONTACORRENTE      VARCHAR(20)                    not null,
+FLORIGEMSALDO        CHAR(1)                        not null,
+VLSALDOINICIAL       DECIMAL(16,7),
+VLSALDO              DECIMAL(16,7),
+DTSALDO              DATETIME,
+DTVIGENCIAINICIAL    DATETIME,
+DTVIGENCIAFINAL      DATETIME,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBASALDO primary key (CDEMPRESA, CDREPRESENTANTE, CDCONTACORRENTE, FLORIGEMSALDO, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVERBATABELAPRECO                                 */
+/*==============================================================*/
+create table TBLVPVERBATABELAPRECO (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+CDVERBA              VARCHAR(20)                    not null,
+CDTABELAPRECO        varchar(30)                    not null,
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVERBATABELAPRECO primary key (CDEMPRESA, CDREPRESENTANTE, CDVERBA, CDUSUARIO, CDTABELAPRECO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVISITA                                           */
+/*==============================================================*/
+create table TBLVPVISITA (
+CDEMPRESA            varchar(20)                    not null,
+CDREPRESENTANTE      varchar(20)                    not null,
+FLORIGEMVISITA       CHAR(1)                        not null,
+CDVISITA             VARCHAR(20)                    not null,
+CDCLIENTE            VARCHAR(20),
+FLVISITAPOSITIVADA   CHAR(1),
+CDMOTIVOREGISTROVISITA VARCHAR(20),
+DTVISITA             DATETIME,
+HRVISITA             CHAR(5),
+DSOBSERVACAO         VARCHAR(255),
+NUPEDIDO             VARCHAR(30),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVISITA primary key (CDEMPRESA, CDREPRESENTANTE, CDVISITA, FLORIGEMVISITA, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVISITAACOMP                                      */
+/*==============================================================*/
+create table TBLVPVISITAACOMP (
+cdEmpresa            varchar(20)                    not null,
+cdRepresentante      varchar(20)                    not null,
+dtRegistro           datetime                       not null,
+qtVisitasPositivas   decimal(9),
+qtVisitasNegativas   decimal(9),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVISITAACOMP primary key (cdEmpresa, cdRepresentante, dtRegistro, CDUSUARIO)
+);
+
+/*==============================================================*/
+/* Table: TBLVPVISITASUPERVISOR                                 */
+/*==============================================================*/
+create table TBLVPVISITASUPERVISOR (
+cdEmpresa            varchar(20)                    not null,
+cdVisita             varchar(20)                    not null,
+cdSupervisor         varchar(20)                    not null,
+flOrigemVisita       char(1)                        not null,
+cdRepresentante      varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+dtVisita             DATETIME,
+hrVisita             char(5),
+dsObservacao         varchar(255),
+qtTempoAtendimento   char(5),
+flRepresentantePresente char(1),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPVISITASUPERVISOR primary key (cdEmpresa, cdVisita, cdSupervisor, flOrigemVisita, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 07/12/2012
+Autor: Wellington
+Descrição: Alterado a coluna FLTIPOFREQUENCIA da tabela TBLVPAGENDAVISITA
+------------------------------------------------------------------------*/
+ALTER TABLE TBLVPAGENDAVISITA ALTER COLUMN FLTIPOFREQUENCIA CHAR(1) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/12/2012
+Autor: Pedro
+Descrição: Altera chave tabela ConfigIterno
+------------------------------------------------------------------------*/
+DROP TABLE TBLVPCONFIGINTERNO;
+CREATE TABLE TBLVPCONFIGINTERNO (
+   CDEMPRESA            VARCHAR(20)          NOT NULL,
+   CDCONFIGINTERNO      DECIMAL(9,0)         NOT NULL,
+   VLCHAVE              VARCHAR(20)          NOT NULL,
+   VLCONFIGINTERNO      VARCHAR(500)         NULL,
+   NUCARIMBO            DECIMAL(9,0)         NULL,
+   FLTIPOALTERACAO      CHAR(1)              NULL,
+   CDUSUARIO            VARCHAR(8)           NOT NULL,
+   CONSTRAINT PK_TBLVPCONFIGINTERNO PRIMARY KEY (CDEMPRESA, CDCONFIGINTERNO, VLCHAVE, CDUSUARIO)
+);
+/*-------------------------------------------------------------------------
+Data: 21/12/2012
+Autor: Guilherme
+Descrição: Alteração de nome da coluna da tabela TBLVPTCACTIVATION
+------------------------------------------------------------------------*/
+--ORACLE	
+	ALTER TABLE TBLVPTCACTIVATION RENAME COLUMN htAtualizacao TO hrAtualizacao;
+--/ORACLE
+
+--POSTGRES
+	ALTER TABLE TBLVPTCACTIVATION RENAME COLUMN htAtualizacao TO hrAtualizacao;
+--/POSTGRES
+
+--SQLSERVER
+	EXECUTE sp_rename 'dbo.TBLVPTCACTIVATION.htAtualizacao', 'hrAtualizacao', 'COLUMN';
+--/SQLSERVER

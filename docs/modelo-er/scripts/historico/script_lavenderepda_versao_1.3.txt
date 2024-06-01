@@ -1,0 +1,207 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.10' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2009
+Autor: Pedro
+Descrição: nova coluna vlTrocaRecolher nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlTrocaRecolher DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlTrocaRecolher DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2009
+Autor: Pedro
+Descrição: nova coluna vlTrocaEntregar nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlTrocaEntregar DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlTrocaEntregar DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2009
+Autor: Pedro
+Descrição: nova coluna vlPctDepreciacaoTroca na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add vlPctDepreciacaoTroca DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 13/11/2009
+Autor: Pedro
+Descrição: nova coluna flTroca na tabela de preço
+------------------------------------------------------------------------*/
+alter table TBLVPTABELAPRECO 
+add flTroca CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2009
+Autor: Dirceu
+Descrição: Nova tabela Campanha
+------------------------------------------------------------------------*/
+create table TBLVPCAMPANHA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCAMPANHA           DECIMAL(9,0)                   not null,
+DSCAMPANHA           VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCAMPANHA primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2009
+Autor: Dirceu
+Descrição: Nova tabela Cesta
+------------------------------------------------------------------------*/
+create table TBLVPCESTA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCESTA              DECIMAL(9,0)                   not null,
+DSCESTA              VARCHAR(100),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCESTA primary key (CDEMPRESA, CDREPRESENTANTE, CDCESTA, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2009
+Autor: Dirceu
+Descrição: Nova tabela CestaProduto
+------------------------------------------------------------------------*/
+create table TBLVPCESTAPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCESTA              DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCESTAPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCESTA, CDPRODUTO, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2009
+Autor: Dirceu
+Descrição: Nova tabela CestaPositCliente
+------------------------------------------------------------------------*/
+create table TBLVPCESTAPOSITCLIENTE (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCAMPANHA           DECIMAL(9,0)                   not null,
+CDCESTA              DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+vlPctPositivacao     DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPOSITCLIENTE primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDCESTA, CDCLIENTE, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/11/2009
+Autor: Dirceu
+Descrição: Nova tabela CestaPositProduto
+------------------------------------------------------------------------*/
+create table TBLVPCESTAPOSITPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCAMPANHA           DECIMAL(9,0)                   not null,
+CDCESTA              DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+vlMeta               DECIMAL(16,7),
+vlRealizado          DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPOSITPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCAMPANHA, CDCESTA, CDPRODUTO, CDCLIENTE, CDUSUARIO)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/12/2009
+Autor: Pedro
+Descrição: nova coluna dsEmbalagem na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add dsEmbalagem VARCHAR(100);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 11/12/2009
+Autor: Pedro
+Descrição: nova coluna vlSt na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add vlSt DECIMAL(16,7);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/12/2009
+Autor: Pedro
+Descrição: nova coluna flAplicaSt na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE 
+add flAplicaSt CHAR(1);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 13/01/2010
+Autor: Pedro
+Descrição: novas tabelas relacionadas aos atributos dos produtos
+------------------------------------------------------------------------*/
+create table TBLVPATRIBUTOOPCAOPROD (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDATRIBUTOPRODUTO    DECIMAL(9,0)                   not null,
+CDATRIBUTOOPCAOPRODUTO DECIMAL(9,0)                   not null,
+DSATRIBUTOOPCAOPRODUTO VARCHAR(100),
+FLATIVO              CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPATRIBUTOOPCAOPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDATRIBUTOOPCAOPRODUTO, CDUSUARIO)
+);
+
+
+create table TBLVPATRIBUTOPROD (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDATRIBUTOPRODUTO    DECIMAL(9,0)                   not null,
+DSATRIBUTOPRODUTO    VARCHAR(100),
+FLATIVO              CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPATRIBUTOPROD primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDUSUARIO)
+);
+
+
+create table TBLVPPRODUTOATRIBUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDATRIBUTOPRODUTO    DECIMAL(9,0)                   not null,
+CDATRIBUTOOPCAOPRODUTO DECIMAL(9,0)                   not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+FLATIVO              CHAR(1),
+FLTIPOALTERACAO      CHAR(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPPRODUTOATRIBUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDATRIBUTOPRODUTO, CDATRIBUTOOPCAOPRODUTO, CDPRODUTO, CDUSUARIO)
+);

@@ -1,0 +1,122 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.15' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2012
+Autor: Pedro
+Descrição: Mudança estrutura tabela AgendaVisita
+------------------------------------------------------------------------*/
+drop table TBLVPAGENDAVISITA;
+
+create table TBLVPAGENDAVISITA (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+NUDIASEMANA          DECIMAL(9,0)                   not null,
+FLSEMANAMES          CHAR(1)                        not null,
+flTipoFrequencia     CHAR(1),
+nuSequencia          DECIMAL(9,0),
+dtBase               DATETIME,
+hrAgenda             VARCHAR(5),
+dsObservacao         VARCHAR(100),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAGENDAVISITA primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, NUDIASEMANA, FLSEMANAMES, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2012
+Autor: Dirceu
+Descrição: Nova tabela VisitaAcomp
+------------------------------------------------------------------------*/
+create table TBLVPVISITAACOMP (
+cdEmpresa            decimal(9)                     not null,
+cdRepresentante      decimal(9)                     not null,
+dtRegistro           datetime                       not null,
+qtVisitasPositivas   decimal(9),
+qtVisitasNegativas   decimal(9),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPVISITAACOMP primary key (cdEmpresa, cdRepresentante, dtRegistro, CDUSUARIO)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 16/07/2012
+Autor: Pedro
+Descrição: Novos campos tabela NOVOCLIENTE
+------------------------------------------------------------------------*/
+alter table TBLVPNOVOCLIENTE add HRAGENDA varchar(5) null;
+alter table TBLVPNOVOCLIENTE add FLSEMANAMES char(1) null;
+alter table TBLVPNOVOCLIENTE add FLTIPOFREQUENCIA char(1) null;
+alter table TBLVPNOVOCLIENTE add NUDIASEMANA decimal(9) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 17/07/2012
+Autor: Richard
+Descrição: Novos campos tabela NOVOCLIENTE
+------------------------------------------------------------------------*/
+alter table TBLVPNOVOCLIENTE add DTBASE datetime null;
+
+
+/*-------------------------------------------------------------------------
+Data: 20/07/2012
+Autor: Pedro
+Descrição: Novo campo na tabela PRODUTO
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add DSMARCA varchar(100) null;
+alter table TBLVPPRODUTOTABPRECO add DSMARCA varchar(100) null;
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/07/2012
+Autor: Pedro
+Descrição: Novo campo na tabela PRODUTO
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add FLNEUTRO char(1) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 24/07/2012
+Autor: Pedro
+Descrição: Novo campo na tabela ITEMTABELAPRECO
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO add qtMaxVenda decimal(16,7) null;
+
+
+/*-------------------------------------------------------------------------
+Data: 27/07/2012
+Autor: Guilherme
+Descrição: Nova tabela CLASSIFICFISCAL
+------------------------------------------------------------------------*/
+create table TBLVPCLASSIFICFISCAL (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+cdClassificFiscal    DECIMAL(9,0)                   not null,
+dsClassificFiscal    varchar(50),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCLASSIFICFISCAL primary key (cdEmpresa, cdRepresentante, cdClassificFiscal, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 27/07/2012
+Autor: Guilherme
+Descrição: Novo campo na tabela PRODUTO
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO add cdClassificFiscal DECIMAL(9,0) null;
+
+/*-------------------------------------------------------------------------
+Data: 31/07/2012
+Autor: Pedro
+Descrição: Novo campo na tabela ESTOQUE
+------------------------------------------------------------------------*/
+alter table TBLVPESTOQUE add QTESTOQUEMIN decimal(16,7) null;

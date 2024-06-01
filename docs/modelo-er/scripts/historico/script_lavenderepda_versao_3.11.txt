@@ -1,0 +1,68 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '3.11' where CDSISTEMA = 20;
+
+/*-------------------------------------------------------------------------
+Data: 15/05/2012
+Autor: Pedro
+Descrição: Ajuste na tabela supervisorRep, para evitar recebimentos desnecessários no pda
+-------------------------------------------------------------------------*/
+delete from tblvpsupervisorrep
+
+
+
+/*-------------------------------------------------------------------------
+Data: 18/05/2012
+Autor: Dirceu
+Descrição: Nova tabela NotificacaoPda
+-------------------------------------------------------------------------*/
+drop table TBLVPNOTIFICACAOPDA;
+
+create table TBLVPNOTIFICACAOPDA (
+CDNOTIFICACAO        varchar(20)                    not null,
+CDCHAVE              varchar(20)                    not null,
+CDREPRESENTANTE      decimal(9,0)                   not null,
+dtNotificacao        datetime,
+hrNotificacao        varchar(5),
+cdCliente            varchar(20),
+nuCarimbo            DECIMAL(9,0),
+FLTIPOALTERACAO      char(1),
+CDUSUARIO            VARCHAR(8)                     not null,
+constraint PK_TBLVPNOTIFICACAOPDA primary key (CDNOTIFICACAO, CDCHAVE, CDREPRESENTANTE, CDUSUARIO)
+);
+
+/*-------------------------------------------------------------------------
+Data: 18/04/2012
+Autor: Pedro
+Descrição: Adicionado novas colunas na tabela de Meta
+------------------------------------------------------------------------*/
+alter table TBLVPMETA add DTINICIAL DATETIME null;
+alter table TBLVPMETA add DTFINAL DATETIME null;
+
+create table TBLVPMETAACOMPANHAMENTO (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+dsPeriodo            Varchar(30)                    not null,
+dtRegistro           datetime                       not null,
+vlRealizadoMeta      DECIMAL(16,7),
+vlRealizadoFlex      DECIMAL(16,7),
+nuCarimbo            DECIMAL(9,0),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPMETAACOMPANHAMENTO primary key (cdEmpresa, cdRepresentante, dsPeriodo, dtRegistro, cdUsuario)
+);
+
+
+
+/*-------------------------------------------------------------------------
+Data: 24/05/2012
+Autor: Dirceu
+Descrição: Coluna cdTabelaPreco passada de obrigatória para não obrigatória
+------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDOERP
+drop column CDTABELAPRECO;
+
+alter table TBLVPITEMPEDIDOERP
+add CDTABELAPRECO        DECIMAL(9,0);
+
+
+

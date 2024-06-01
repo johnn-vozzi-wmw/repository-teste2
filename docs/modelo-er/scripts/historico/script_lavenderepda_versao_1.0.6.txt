@@ -1,0 +1,7 @@
+/*-------------------------------------------------------------------------
+Data: 11/03/2008
+Descrição: novo campo vlVerbaItem na tabela ItemPedido
+-------------------------------------------------------------------------*/
+alter table TBLVPITEMPEDIDO
+add VLVERBAITEM DECIMAL(12,3);
+

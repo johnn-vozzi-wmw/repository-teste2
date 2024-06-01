@@ -1,0 +1,298 @@
+/*** versão do sistema para qual o banco é compatível ***/
+update TBLVPSISTEMA set DSVERSAOSISTEMA = '1.2.0' where CDSISTEMA = 20;
+
+
+/*-------------------------------------------------------------------------
+Data: 09/06/2009
+Autor: Dirceu
+Descrição: Novas colunas na tabela Meta
+------------------------------------------------------------------------*/
+alter table TBLVPMETA 
+add qtUnidadeMeta	DECIMAL(16,7);
+
+alter table TBLVPMETA 
+add qtCaixaMeta	DECIMAL(16,7);
+
+alter table TBLVPMETA 
+add qtMixClienteMeta	DECIMAL(16,7);
+
+alter table TBLVPMETA 
+add qtMixProdutoMeta	DECIMAL(16,7);
+
+alter table TBLVPMETA 
+add nuSequencia	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 09/06/2009
+Autor: Pedro
+Descrição: Novas colunas na tabela MetasPorProduto
+------------------------------------------------------------------------*/
+alter table TBLVPMETASPORPRODUTO 
+add qtUnidadeMeta	DECIMAL(16,7);
+
+alter table TBLVPMETASPORPRODUTO 
+add qtCaixaMeta	DECIMAL(16,7);
+
+alter table TBLVPMETASPORPRODUTO 
+add qtMixClienteMeta	DECIMAL(16,7);
+
+alter table TBLVPMETASPORPRODUTO 
+add nuSequencia	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 15/06/2009
+Autor: Dirceu
+Descrição: Nova coluna vlDesconto nas tabelas Pedido e PedidoErp
+------------------------------------------------------------------------*/
+alter table TBLVPPEDIDO 
+add vlDesconto		DECIMAL(16,7);
+
+alter table TBLVPPEDIDOERP 
+add vlDesconto		DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 17/06/2009
+Autor: Pedro
+Descrição: Alteração nas tabelas Pedido e PedidoERP na coluna nupedidorelacionado
+------------------------------------------------------------------------*/
+ALTER TABLE tblvppedido
+ALTER COLUMN nupedidorelacionado VARCHAR(30) NULL;
+
+ALTER TABLE tblvppedidoerp
+ALTER COLUMN nupedidorelacionado VARCHAR(30) NULL;
+
+
+/*-------------------------------------------------------------------------
+Data: 18/06/2009
+Autor: Dirceu
+Descrição: Nova tabela GiroProduto
+------------------------------------------------------------------------*/
+create table TBLVPGIROPRODUTO (
+CDEMPRESA            DECIMAL(9,0)                   not null,
+CDREPRESENTANTE      DECIMAL(9,0)                   not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+QTMEDIASEMANAL       DECIMAL(16,7),
+QTMAIORCOMPRA        DECIMAL(16,7),
+DSDIA                VARCHAR(20),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPGIROPRODUTO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/06/2009
+Autor: Dirceu
+Descrição: Nova tabela Concorrente
+------------------------------------------------------------------------*/
+create table TBLVPCONCORRENTE (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDCONCORRENTE        DECIMAL(9)                     not null,
+DSCONCORRENTE        VARCHAR(50),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONCORRENTE primary key (CDEMPRESA, CDCONCORRENTE, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 22/06/2009
+Autor: Dirceu
+Descrição: Nova tabela Pesquisa de Mercado
+------------------------------------------------------------------------*/
+create table TBLVPPESQUISAMERCADO (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+FLORIGEMPESQUISAMERCADO CHAR(1)                        not null,
+CDPESQUISAMERCADO    DECIMAL(9)                     not null,
+CDCLIENTE            VARCHAR(20),
+CDPRODUTO            VARCHAR(20),
+CDCONCORRENTE        DECIMAL(9),
+DTEMISSAO            DATETIME,
+VLUNITARIO           DECIMAL(16,7),
+QTITEM               DECIMAL(16,7),
+DSOBSERVACAO         VARCHAR(255),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPPESQUISAMERCADO primary key (CDEMPRESA, CDREPRESENTANTE, FLORIGEMPESQUISAMERCADO, CDPESQUISAMERCADO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 23/06/2009
+Autor: Dirceu
+Descrição: Nova tabela Contato
+------------------------------------------------------------------------*/
+create table TBLVPCONTATO (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+FLORIGEMCONTATO      CHAR(1)                        not null,
+CDCONTATO            VARCHAR(20)                    not null,
+CDREGISTRO           VARCHAR(20)                    not null,
+NMCONTATO            VARCHAR(100),
+NUFONE               VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+DSCARGO              VARCHAR(50),
+FLSEXO               CHAR(1),
+DSEMAIL              VARCHAR(100),
+DSOBSERVACAO         VARCHAR(255),
+DTANIVERSARIO        DATETIME,
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTATO primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONTATO, FLORIGEMCONTATO, CDREGISTRO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 23/06/2009
+Autor: Dirceu
+Descrição: Nova tabela ContatoErp
+------------------------------------------------------------------------*/
+create table TBLVPCONTATOERP (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDCONTATO            VARCHAR(20)                    not null,
+NMCONTATO            VARCHAR(100),
+NUFONE               VARCHAR(20),
+NUCELULAR            VARCHAR(20),
+DSCARGO              VARCHAR(50),
+FLSEXO               CHAR(1),
+DSEMAIL              VARCHAR(100),
+DSOBSERVACAO         VARCHAR(255),
+DTANIVERSARIO        DATETIME,
+CDCONTATORELACIONADO VARCHAR(20),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCONTATOERP primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDCONTATO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2009
+Autor: Dirceu
+Descrição: Nova tabela CestaPromocional
+------------------------------------------------------------------------*/
+create table TBLVPCESTAPROMOCIONAL (
+CDEMPRESA            DECIMAL(9)                     not null,
+CDREPRESENTANTE      DECIMAL(9)                     not null,
+CDCLIENTE            VARCHAR(20)                    not null,
+CDPRODUTO            VARCHAR(20)                    not null,
+CDTABELAPRECO        DECIMAL(9)                     not null,
+DTVIGENCIAINICIAL    DATETIME,
+DTVIGENCIAFINAL      DATETIME,
+VLUNITARIO           DECIMAL(16,7),
+vlPctMaxDesconto     DECIMAL(16,7),
+FLTIPOALTERACAO      CHAR(1),
+cdUsuario            VARCHAR(8)                     not null,
+constraint PK_TBLVPCESTAPROMOCIONAL primary key (CDEMPRESA, CDREPRESENTANTE, CDCLIENTE, CDPRODUTO, CDTABELAPRECO, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2009
+Autor: Dirceu
+Descrição: Nova coluna vlPctComissao na tabela ItemTabelaPreco
+------------------------------------------------------------------------*/
+alter table TBLVPITEMTABELAPRECO 
+add vlPctComissao	DECIMAL(16,7);
+
+
+/*-------------------------------------------------------------------------
+Data: 25/06/2009
+Autor: Dirceu
+Descrição: Nova coluna flAcaoAlteracao na tabela Contato
+------------------------------------------------------------------------*/
+alter table TBLVPCONTATO 
+add flAcaoAlteracao	CHAR(1);
+
+
+/*-------------------------------------------------------------------------
+Data: 09/07/2009
+Autor: Pedro
+Descrição: Nova coluna na tabela Produto
+------------------------------------------------------------------------*/
+alter table TBLVPPRODUTO 
+add dsPrincipioAtivo	VARCHAR(100);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2009
+Autor: Pedro
+Descrição: Nova tabela de grupo Produto 1
+------------------------------------------------------------------------*/
+create table TBLVPGRUPOPRODUTO1 (
+cdGrupoProduto1      varchar(20)                    not null,
+dsGrupoProduto1      varchar(100),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPGRUPOPRODUTO1 primary key (cdGrupoProduto1, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2009
+Autor: Pedro
+Descrição: Nova tabela Categoria
+------------------------------------------------------------------------*/
+create table TBLVPCATEGORIA (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdCategoria          varchar(20)                    not null,
+dsCategoria          varchar(100),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPCATEGORIA primary key (cdEmpresa, cdCategoria, cdUsuario)
+);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2009
+Autor: Pedro
+Descrição: Novas colunas na tabela Cliente
+------------------------------------------------------------------------*/
+alter table TBLVPCLIENTE
+add nuCnpj	VARCHAR(20);
+
+alter table TBLVPCLIENTE
+add nuInscricaoEstadual	VARCHAR(20);
+
+
+/*-------------------------------------------------------------------------
+Data: 10/07/2009
+Autor: Pedro
+Descrição: Novas tabelas AreaVenda, AreaVendaCliente e AreaVendaProduto.
+------------------------------------------------------------------------*/
+create table TBLVPAREAVENDA (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(9,0)                   not null,
+cdAreaVenda          varchar(20)                    not null,
+dsAreaVenda          varchar(100),
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                      not null,
+constraint PK_TBLVPAREAVENDA primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdUsuario)
+);
+
+create table TBLVPAREAVENDAPRODUTO (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(20)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+cdProduto            varchar(20)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDAPRODUTO primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdProduto, cdUsuario)
+);
+
+create table TBLVPAREAVENDACLIENTE (
+cdEmpresa            DECIMAL(9,0)                   not null,
+cdRepresentante      DECIMAL(20)                    not null,
+cdAreaVenda          varchar(20)                    not null,
+cdCliente            varchar(20)                    not null,
+flTipoAlteracao      char(1),
+cdUsuario            varchar(8)                     not null,
+constraint PK_TBLVPAREAVENDACLIENTE primary key (cdEmpresa, cdRepresentante, cdAreaVenda, cdCliente, cdUsuario)
+);
